@@ -19,7 +19,7 @@ export const BudgetCard = () => {
   };
 
   return (
-    <Box w="xl" padding="10px" borderWidth="1px" borderRadius="lg">
+    <Box w={["sm", "lg"]} padding="10px" borderWidth="1px" borderRadius="lg">
       <Tabs index={tabIndex} variant="soft-rounded" onChange={handleTabsChange}>
         <Center>
           <TabList>
