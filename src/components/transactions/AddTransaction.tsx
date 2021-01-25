@@ -26,8 +26,6 @@ import { addTransaction } from "../../slices/transactionsSlice";
 
 export const AddTransaction = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const format = (val: string) => `$` + val;
-  const parse = (val: string) => parseFloat(val.replace(/^\$/, ""));
   const [merchant, setMerchant] = useState("Starbucks");
   const [amount, setAmount] = useState(1.53);
   const dispatch = useDispatch();

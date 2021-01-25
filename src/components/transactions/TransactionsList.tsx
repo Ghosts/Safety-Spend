@@ -19,34 +19,30 @@ import {
   Icon,
   Tooltip,
   Box,
-  Slide,
   ScaleFade,
 } from "@chakra-ui/react";
 import { FiEdit, FiHelpCircle } from "react-icons/fi";
 import React, { useState } from "react";
 import { transactionsSelectors } from "../../slices/transactionsSlice";
 import { AddTransaction } from "./AddTransaction";
-import { useDispatch, useSelector } from "react-redux";
-import { Transaction } from "../../models/transaction";
-import { editTransaction } from "./../../slices/transactionsSlice";
+import { useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.list);
   const loading = useSelector(transactionsSelectors.loading);
-  const dispatch = useDispatch();
   const [isEditing, setEditing] = useState(false);
   const [editingId, setEditingId] = useState(0);
 
-  const merchantEdit = (newMerchant: string, transaction: Transaction) => {
-    const newTransaction = { ...transaction, merchant: newMerchant };
-    dispatch(editTransaction(newTransaction));
-  };
+  // const merchantEdit = (newMerchant: string, transaction: Transaction) => {
+  //   const newTransaction = { ...transaction, merchant: newMerchant };
+  //   dispatch(editTransaction(newTransaction));
+  // };
 
-  const amountEdit = (newAmount: number, transaction: Transaction) => {
-    const newTransaction = { ...transaction, amount: newAmount };
-    dispatch(editTransaction(newTransaction));
-  };
+  // const amountEdit = (newAmount: number, transaction: Transaction) => {
+  //   const newTransaction = { ...transaction, amount: newAmount };
+  //   dispatch(editTransaction(newTransaction));
+  // };
 
   return (
     <SkeletonText spacing={4} noOfLines={5} isLoaded={!loading}>

@@ -1,7 +1,6 @@
 import {
   Box,
   Center,
-  Slide,
   Tab,
   TabList,
   TabPanel,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, VStack, Text, ScaleFade, Slide } from "@chakra-ui/react";
+import { Box, VStack, Text } from "@chakra-ui/react";
 import { TrackingCard } from "./components/TrackingCard";
 import { BudgetCard } from "./components/BudgetCard";
 import { IconBar } from "./components/IconBar";
