@@ -48,7 +48,7 @@ export const TransactionsList = () => {
     <SkeletonText spacing={4} noOfLines={5} isLoaded={!loading}>
       {!isEditing ? (
         <ScaleFade initialScale={0.9} in>
-          <Stack mb="10px" direction={["column", "row"]}>
+          <Stack mb="10px" direction={["row"]}>
             <Spacer />
             <Popover placement="bottom" closeOnBlur={true}>
               <Tooltip label="What are transactions?">
