@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import { Box, VStack, Text, ScaleFade, Slide } from "@chakra-ui/react";
+import { TrackingCard } from "./components/TrackingCard";
+import { BudgetCard } from "./components/BudgetCard";
+import { IconBar } from "./components/IconBar";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <VStack padding="10px" spacing={2} align="center">
+      <Box>
+        <Text
+          bgGradient="linear(to-r, blue.500,green.400)"
+          bgClip="text"
+          fontSize="6xl"
+          fontWeight="extrabold"
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          week
+        </Text>
+      </Box>
+      <Box>
+        <TrackingCard />
+      </Box>
+      <Box>
+        <BudgetCard />
+      </Box>
+      <Box>
+        <IconBar />
+      </Box>
+    </VStack>
   );
 }
 
