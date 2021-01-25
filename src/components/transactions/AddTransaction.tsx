@@ -14,6 +14,7 @@ import {
   InputLeftAddon,
   NumberInput,
   NumberInputField,
+  Select,
   Stack,
   Tooltip,
   useDisclosure,
@@ -68,6 +69,13 @@ export const AddTransaction = () => {
                         placeholder="Starbucks"
                       />
                     </FormControl>
+                  </InputGroup>
+                  <InputGroup>
+                    <InputLeftAddon children="Type" />
+                    <Select variant="outline">
+                      <option value="expense">Expense</option>
+                      <option value="income">Income</option>
+                    </Select>
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Date" />

@@ -21,7 +21,7 @@ import {
   Box,
   ScaleFade,
 } from "@chakra-ui/react";
-import { FiEdit, FiHelpCircle } from "react-icons/fi";
+import { FiHelpCircle } from "react-icons/fi";
 import React, { useState } from "react";
 import { transactionsSelectors } from "../../slices/transactionsSlice";
 import { AddTransaction } from "./AddTransaction";
@@ -107,26 +107,6 @@ export const TransactionsList = () => {
                     <Td>{transaction.merchant}</Td>
                     <Td>{new Date(transaction.date).toLocaleDateString()}</Td>
                     <Td>${transaction.amount}</Td>
-                    <Td>
-                      <Tooltip label="Edit transaction">
-                        <IconButton
-                          onClick={() => {
-                            setEditingId(transaction.id!);
-                            setEditing(true);
-                          }}
-                          variant="ghost"
-                          aria-label="Add manual expense"
-                          colorScheme="gray"
-                          icon={
-                            <Icon
-                              boxSize="1.5em"
-                              as={FiEdit}
-                              color="gray.200"
-                            />
-                          }
-                        />
-                      </Tooltip>
-                    </Td>
                   </Tr>
                 );
               })}
