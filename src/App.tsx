@@ -3,6 +3,8 @@ import { Box, VStack, Text } from "@chakra-ui/react";
 import { TrackingCard } from "./components/TrackingCard";
 import { BudgetCard } from "./components/BudgetCard";
 import { IconBar } from "./components/IconBar";
+import "./app.css";
+
 function App() {
   return (
     <VStack padding="10px" spacing={2} align="center">
