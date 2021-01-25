@@ -38,7 +38,7 @@ export const TrackingCard = () => {
     <Box>
       <ScaleFade initialScale={0.9} in>
         <Box w="sm" padding="10px" borderWidth="1px" borderRadius="lg">
-          <Stack mb="10px" direction={["row", "column"]}>
+          <Stack mb="10px" direction={["column"]}>
             <Stack direction="row" spacing={1}>
               <Tooltip label="Last week">
                 <IconButton
