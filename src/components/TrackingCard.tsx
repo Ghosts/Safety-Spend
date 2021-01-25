@@ -13,7 +13,6 @@ import {
   PopoverHeader,
   PopoverTrigger,
   ScaleFade,
-  Spacer,
   Stack,
   Stat,
   StatHelpText,
