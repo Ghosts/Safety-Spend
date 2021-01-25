@@ -8,9 +8,8 @@ import {
   Tabs,
 } from "@chakra-ui/react";
 import React from "react";
-import { IncomesList } from "./incomes/IncomesList";
 import { TransactionsList } from "./transactions/TransactionsList";
-import { ExpensesList } from "./expenses/ExpensesList";
+import { RecurrencesList } from "./transactions/RecurrencesList";
 
 export const BudgetCard = () => {
   const [tabIndex, setTabIndex] = React.useState(0);
@@ -33,13 +32,7 @@ export const BudgetCard = () => {
               color="blue.400"
               _selected={{ color: "blue.700", bg: "blue.200" }}
             >
-              Income
-            </Tab>
-            <Tab
-              color="blue.400"
-              _selected={{ color: "blue.700", bg: "red.200" }}
-            >
-              Expenses
+              Recurrences
             </Tab>
           </TabList>
         </Center>
@@ -48,10 +41,7 @@ export const BudgetCard = () => {
             <TransactionsList />
           </TabPanel>
           <TabPanel>
-            <IncomesList />
-          </TabPanel>
-          <TabPanel>
-            <ExpensesList />
+            <RecurrencesList />
           </TabPanel>
         </TabPanels>
       </Tabs>

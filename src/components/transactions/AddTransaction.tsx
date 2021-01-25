@@ -1,18 +1,17 @@
 import {
   Button,
+  Drawer,
+  DrawerBody,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
   FormControl,
   Icon,
   IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   NumberInput,
   NumberInputField,
   Stack,
@@ -33,6 +32,7 @@ export const AddTransaction = () => {
   const newTransaction = () => {
     dispatch(
       addTransaction({
+        type: "expense",
         amount: amount,
         merchant: merchant,
         date: new Date(Date.now()).toString(),
@@ -51,42 +51,43 @@ export const AddTransaction = () => {
           icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="green.400" />}
         />
       </Tooltip>
-      <Modal onClose={onClose} isOpen={isOpen} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <form>
-            <ModalHeader>Add Transaction</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Stack spacing={3}>
-                <InputGroup>
-                  <InputLeftAddon children="Merchant" />
-                  <FormControl isRequired>
-                    <Input
-                      onChange={(event) => setMerchant(event.target.value)}
+
+      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay>
+          <DrawerContent>
+            <DrawerHeader borderBottomWidth="1px">Add Transaction</DrawerHeader>
+            <DrawerBody>
+              <form>
+                <Stack spacing={3}>
+                  <InputGroup>
+                    <InputLeftAddon children="Merchant" />
+                    <FormControl isRequired>
+                      <Input
+                        onChange={(event) => setMerchant(event.target.value)}
+                        variant="outline"
+                        placeholder="Starbucks"
+                      />
+                    </FormControl>
+                  </InputGroup>
+                  <InputGroup>
+                    <InputLeftAddon children="Date" />
+                    <Input variant="outline" placeholder="Today!" />
+                  </InputGroup>
+                  <InputGroup>
+                    <InputLeftAddon children="Amount" />
+                    <NumberInput
                       variant="outline"
-                      placeholder="Starbucks"
-                    />
-                  </FormControl>
-                </InputGroup>
-                <InputGroup>
-                  <InputLeftAddon children="Date" />
-                  <Input variant="outline" placeholder="Today!" />
-                </InputGroup>
-                <InputGroup>
-                  <InputLeftAddon children="Amount" />
-                  <NumberInput
-                    variant="outline"
-                    placeholder="1.50"
-                    onChange={(v, n) => setAmount(n)}
-                    precision={2}
-                  >
-                    <NumberInputField />
-                  </NumberInput>
-                </InputGroup>
-              </Stack>
-            </ModalBody>
-            <ModalFooter>
+                      placeholder="1.50"
+                      onChange={(v, n) => setAmount(n)}
+                      precision={2}
+                    >
+                      <NumberInputField />
+                    </NumberInput>
+                  </InputGroup>
+                </Stack>
+              </form>
+            </DrawerBody>
+            <DrawerFooter>
               <Stack direction="row" spacing={4}>
                 <Button onClick={onClose}>Close</Button>
                 <Button
@@ -97,10 +98,10 @@ export const AddTransaction = () => {
                   Add
                 </Button>
               </Stack>
-            </ModalFooter>
-          </form>
-        </ModalContent>
-      </Modal>
+            </DrawerFooter>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
     </>
   );
 };

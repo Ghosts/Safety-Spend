@@ -4,6 +4,8 @@ import {
   combineReducers,
 } from "@reduxjs/toolkit";
 import transactionsSlice from "./slices/transactionsSlice";
+import recurrencesSlice from "./slices/recurrencesSlice";
+
 import {
   FLUSH,
   PAUSE,
@@ -20,6 +22,7 @@ export const whiteList = ["transactions"];
 
 const reducers = combineReducers({
   transactions: transactionsSlice.reducer,
+  recurrences: recurrencesSlice.reducer,
 });
 
 const persistConfig = {
