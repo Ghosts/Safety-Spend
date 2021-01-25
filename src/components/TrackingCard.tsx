@@ -73,7 +73,7 @@ export const TrackingCard = () => {
                       <PopoverBody>
                         The weekly Safe-To-Spend value is calculated by taking
                         your average weekly income, and subtracting the average
-                        weekly expenses based on their billing schedules. The
+                        weekly expenses based on their frequency schedules. The
                         result is an average value that can be spent without
                         worrying about needing funds for bills or other
                         expenses.

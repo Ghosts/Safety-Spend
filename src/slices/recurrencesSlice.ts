@@ -69,5 +69,5 @@ const total = (state: RootState) =>
 const byId = (id: number) => (state: RootState) =>
   state.recurrences.list.find((t) => t.id === id);
 
-export const incomesSelectors = { list, loading, total, byId };
+export const recurrencesSelectors = { list, loading, total, byId };
 export default recurrencesSlice;

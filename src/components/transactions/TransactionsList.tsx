@@ -79,10 +79,9 @@ export const TransactionsList = () => {
                 </PopoverHeader>
                 <PopoverCloseButton />
                 <PopoverBody>
-                  Record transactions that occured within the week being tracked
-                  to adjust what is Safe-To-Spend. The Safe-To-Spend amount will
-                  begin the same every week, but transactions occuring on a
-                  one-time basis will reduce the amount as the week progresses.
+                  Examples of transactions would include buying coffee, or
+                  getting paid by a friend for movie tickets. Anything that
+                  isn't pre-planned or on a schedule.
                 </PopoverBody>
               </PopoverContent>
             </Popover>
@@ -96,6 +95,7 @@ export const TransactionsList = () => {
             <Thead>
               <Tr>
                 <Th>Merchant</Th>
+                <Th>Type</Th>
                 <Th>Date</Th>
                 <Th>Amount</Th>
               </Tr>
@@ -105,6 +105,7 @@ export const TransactionsList = () => {
                 return (
                   <Tr key={idx}>
                     <Td>{transaction.merchant}</Td>
+                    <Td>{transaction.type}</Td>
                     <Td>{new Date(transaction.date).toLocaleDateString()}</Td>
                     <Td>${transaction.amount}</Td>
                   </Tr>
