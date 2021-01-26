@@ -1,6 +1,6 @@
 import {
   FiHeart,
-  FiLoader,
+  FiBookOpen,
   FiMessageCircle,
   FiMoon,
   FiSun,
@@ -40,7 +40,7 @@ export const IconBar = () => {
           onClick={toggleColorMode}
           variant="ghost"
           aria-label="Start tutorial"
-          icon={<Icon boxSize="1.5em" as={FiLoader} color="green.500" />}
+          icon={<Icon boxSize="1.5em" as={FiBookOpen} color="green.500" />}
         />
       </Tooltip>
       <Tooltip label="Send feedback" fontSize="sm">
