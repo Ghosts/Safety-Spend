@@ -26,7 +26,7 @@ import { addTransaction } from "../../slices/transactionsSlice";
 
 export const AddTransaction = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [merchant, setMerchant] = useState("Starbucks");
+  const [description, setDescription] = useState("Starbucks");
   const [amount, setAmount] = useState(1.53);
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ export const AddTransaction = () => {
       addTransaction({
         type: "expense",
         amount: amount,
-        merchant: merchant,
+        description: description,
         date: new Date(Date.now()).toString(),
       })
     );
@@ -61,10 +61,10 @@ export const AddTransaction = () => {
               <form>
                 <Stack spacing={3}>
                   <InputGroup>
-                    <InputLeftAddon children="Merchant" />
+                    <InputLeftAddon children="Description" />
                     <FormControl isRequired>
                       <Input
-                        onChange={(event) => setMerchant(event.target.value)}
+                        onChange={(event) => setDescription(event.target.value)}
                         variant="outline"
                         placeholder="Starbucks"
                       />
@@ -79,13 +79,12 @@ export const AddTransaction = () => {
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Date" />
-                    <Input variant="outline" placeholder="Today!" />
+                    <Input type="date" variant="outline" placeholder="Today!" />
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Amount" />
                     <NumberInput
                       variant="outline"
-                      placeholder="1.50"
                       onChange={(v, n) => setAmount(n)}
                       precision={2}
                     >

@@ -37,7 +37,7 @@ export const TransactionEdit = ({
         <Spacer />
       </Stack>
       <Heading>
-        {transaction?.merchant} - ${transaction?.amount}
+        {transaction?.description} - ${transaction?.amount}
       </Heading>
     </ScaleFade>
   );

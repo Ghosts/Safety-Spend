@@ -157,7 +157,7 @@ export const TransactionsList = () => {
                             <Stat>
                               <StatLabel>
                                 <Text maxW="150px" isTruncated>
-                                  {transaction.merchant}
+                                  {transaction.description}
                                 </Text>
                               </StatLabel>
                               <StatNumber>
