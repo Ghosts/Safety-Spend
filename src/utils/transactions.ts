@@ -2,7 +2,7 @@ import { Transaction } from "../models/transaction";
 
 export const getTransactionsByDay = (d: Date, transactions: Transaction[]) => {
   return transactions.filter((t) => {
-    const tDay = new Date(t.date + " ");
+    const tDay = new Date(t.date);
     return (
       d.getFullYear() === tDay.getFullYear() &&
       d.getMonth() === tDay.getMonth() &&
@@ -18,7 +18,7 @@ export const getTransactionsByDay = (d: Date, transactions: Transaction[]) => {
  */
 export const getTransactionsByWeek = (d: Date, transactions: Transaction[]) => {
   return transactions.filter((t) => {
-    const tDay = new Date(t.date + " ");
+    const tDay = new Date(t.date);
     return (
       d.getFullYear() === tDay.getFullYear() &&
       d.getMonth() === tDay.getMonth() &&
