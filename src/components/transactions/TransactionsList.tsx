@@ -1,12 +1,6 @@
 import {
-  Spacer,
-  Stack,
   Text,
-  IconButton,
-  Icon,
   Box,
-  ScaleFade,
-  Heading,
   Accordion,
   AccordionButton,
   AccordionIcon,
@@ -16,14 +10,13 @@ import {
   StatLabel,
   StatNumber,
   Flex,
-  Tooltip,
   Button,
   useColorModeValue,
+  Spacer,
+  SlideFade,
 } from "@chakra-ui/react";
-import { FiRepeat } from "react-icons/fi";
 import React from "react";
 import { transactionsSelectors } from "../../slices/transactionsSlice";
-import { AddTransaction } from "./AddTransaction";
 import { useDispatch, useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
 import { getWeekByDate } from "../../utils/dates";
@@ -47,36 +40,20 @@ export const TransactionsList = () => {
   return (
     <>
       {!isEditing ? (
-        <ScaleFade initialScale={0.9} in>
-          <Stack mb="10px" direction={["row"]} spacing={0}>
-            <Box>
-              <Heading as="h2" size="xl" color="blue.400">
-                Activity
-              </Heading>
-              <Text size="sm" fontWeight="bold">
-                $
-                {transactions.length > 0
-                  ? transactions
-                      .map((item) => item.amount)
-                      .reduce((prev, next) => prev + next)
-                      .toFixed(2)
-                  : 0}
-                &nbsp;spent this week
-              </Text>
-            </Box>
+        <SlideFade in offsetX="50px" offsetY="0">
+          <Flex>
             <Spacer />
-
-            <Tooltip label="Manage recurring transactions">
-              <IconButton
-                variant="ghost"
-                colorScheme="purple"
-                aria-label="Add recurring transaction"
-                icon={<Icon boxSize="1.5em" as={FiRepeat} color="purple.400" />}
-              />
-            </Tooltip>
-            <AddTransaction />
-          </Stack>
-
+            <Text size="sm">
+              $
+              {transactions.length > 0
+                ? transactions
+                    .map((item) => item.amount)
+                    .reduce((prev, next) => prev + next)
+                    .toFixed(2)
+                : 0}
+              &nbsp;spent this week
+            </Text>
+          </Flex>
           <Accordion
             onChange={(days) => dispatch(toggleOpenDays(days))}
             defaultIndex={openDays}
@@ -88,7 +65,7 @@ export const TransactionsList = () => {
                   <AccordionButton>
                     <Box flex="1" textAlign="left">
                       <Text float="left">{day.toDateString()}</Text>
-                      <Text float="right" fontWeight="bold">
+                      <Text float="right">
                         $
                         {getTransactionsByDay(day, transactions).length > 0
                           ? getTransactionsByDay(day, transactions)
@@ -96,7 +73,6 @@ export const TransactionsList = () => {
                               .reduce((prev, next) => prev + next)
                               .toFixed(2)
                           : 0}
-                        &nbsp; spent
                       </Text>
                     </Box>
                     <AccordionIcon />
@@ -119,30 +95,36 @@ export const TransactionsList = () => {
                               color={color}
                               h="auto"
                               m="5px"
-                              maxW="150px"
+                              minW="125px"
+                              maxW="125px"
                               padding="10px"
                               borderWidth="1px"
                               borderRadius="lg"
                             >
                               <Stat>
                                 <StatLabel>
-                                  <Text maxW="150px" isTruncated>
+                                  <Text maxW="125px" isTruncated>
                                     {transaction.description}
                                   </Text>
                                 </StatLabel>
                                 <StatNumber>
-                                  <Text
-                                    fontWeight="800"
-                                    color={
-                                      transaction.type === "expense"
-                                        ? "red.400"
-                                        : "green.400"
-                                    }
-                                    float="left"
-                                  >
-                                    {transaction.type === "expense" ? "-" : "+"}
-                                  </Text>
-                                  ${transaction.amount}
+                                  <Flex>
+                                    <Spacer />
+                                    <Text
+                                      fontWeight="800"
+                                      color={
+                                        transaction.type === "expense"
+                                          ? "red.400"
+                                          : "green.400"
+                                      }
+                                    >
+                                      {transaction.type === "expense"
+                                        ? "-"
+                                        : "+"}
+                                    </Text>
+                                    ${transaction.amount}
+                                    <Spacer />
+                                  </Flex>
                                 </StatNumber>
                               </Stat>
                             </Button>
@@ -155,7 +137,7 @@ export const TransactionsList = () => {
               );
             })}
           </Accordion>
-        </ScaleFade>
+        </SlideFade>
       ) : (
         <TransactionEdit />
       )}

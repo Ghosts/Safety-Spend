@@ -4,15 +4,8 @@ import {
   Center,
   CircularProgress,
   CircularProgressLabel,
-  Icon,
   IconButton,
-  Popover,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  ScaleFade,
+  SlideFade,
   Stack,
   Stat,
   StatHelpText,
@@ -21,7 +14,6 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiHelpCircle } from "react-icons/fi";
 import { useSelector } from "react-redux";
 import { transactionsSelectors } from "../slices/transactionsSlice";
 import { DayTags } from "./DayTags";
@@ -36,7 +28,7 @@ export const TrackingCard = () => {
 
   return (
     <Box>
-      <ScaleFade initialScale={0.9} in>
+      <SlideFade in offsetX="0" offsetY="200px">
         <Box w="sm" padding="10px" borderWidth="1px" borderRadius="lg">
           <Stack mb="10px" direction={["column"]}>
             <Stack direction="row" spacing={1}>
@@ -71,7 +63,7 @@ export const TrackingCard = () => {
                   </Center>
                 </StatNumber>
                 <StatHelpText textAlign="center">
-                  of ${safeToSpend}
+                  of ${safeToSpend.toFixed(2)}
                 </StatHelpText>
               </Stat>
               <Tooltip label="Next week">
@@ -86,7 +78,7 @@ export const TrackingCard = () => {
             <DayTags />
           </Stack>
         </Box>
-      </ScaleFade>
+      </SlideFade>
     </Box>
   );
 };

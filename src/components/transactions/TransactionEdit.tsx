@@ -12,7 +12,7 @@ import {
   InputLeftAddon,
   NumberInput,
   NumberInputField,
-  ScaleFade,
+  SlideFade,
   Select,
   Spacer,
   Stack,
@@ -52,7 +52,7 @@ export const TransactionEdit = () => {
   };
 
   return (
-    <ScaleFade initialScale={0.9} in>
+    <SlideFade in offsetX="-50px" offsetY="0">
       <Stack mb="10px" direction={["column", "row"]}>
         <Tooltip label="Go back">
           <IconButton
@@ -132,6 +132,6 @@ export const TransactionEdit = () => {
           </Flex>
         </form>
       </Box>
-    </ScaleFade>
+    </SlideFade>
   );
 };

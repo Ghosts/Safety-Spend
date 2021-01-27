@@ -22,38 +22,42 @@ import {
 import React, { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { getTypedTransactionType, transactionTypes } from "../../models/common";
-import { addTransaction } from "../../slices/transactionsSlice";
+import { frequencies, getTypedFrequency } from "../../models/recurrence";
+import { addRecurrence } from "../../slices/recurrencesSlice";
 import { toTitleCase } from "../../utils/string";
+import {
+  getTypedTransactionType,
+  transactionTypes,
+} from "./../../models/common";
 
-export const AddTransaction = () => {
+export const AddRecurrence = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [description, setDescription] = useState("Starbucks");
+  const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(1.53);
-  const [type, setType] = useState("expense");
-  const [date, setDate] = useState("");
+  const [type, setType] = useState("");
+  const [frequency, setFrequency] = useState("");
 
   const dispatch = useDispatch();
 
   const newTransaction = () => {
     dispatch(
-      addTransaction({
+      addRecurrence({
         type: getTypedTransactionType(type),
         amount: amount,
         description: description,
-        date: date,
+        frequency: getTypedFrequency(frequency),
       })
     );
     onClose();
   };
   return (
     <>
-      <Tooltip label="Add manual transaction">
+      <Tooltip label="Add recurrence">
         <IconButton
           variant="ghost"
           colorScheme="green"
           onClick={onOpen}
-          aria-label="Add manual transaction"
+          aria-label="Add recurrence"
           icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="green.400" />}
         />
       </Tooltip>
@@ -71,7 +75,7 @@ export const AddTransaction = () => {
                       <Input
                         onChange={(event) => setDescription(event.target.value)}
                         variant="outline"
-                        placeholder="Starbucks"
+                        placeholder="Savings Account"
                       />
                     </FormControl>
                   </InputGroup>
@@ -94,13 +98,25 @@ export const AddTransaction = () => {
                     </Select>
                   </InputGroup>
                   <InputGroup>
-                    <InputLeftAddon children="Date" />
-                    <Input
-                      onChange={(event) => setDate(event.target.value)}
-                      type="date"
+                    <InputLeftAddon children="Frequency" />
+                    <Select
+                      onChange={(event) => {
+                        console.log(event.target.value);
+                        setFrequency(event.target.value);
+                      }}
                       variant="outline"
-                      placeholder="Today!"
-                    />
+                    >
+                      <option disabled selected>
+                        Select Frequency
+                      </option>
+                      {frequencies.map((frequency, idx) => {
+                        return (
+                          <option key={idx} value={frequency}>
+                            {toTitleCase(frequency)}
+                          </option>
+                        );
+                      })}
+                    </Select>
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Amount" />
