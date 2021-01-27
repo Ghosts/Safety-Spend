@@ -136,7 +136,7 @@ export const RecurrencesList = () => {
           </Table>
         </ScaleFade>
       ) : (
-        <TransactionEdit transactionId={editingId} setEditing={setEditing} />
+        <TransactionEdit />
       )}
     </SkeletonText>
   );

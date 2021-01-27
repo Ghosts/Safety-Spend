@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import transactionsSlice from "./slices/transactionsSlice";
 import recurrencesSlice from "./slices/recurrencesSlice";
+import appSlice from "./slices/appSlice";
 
 import {
   FLUSH,
@@ -18,11 +19,12 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-export const whiteList = ["transactions"];
+export const whiteList = ["transactions", "app", "recurrences"];
 
 const reducers = combineReducers({
   transactions: transactionsSlice.reducer,
   recurrences: recurrencesSlice.reducer,
+  app: appSlice.reducer,
 });
 
 const persistConfig = {

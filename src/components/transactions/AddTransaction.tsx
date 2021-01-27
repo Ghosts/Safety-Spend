@@ -28,18 +28,23 @@ export const AddTransaction = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [description, setDescription] = useState("Starbucks");
   const [amount, setAmount] = useState(1.53);
+  const [type, setType] = useState("expense");
+  const [date, setDate] = useState("");
+
   const dispatch = useDispatch();
 
   const newTransaction = () => {
-    dispatch(
-      addTransaction({
-        type: "expense",
-        amount: amount,
-        description: description,
-        date: new Date(Date.now()).toString(),
-      })
-    );
-    onClose();
+    if (type === "expense" || type === "income") {
+      dispatch(
+        addTransaction({
+          type: type,
+          amount: amount,
+          description: description,
+          date: date,
+        })
+      );
+      onClose();
+    }
   };
   return (
     <>
@@ -72,14 +77,22 @@ export const AddTransaction = () => {
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Type" />
-                    <Select variant="outline">
+                    <Select
+                      onChange={(event) => setType(event.target.value)}
+                      variant="outline"
+                    >
                       <option value="expense">Expense</option>
                       <option value="income">Income</option>
                     </Select>
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Date" />
-                    <Input type="date" variant="outline" placeholder="Today!" />
+                    <Input
+                      onChange={(event) => setDate(event.target.value)}
+                      type="date"
+                      variant="outline"
+                      placeholder="Today!"
+                    />
                   </InputGroup>
                   <InputGroup>
                     <InputLeftAddon children="Amount" />

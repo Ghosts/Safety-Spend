@@ -2,7 +2,6 @@ import {
   Spacer,
   Stack,
   Text,
-  SkeletonText,
   IconButton,
   Icon,
   Box,
@@ -14,51 +13,39 @@ import {
   AccordionItem,
   AccordionPanel,
   Stat,
-  StatArrow,
-  StatHelpText,
   StatLabel,
   StatNumber,
   Flex,
   Tooltip,
+  Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FiRepeat } from "react-icons/fi";
-import React, { useState } from "react";
+import React from "react";
 import { transactionsSelectors } from "../../slices/transactionsSlice";
 import { AddTransaction } from "./AddTransaction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
-import { getWeekByDate } from "./utils";
+import { getWeekByDate } from "../../utils/dates";
+import { getTransactionsByDay } from "../../utils/transactions";
+
+import {
+  appSelectors,
+  setTransactionEditing,
+  setTransactionEditingId,
+  toggleOpenDays,
+} from "./../../slices/appSlice";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.list);
-  const loading = useSelector(transactionsSelectors.loading);
-  const [isEditing, setEditing] = useState(false);
-  const [editingId] = useState(0);
+  const dispatch = useDispatch();
+  const isEditing = useSelector(appSelectors.editingTransaction);
   const week = getWeekByDate(new Date());
-
-  const getTransactionsByDay = (d: Date) => {
-    return transactions.filter((t) => {
-      const tDay = new Date(t.date);
-      return (
-        d.getFullYear() === tDay.getFullYear() &&
-        d.getMonth() === tDay.getMonth() &&
-        d.getDate() === tDay.getDate()
-      );
-    });
-  };
-
-  // const merchantEdit = (newMerchant: string, transaction: Transaction) => {
-  //   const newTransaction = { ...transaction, merchant: newMerchant };
-  //   dispatch(editTransaction(newTransaction));
-  // };
-
-  // const amountEdit = (newAmount: number, transaction: Transaction) => {
-  //   const newTransaction = { ...transaction, amount: newAmount };
-  //   dispatch(editTransaction(newTransaction));
-  // };
+  const color = useColorModeValue("gray.600", "gray.200");
+  const openDays = useSelector(appSelectors.openDays);
 
   return (
-    <SkeletonText spacing={4} noOfLines={5} isLoaded={!loading}>
+    <>
       {!isEditing ? (
         <ScaleFade initialScale={0.9} in>
           <Stack mb="10px" direction={["row"]} spacing={0}>
@@ -78,39 +65,7 @@ export const TransactionsList = () => {
               </Text>
             </Box>
             <Spacer />
-            {/* <Popover placement="bottom" closeOnBlur={true}>
-              <Box>
-                <PopoverTrigger>
-                  <IconButton
-                    variant="ghost"
-                    colorScheme="orange"
-                    aria-label="Add manual expense"
-                    icon={
-                      <Icon
-                        boxSize="1.5em"
-                        as={FiHelpCircle}
-                        color="orange.400"
-                      />
-                    }
-                  />
-                </PopoverTrigger>
-              </Box>
-              <PopoverContent
-                color="white"
-                bg="blue.800"
-                borderColor="blue.800"
-              >
-                <PopoverHeader pt={4} fontWeight="bold" border="0">
-                  Transactions
-                </PopoverHeader>
-                <PopoverCloseButton />
-                <PopoverBody>
-                  Examples of transactions would include buying coffee, or
-                  getting paid by a friend for movie tickets. Anything that
-                  isn't pre-planned or on a schedule.
-                </PopoverBody>
-              </PopoverContent>
-            </Popover> */}
+
             <Tooltip label="Manage recurring transactions">
               <IconButton
                 variant="ghost"
@@ -122,123 +77,88 @@ export const TransactionsList = () => {
             <AddTransaction />
           </Stack>
 
-          <Accordion defaultIndex={[new Date().getDay()]} allowMultiple>
+          <Accordion
+            onChange={(days) => dispatch(toggleOpenDays(days))}
+            defaultIndex={openDays}
+            allowMultiple
+          >
             {week.map((day, idx) => {
               return (
-                <AccordionItem>
+                <AccordionItem key={idx}>
                   <AccordionButton>
                     <Box flex="1" textAlign="left">
                       <Text float="left">{day.toDateString()}</Text>
                       <Text float="right" fontWeight="bold">
                         $
-                        {getTransactionsByDay(day).length > 0
-                          ? getTransactionsByDay(day)
+                        {getTransactionsByDay(day, transactions).length > 0
+                          ? getTransactionsByDay(day, transactions)
                               .map((t) => t.amount)
                               .reduce((prev, next) => prev + next)
                               .toFixed(2)
-                          : 0}{" "}
-                        spent
+                          : 0}
+                        &nbsp; spent
                       </Text>
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
                   <AccordionPanel pb={4}>
                     <Flex wrap="wrap">
-                      {getTransactionsByDay(day).map((transaction, idx) => {
-                        return (
-                          <Box
-                            style={{ margin: "0 auto", marginTop: "5px" }}
-                            maxW="150px"
-                            m="5px"
-                            padding="10px"
-                            borderWidth="1px"
-                            borderRadius="lg"
-                          >
-                            <Stat>
-                              <StatLabel>
-                                <Text maxW="150px" isTruncated>
-                                  {transaction.description}
-                                </Text>
-                              </StatLabel>
-                              <StatNumber>
-                                <StatArrow
-                                  type={
-                                    transaction.type === "expense"
-                                      ? "decrease"
-                                      : "increase"
-                                  }
-                                />
-                                ${transaction.amount}
-                              </StatNumber>
-                              <StatHelpText>
-                                <Text>edit</Text>
-                              </StatHelpText>
-                            </Stat>
-                          </Box>
-                        );
-                      })}
+                      {getTransactionsByDay(day, transactions).map(
+                        (transaction, idx) => {
+                          return (
+                            <Button
+                              onClick={() => {
+                                dispatch(
+                                  setTransactionEditingId(transaction.id!)
+                                );
+                                dispatch(setTransactionEditing(true));
+                              }}
+                              key={idx}
+                              variant="ghost"
+                              colorScheme="gray"
+                              color={color}
+                              h="auto"
+                              m="5px"
+                              maxW="150px"
+                              padding="10px"
+                              borderWidth="1px"
+                              borderRadius="lg"
+                            >
+                              <Stat>
+                                <StatLabel>
+                                  <Text maxW="150px" isTruncated>
+                                    {transaction.description}
+                                  </Text>
+                                </StatLabel>
+                                <StatNumber>
+                                  <Text
+                                    fontWeight="800"
+                                    color={
+                                      transaction.type === "expense"
+                                        ? "red.400"
+                                        : "green.400"
+                                    }
+                                    float="left"
+                                  >
+                                    {transaction.type === "expense" ? "-" : "+"}
+                                  </Text>
+                                  ${transaction.amount}
+                                </StatNumber>
+                              </Stat>
+                            </Button>
+                          );
+                        }
+                      )}
                     </Flex>
                   </AccordionPanel>
                 </AccordionItem>
               );
             })}
           </Accordion>
-          {/* 
-          <Table>
-            <TableCaption>
-              Track transactions manually or automatically to stay on top of
-              spending.
-            </TableCaption>
-            <Thead>
-              <Tr>
-                <Th>Merchant</Th>
-                <Th>Type</Th>
-                <Th>Date</Th>
-                <Th>Amount</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {transactions.map((transaction, idx) => {
-                return (
-                  <Tr key={idx}>
-                    <Td>
-                      <Text isTruncated>{transaction.merchant}</Text>
-                    </Td>
-                    <Td>{transaction.type}</Td>
-                    <Td>{new Date(transaction.date).toLocaleDateString()}</Td>
-                    <Td>
-                      <Text
-                        color={
-                          transaction.type === "expense"
-                            ? "red.500"
-                            : "green.500"
-                        }
-                      >
-                        ${transaction.amount}
-                      </Text>
-                    </Td>
-                  </Tr>
-                );
-              })}
-              <Tr>
-                <Td></Td>
-                <Td></Td>
-                <Td>
-                  Total: $
-                  {transactions.length > 0
-                    ? transactions
-                        .map((item) => item.amount)
-                        .reduce((prev, next) => prev + next)
-                        .toFixed(2)
-                    : 0}
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table> */}
         </ScaleFade>
       ) : (
-        <TransactionEdit transactionId={editingId} setEditing={setEditing} />
+        <TransactionEdit />
       )}
-    </SkeletonText>
+    </>
   );
 };
