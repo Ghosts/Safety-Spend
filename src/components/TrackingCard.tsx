@@ -28,7 +28,7 @@ export const TrackingCard = () => {
 
   return (
     <Box>
-      <SlideFade in offsetX="0" offsetY="200px">
+      <SlideFade in offsetX="0" offsetY="50px">
         <Box w="sm" padding="10px" borderWidth="1px" borderRadius="lg">
           <Stack mb="10px" direction={["column"]}>
             <Stack direction="row" spacing={1}>

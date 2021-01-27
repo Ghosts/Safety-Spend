@@ -12,7 +12,7 @@ export const BudgetCard = () => {
   const managingRecurrences = useSelector(appSelectors.areManagingRecurrences);
 
   return (
-    <SlideFade in offsetX="0" offsetY="400px">
+    <SlideFade in offsetX="0" offsetY="50px">
       <Box w={["sm", "lg"]} padding="20px" borderWidth="1px" borderRadius="lg">
         {transactionEditing || managingRecurrences ? (
           <></>
