@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   Heading,
+  Image,
   Button,
   color,
   Flex,
@@ -50,54 +51,74 @@ export const RecurrencesList = () => {
         <AddRecurrence />
       </Stack>
       <Flex justifyContent="space-evenly" wrap="wrap">
-        {recurrences.map((recurrence, idx) => {
-          return (
-            <Button
-              onClick={() => {
-                // dispatch(setTransactionEditingId(transaction.id!));
-                // dispatch(setTransactionEditing(true));
-              }}
-              key={idx}
-              variant="ghost"
-              colorScheme="gray"
-              color={color}
-              h="auto"
-              m="5px"
-              minW="125px"
-              maxW="125px"
-              padding="10px"
-              borderWidth="1px"
-              borderRadius="lg"
-            >
-              <Stat>
-                <StatLabel>
-                  <Text maxW="125px" isTruncated>
-                    {recurrence.description}
-                  </Text>
-                </StatLabel>
-                <StatNumber>
-                  <Flex>
-                    <Spacer />
-                    <Text
-                      fontWeight="800"
-                      color={
-                        recurrence.type === "expense" ? "red.400" : "green.400"
-                      }
-                      float="left"
-                    >
-                      {recurrence.type === "expense" ? "-" : "+"}
+        {recurrences.length <= 0 ? (
+          <>
+            <Flex direction="column">
+              <Image
+                width="250px"
+                m="0 auto"
+                mb="10px"
+                src="./illustrations/noRecurrences.svg"
+                alt="No recurring transaction"
+              />
+              <Text>
+                Looks like there's no recurrences yet... add some to get
+                started!
+              </Text>
+            </Flex>
+          </>
+        ) : (
+          recurrences.map((recurrence, idx) => {
+            return (
+              <Button
+                onClick={() => {
+                  // dispatch(setTransactionEditingId(transaction.id!));
+                  // dispatch(setTransactionEditing(true));
+                }}
+                key={idx}
+                variant="ghost"
+                colorScheme="gray"
+                color={color}
+                h="auto"
+                m="5px"
+                minW="125px"
+                maxW="125px"
+                padding="10px"
+                borderWidth="1px"
+                borderRadius="lg"
+              >
+                <Stat>
+                  <StatLabel>
+                    <Text maxW="125px" isTruncated>
+                      {recurrence.description}
                     </Text>
-                    ${recurrence.amount}
-                    <Spacer />
-                  </Flex>
-                  <StatHelpText>
-                    <Text fontWeight="normal">{recurrence.frequency}</Text>
-                  </StatHelpText>
-                </StatNumber>
-              </Stat>
-            </Button>
-          );
-        })}
+                  </StatLabel>
+                  <StatNumber>
+                    <Flex>
+                      <Spacer />
+                      <Text
+                        fontWeight="800"
+                        color={
+                          recurrence.type === "expense"
+                            ? "red.400"
+                            : "green.400"
+                        }
+                        float="left"
+                      >
+                        {recurrence.type === "expense" ? "-" : "+"}
+                      </Text>
+                      ${recurrence.amount}
+                      <Spacer />
+                    </Flex>
+                    <StatHelpText>
+                      <Text fontWeight="normal">{recurrence.frequency}</Text>
+                    </StatHelpText>
+                  </StatNumber>
+                </Stat>
+              </Button>
+            );
+          })
+        )}
       </Flex>
     </SlideFade>
   );

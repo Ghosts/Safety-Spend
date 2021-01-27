@@ -18,6 +18,7 @@ import {
   Stack,
   Tooltip,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
@@ -36,6 +37,7 @@ export const AddRecurrence = () => {
   const [amount, setAmount] = useState(1.53);
   const [type, setType] = useState("");
   const [frequency, setFrequency] = useState("");
+  const toast = useToast();
 
   const dispatch = useDispatch();
 
@@ -48,6 +50,13 @@ export const AddRecurrence = () => {
         frequency: getTypedFrequency(frequency),
       })
     );
+    toast({
+      title: "Recurrence added",
+      description: `Your Safe-To-Spend will update shortly.`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
     onClose();
   };
   return (
@@ -55,10 +64,10 @@ export const AddRecurrence = () => {
       <Tooltip label="Add recurrence">
         <IconButton
           variant="ghost"
-          colorScheme="green"
+          colorScheme="cyan"
           onClick={onOpen}
           aria-label="Add recurrence"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="green.400" />}
+          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="cyan.400" />}
         />
       </Tooltip>
 

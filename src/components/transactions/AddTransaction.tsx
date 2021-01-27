@@ -18,6 +18,7 @@ import {
   Stack,
   Tooltip,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FiPlusCircle } from "react-icons/fi";
@@ -32,6 +33,7 @@ export const AddTransaction = () => {
   const [amount, setAmount] = useState(1.53);
   const [type, setType] = useState("expense");
   const [date, setDate] = useState("");
+  const toast = useToast();
 
   const dispatch = useDispatch();
 
@@ -44,6 +46,13 @@ export const AddTransaction = () => {
         date: date,
       })
     );
+    toast({
+      title: "Transaction added",
+      description: `Your Safe-To-Spend will update shortly.`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
     onClose();
   };
   return (
@@ -51,14 +60,14 @@ export const AddTransaction = () => {
       <Tooltip label="Add manual transaction">
         <IconButton
           variant="ghost"
-          colorScheme="green"
+          colorScheme="cyan"
           onClick={onOpen}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="green.400" />}
+          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="cyan.400" />}
         />
       </Tooltip>
 
-      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Add Transaction</DrawerHeader>

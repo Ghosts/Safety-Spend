@@ -10,7 +10,7 @@ function App() {
     <VStack padding="10px" spacing={2} align="center">
       <Box>
         <Text
-          bgGradient="linear(to-r, blue.500,green.400)"
+          bgGradient="linear(to-r, blue.400,cyan.300)"
           bgClip="text"
           fontSize="6xl"
           fontWeight="extrabold"

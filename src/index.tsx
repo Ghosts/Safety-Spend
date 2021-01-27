@@ -2,14 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ChakraProvider, ColorModeScript, theme } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import { Provider } from "react-redux";
 
+import theme from "./theme";
+
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />

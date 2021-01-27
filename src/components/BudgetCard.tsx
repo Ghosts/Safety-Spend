@@ -13,7 +13,7 @@ export const BudgetCard = () => {
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
-      <Box w={["sm", "lg"]} padding="20px" borderWidth="1px" borderRadius="lg">
+      <Box w={["sm", "xl"]} padding="20px" borderWidth="1px" borderRadius="lg">
         {transactionEditing || managingRecurrences ? (
           <></>
         ) : (
