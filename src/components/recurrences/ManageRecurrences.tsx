@@ -1,4 +1,4 @@
-import { Icon, IconButton, SlideFade, Tooltip } from "@chakra-ui/react";
+import { Icon, IconButton, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { FiCalendar } from "react-icons/fi";
 import { useDispatch } from "react-redux";
