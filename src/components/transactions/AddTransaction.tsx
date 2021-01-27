@@ -17,6 +17,7 @@ import {
   Select,
   Stack,
   Tooltip,
+  useBreakpointValue,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -34,6 +35,7 @@ export const AddTransaction = () => {
   const [type, setType] = useState("expense");
   const [date, setDate] = useState("");
   const toast = useToast();
+  const position = useBreakpointValue<"bottom" | "left">(["bottom", "left"]);
 
   const dispatch = useDispatch();
 
@@ -67,7 +69,7 @@ export const AddTransaction = () => {
         />
       </Tooltip>
 
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+      <Drawer placement={position} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Add Transaction</DrawerHeader>
