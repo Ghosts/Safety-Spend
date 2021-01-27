@@ -49,7 +49,7 @@ export const TrackingCard = () => {
                   <Center>
                     <CircularProgress
                       capIsRound={true}
-                      max={100}
+                      max={safeToSpend}
                       trackColor="gray.100"
                       color={currentSafeToSpend > 0 ? "green.300" : "red.300"}
                       value={currentSafeToSpend}
