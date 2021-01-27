@@ -53,7 +53,7 @@ export const TransactionEdit = () => {
 
   return (
     <SlideFade in offsetX="-50px" offsetY="0">
-      <Stack mb="10px" direction={["column", "row"]}>
+      <Stack mb="10px" direction={["row"]}>
         <Tooltip label="Go back">
           <IconButton
             onClick={() => dispatch(setTransactionEditing(false))}
