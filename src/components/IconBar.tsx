@@ -4,7 +4,6 @@ import {
   FiMessageCircle,
   FiMoon,
   FiSun,
-  FiInfo,
 } from "react-icons/fi";
 import {
   Icon,
