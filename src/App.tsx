@@ -1,34 +1,24 @@
 import React from "react";
-import { Box, VStack, Text } from "@chakra-ui/react";
-import { TrackingCard } from "./components/TrackingCard";
-import { BudgetCard } from "./components/BudgetCard";
-import { IconBar } from "./components/IconBar";
 import "./app.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Login } from "./pages/Login";
+import { Main } from "./pages/Main";
+import { NotFound } from "./pages/NotFound";
 
-function App() {
+export const App = () => {
   return (
-    <VStack padding="10px" spacing={2} align="center">
-      <Box>
-        <Text
-          bgGradient="linear(to-r, blue.400,cyan.300)"
-          bgClip="text"
-          fontSize="6xl"
-          fontWeight="extrabold"
-        >
-          week
-        </Text>
-      </Box>
-      <Box>
-        <TrackingCard />
-      </Box>
-      <Box>
-        <BudgetCard />
-      </Box>
-      <Box>
-        <IconBar />
-      </Box>
-    </VStack>
+    <Router>
+      <Switch>
+        <Route path="/app">
+          <Main />
+        </Route>
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route path="/*">
+          <NotFound />
+        </Route>
+      </Switch>
+    </Router>
   );
-}
-
-export default App;
+};

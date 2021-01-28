@@ -4,6 +4,7 @@ import {
   FiMessageCircle,
   FiMoon,
   FiSun,
+  FiLogOut,
 } from "react-icons/fi";
 import {
   Icon,
@@ -14,7 +15,8 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import React from "react";
-import { InfoModal } from "./InfoModal";
+import { InfoModal } from "./iconBar/InfoModal";
+import { SignOut } from "./iconBar/SignOut";
 
 export const IconBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -64,6 +66,7 @@ export const IconBar = () => {
           />
         </Tooltip>
         <InfoModal />
+        <SignOut />
       </Stack>
     </SlideFade>
   );
