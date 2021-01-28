@@ -7,11 +7,10 @@ interface UserGuardProps {
   children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
 }
 export const UserGuard = ({ children, redirect }: UserGuardProps) => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const history = useHistory();
 
   useEffect(() => {
-    console.log(user);
     if (!isLoading && isAuthenticated) {
       if (redirect) {
         history.push("/app");
