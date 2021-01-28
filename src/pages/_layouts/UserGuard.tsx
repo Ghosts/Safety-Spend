@@ -1,21 +1,16 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import React, { ReactChild, ReactChildren, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { IfFirebaseAuthed } from "@react-firebase/auth";
+import React, { ReactChild, ReactChildren } from "react";
 
 interface UserGuardProps {
   redirect: boolean;
   children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
 }
-export const UserGuard = ({ children, redirect }: UserGuardProps) => {
-  const { isAuthenticated, isLoading } = useAuth0();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      if (redirect) {
-        history.push("/app");
-      }
-    }
-  }, [isLoading, isAuthenticated, history, redirect]);
-  return <>{children}</>;
+export const UserGuard = ({ children }: UserGuardProps) => {
+  return (
+    <IfFirebaseAuthed>
+      {() => {
+        return <>children</>;
+      }}
+    </IfFirebaseAuthed>
+  );
 };

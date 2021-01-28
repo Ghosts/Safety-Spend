@@ -1,4 +1,3 @@
-import firebase from "firebase";
 export const config = {
   databaseURL: "",
   apiKey: "AIzaSyBA2jRug5NJGdtkCA2oYfFVRHOZvKY6TEg",
@@ -10,4 +9,3 @@ export const config = {
   measurementId: "G-2S8WVRFZBN",
 };
 // firebase.initializeApp(config);
-export default firebase;

@@ -21,14 +21,16 @@ import {
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { BaseLayout } from "./_layouts/BaseLayout";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
-import { FirebaseAuthConsumer, IfFirebaseAuthed } from "@react-firebase/auth";
+import { IfFirebaseAuthed } from "@react-firebase/auth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
+  const [emailed, setEmailed] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
+  const history = useHistory();
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -90,26 +92,21 @@ export const Login = () => {
               {query.get("code") ? "Welcome Back!" : "Welcome!"}
             </Heading>
             <Text>Week is a weekly budgeting app.</Text>
-            <Button
-              size="lg"
-              variant="outline"
-              colorScheme="green"
-              onClick={onOpen}
-            >
-              {query.get("code") ? "Continue to Week" : "Log In"}
-            </Button>
-            <FirebaseAuthConsumer>
-              {({ isSignedIn, user, providerId }) => {
-                return (
-                  <pre style={{ height: 300, overflow: "auto" }}>
-                    {JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
-                  </pre>
-                );
-              }}
-            </FirebaseAuthConsumer>
+            {emailed ? (
+              "Check your email!"
+            ) : (
+              <Button
+                size="lg"
+                variant="outline"
+                colorScheme="green"
+                onClick={onOpen}
+              >
+                Log In
+              </Button>
+            )}
             <IfFirebaseAuthed>
               {() => {
-                return <div>You are authenticated</div>;
+                history.push("/app");
               }}
             </IfFirebaseAuthed>
           </VStack>
@@ -154,6 +151,7 @@ export const Login = () => {
                       duration: 5000,
                       isClosable: true,
                     });
+                    setEmailed(true);
                     onClose();
                   }}
                 >
