@@ -6,7 +6,7 @@ import { BaseLayout } from "./_layouts/BaseLayout";
 
 export const Main = () => {
   return (
-    <BaseLayout redirectLogin={false} showIconBar>
+    <BaseLayout showIconBar>
       <Box>
         <TrackingCard />
       </Box>

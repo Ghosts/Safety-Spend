@@ -20,7 +20,6 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { BaseLayout } from "./_layouts/BaseLayout";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
 import { IfFirebaseAuthed } from "@react-firebase/auth";
@@ -79,8 +78,18 @@ export const Login = () => {
   }, [email]);
 
   return (
-    <BaseLayout redirectLogin={true} showIconBar={false}>
-      <SlideFade in offsetX="0" offsetY="50px">
+    <SlideFade in offsetX="0" offsetY="50px">
+      <VStack padding="10px" spacing={2} align="center">
+        <Box>
+          <Text
+            bgGradient="linear(to-r, blue.400,cyan.300)"
+            bgClip="text"
+            fontSize="6xl"
+            fontWeight="extrabold"
+          >
+            week
+          </Text>
+        </Box>
         <Box
           w={["sm", "md"]}
           padding="10px"
@@ -162,7 +171,7 @@ export const Login = () => {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </SlideFade>
-    </BaseLayout>
+      </VStack>
+    </SlideFade>
   );
 };

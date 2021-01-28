@@ -4,7 +4,7 @@ import { BaseLayout } from "./_layouts/BaseLayout";
 
 export const NotFound = () => {
   return (
-    <BaseLayout redirectLogin={false} showIconBar={false}>
+    <BaseLayout showIconBar={false}>
       <Box>
         <SlideFade in offsetX="0" offsetY="50px">
           <Box

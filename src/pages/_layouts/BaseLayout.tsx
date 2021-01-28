@@ -5,16 +5,11 @@ import { UserGuard } from "./UserGuard";
 
 interface BaseLayoutProps {
   showIconBar: boolean;
-  redirectLogin: boolean;
   children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
 }
-export const BaseLayout = ({
-  children,
-  showIconBar,
-  redirectLogin,
-}: BaseLayoutProps) => {
+export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
   return (
-    <UserGuard redirect={redirectLogin}>
+    <UserGuard>
       <VStack padding="10px" spacing={2} align="center">
         <Box>
           <Text
