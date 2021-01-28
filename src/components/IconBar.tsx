@@ -4,7 +4,6 @@ import {
   FiMessageCircle,
   FiMoon,
   FiSun,
-  FiLogOut,
 } from "react-icons/fi";
 import {
   Icon,
