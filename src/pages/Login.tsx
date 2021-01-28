@@ -41,6 +41,9 @@ export const Login = () => {
   };
 
   useEffect(() => {
+    if (window.localStorage.getItem("emailForSignIn")) {
+      setEmail(window.localStorage.getItem("emailForSignIn")!);
+    }
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
       // Additional state parameters can also be passed via URL.
       // This can be used to continue the user's intended action before triggering
