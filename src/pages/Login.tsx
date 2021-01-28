@@ -12,7 +12,7 @@ import { BaseLayout } from "./_layouts/BaseLayout";
 import { useLocation } from "react-router-dom";
 
 export const Login = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithPopup } = useAuth0();
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -37,7 +37,7 @@ export const Login = () => {
               size="lg"
               variant="outline"
               colorScheme="green"
-              onClick={() => loginWithRedirect()}
+              onClick={() => loginWithPopup()}
             >
               {query.get("code") ? "Continue to Week" : "Log In"}
             </Button>
