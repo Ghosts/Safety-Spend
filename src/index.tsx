@@ -6,17 +6,16 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import { Provider } from "react-redux";
-import { Auth0Provider } from "@auth0/auth0-react";
 import theme from "./theme";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import firebase from "firebase/app";
+import "firebase/auth";
+import { FirebaseAuthProvider } from "@react-firebase/auth";
+import { config } from "./firestore";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Auth0Provider
-      domain="week.us.auth0.com"
-      clientId="o8nuEbBRg7qXWHcEH4rd6imMREuyQAFt"
-      redirectUri={window.location.origin}
-    >
+    <FirebaseAuthProvider firebase={firebase} {...config}>
       <ChakraProvider theme={theme}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
@@ -25,7 +24,7 @@ ReactDOM.render(
           </PersistGate>
         </Provider>
       </ChakraProvider>
-    </Auth0Provider>
+    </FirebaseAuthProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
