@@ -48,7 +48,7 @@ export const TrackingCard = () => {
               <Stat>
                 <StatLabel textAlign="center">
                   <b>Safe-To-Spend</b>
-                  <br /> 1/12-1/19
+                  <br /> Week
                 </StatLabel>
                 <StatNumber>
                   <Center>

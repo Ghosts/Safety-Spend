@@ -84,7 +84,7 @@ const byId = (id: number) => (state: RootState) =>
 
 const byWeek = (date: Date) => (state: RootState) =>
   state.transactions.list.filter(
-    (t) => getWeekNumber(date) === getWeekNumber(new Date(t.date + " "))
+    (t) => getWeekNumber(date) === getWeekNumber(new Date(t.date))
   );
 
 export const transactionsSelectors = { list, loading, total, byId, byWeek };
