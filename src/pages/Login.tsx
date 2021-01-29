@@ -38,24 +38,6 @@ export const Login = () => {
     return new URLSearchParams(useLocation().search);
   }
   const query = useQuery();
-  const actionCodeSettings = {
-    url: "https://weekb.netlify.com",
-    handleCodeInApp: true,
-  };
-
-  useEffect(() => {
-    if (user) {
-      history.push("/");
-    } else if (error) {
-      toast({
-        title: "User error",
-        description: error.toString(),
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  }, [error, history, toast, user]);
 
   const signInWithEmail = useCallback(() => {
     firebase
@@ -77,18 +59,33 @@ export const Login = () => {
   }, [email, toast]);
 
   useEffect(() => {
-    if (window.localStorage.getItem("emailForSignIn")) {
-      setEmail(window.localStorage.getItem("emailForSignIn")!);
+    if (user) {
+      history.push("/");
+    } else if (error) {
+      toast({
+        title: "User error",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      var storedEmail = window.localStorage.getItem("emailForSignIn");
-      if (!storedEmail) {
-        onOpen();
-      } else {
-        signInWithEmail();
+  }, [error, history, toast, user]);
+
+  useEffect(() => {
+    if (query.get("code")) {
+      if (window.localStorage.getItem("emailForSignIn")) {
+        setEmail(window.localStorage.getItem("emailForSignIn")!);
+      }
+      if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+        if (!email) {
+          onOpen();
+        } else {
+          signInWithEmail();
+        }
       }
     }
-  }, [email, onOpen, signInWithEmail, toast]);
+  }, [email, onOpen, query, signInWithEmail]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
@@ -151,7 +148,10 @@ export const Login = () => {
                   onClick={() => {
                     firebase
                       .auth()
-                      .sendSignInLinkToEmail(email, actionCodeSettings)
+                      .sendSignInLinkToEmail(email, {
+                        url: "https://weekb.netlify.com",
+                        handleCodeInApp: true,
+                      })
                       .then(() => {
                         window.localStorage.setItem("emailForSignIn", email);
                       })
@@ -209,15 +209,6 @@ export const Login = () => {
                   variant="solid"
                   colorScheme="green"
                   onClick={() => {
-                    firebase
-                      .auth()
-                      .sendSignInLinkToEmail(email, actionCodeSettings)
-                      .then(() => {
-                        window.localStorage.setItem("emailForSignIn", email);
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
                     signInWithEmail();
                     onClose();
                   }}
