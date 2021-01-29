@@ -21,3 +21,8 @@ export const getWeekByDate = (d: Date) => {
   }
   return week;
 };
+
+export const getUTCDate = (d: Date | string) => {
+  const u = new Date(d);
+  return new Date(u.getUTCFullYear(), u.getUTCMonth(), u.getUTCDate());
+};

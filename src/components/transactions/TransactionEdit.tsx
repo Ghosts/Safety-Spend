@@ -100,7 +100,9 @@ export const TransactionEdit = () => {
             <InputGroup>
               <InputLeftAddon children="Date" />
               <Input
-                defaultValue={transaction?.date}
+                defaultValue={
+                  new Date(transaction?.date!).toISOString().split("T")[0]
+                }
                 onChange={(event) => setDate(event.target.value)}
                 type="date"
                 variant="outline"
