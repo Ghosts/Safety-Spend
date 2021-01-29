@@ -47,7 +47,7 @@ export const Login = () => {
   const signInWithEmail = useCallback(() => {
     firebase
       .auth()
-      .signInWithEmailLink(email, window.location.href)
+      .signInWithEmailLink(cookies["login-email"], window.location.href)
       .then((result) => {})
       .catch((error) => {
         console.error(error);
@@ -59,7 +59,7 @@ export const Login = () => {
           isClosable: true,
         });
       });
-  }, [email, toast]);
+  }, [cookies, toast]);
 
   useEffect(() => {
     if (user) {
@@ -76,11 +76,8 @@ export const Login = () => {
   }, [error, history, toast, user]);
 
   useEffect(() => {
-    if (cookies["login-email"]) {
-      setEmail(cookies["login-email"]);
-    }
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      if (!email) {
+      if (!cookies["login-email"]) {
         onOpen();
       } else {
         signInWithEmail();
