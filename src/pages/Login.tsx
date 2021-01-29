@@ -139,7 +139,13 @@ export const Login = () => {
                       handleCodeInApp: true,
                     })
                     .then(() => {
-                      setCookie("login-email", values.email);
+                      setCookie("login-email", values.email, {
+                        expires: new Date(
+                          new Date().setTime(
+                            new Date().getTime() + 1 * 3600 * 1000
+                          )
+                        ),
+                      });
                     })
                     .catch((error) => {
                       console.error(error);
