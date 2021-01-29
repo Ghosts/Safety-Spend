@@ -73,16 +73,14 @@ export const Login = () => {
   }, [error, history, toast, user]);
 
   useEffect(() => {
-    if (query.get("code")) {
-      if (window.localStorage.getItem("emailForSignIn")) {
-        setEmail(window.localStorage.getItem("emailForSignIn")!);
-      }
-      if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-        if (!email) {
-          onOpen();
-        } else {
-          signInWithEmail();
-        }
+    if (window.localStorage.getItem("emailForSignIn")) {
+      setEmail(window.localStorage.getItem("emailForSignIn")!);
+    }
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      if (!email) {
+        onOpen();
+      } else {
+        signInWithEmail();
       }
     }
   }, [email, onOpen, query, signInWithEmail]);
@@ -136,6 +134,8 @@ export const Login = () => {
                     <Input
                       onChange={(event) => setEmail(event.target.value)}
                       variant="outline"
+                      type="email"
+                      defaultValue={email}
                       placeholder="test@test.com"
                     />
                   </InputGroup>

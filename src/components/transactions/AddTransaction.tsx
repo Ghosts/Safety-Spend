@@ -45,7 +45,7 @@ export const AddTransaction = () => {
         type: getTypedTransactionType(type),
         amount: amount,
         description: description,
-        date: date,
+        date: new Date(date).toISOString(),
       })
     );
     toast({
