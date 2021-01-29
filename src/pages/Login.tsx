@@ -80,10 +80,12 @@ export const Login = () => {
       if (!cookies["login-email"]) {
         onOpen();
       } else {
-        signInWithEmail();
+        if (!loading) {
+          signInWithEmail();
+        }
       }
     }
-  }, [cookies, email, onOpen, query, signInWithEmail]);
+  }, [cookies, email, loading, onOpen, query, signInWithEmail]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
