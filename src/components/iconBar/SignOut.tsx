@@ -4,7 +4,6 @@ import { FiLogOut } from "react-icons/fi";
 import firebase from "firebase/app";
 
 export const SignOut = () => {
-
   return (
     <Tooltip label="Sign Out" fontSize="sm">
       <IconButton

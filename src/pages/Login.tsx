@@ -18,16 +18,19 @@ import {
   useDisclosure,
   Stack,
   useToast,
+  InputLeftAddon,
+  InputGroup,
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
-import { IfFirebaseAuthed } from "@react-firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [emailed, setEmailed] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [user, , error] = useAuthState(firebase.auth());
   const toast = useToast();
   const history = useHistory();
 
@@ -41,44 +44,51 @@ export const Login = () => {
   };
 
   useEffect(() => {
+    if (user) {
+      history.push("/");
+    } else if (error) {
+      toast({
+        title: "User error",
+        description: error.toString(),
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }, [error, history, toast, user]);
+
+  const signInWithEmail = useCallback(() => {
+    firebase
+      .auth()
+      .signInWithEmailLink(email, window.location.href)
+      .then((result) => {
+        window.localStorage.removeItem("emailForSignIn");
+      })
+      .catch((error) => {
+        console.error(error);
+        toast({
+          title: "User rror",
+          description: error.toString(),
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+  }, [email, toast]);
+
+  useEffect(() => {
     if (window.localStorage.getItem("emailForSignIn")) {
       setEmail(window.localStorage.getItem("emailForSignIn")!);
     }
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-      // Additional state parameters can also be passed via URL.
-      // This can be used to continue the user's intended action before triggering
-      // the sign-in operation.
-      // Get the email if available. This should be available if the user completes
-      // the flow on the same device where they started it.
       var storedEmail = window.localStorage.getItem("emailForSignIn");
       if (!storedEmail) {
-        // User opened the link on a different device. To prevent session fixation
-        // attacks, ask the user to provide the associated email again. For example:
-        storedEmail = window.prompt(
-          "Please provide your email for confirmation"
-        );
+        onOpen();
+      } else {
+        signInWithEmail();
       }
-      // The client SDK will parse the code from the link for you.
-      firebase
-        .auth()
-        .signInWithEmailLink(email, window.location.href)
-        .then((result) => {
-          // Clear email from storage.
-          window.localStorage.removeItem("emailForSignIn");
-          console.log(result);
-          // You can access the new user via result.user
-          // Additional user info profile not available via:
-          // result.additionalUserInfo.profile == null
-          // You can check if the user is new or existing:
-          // result.additionalUserInfo.isNewUser
-        })
-        .catch((error) => {
-          console.log(error);
-          // Some error occurred, you can inspect the code: error.code
-          // Common errors could be invalid email and invalid or expired OTPs.
-        });
     }
-  }, [email]);
+  }, [email, onOpen, signInWithEmail, toast]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
@@ -101,50 +111,42 @@ export const Login = () => {
         >
           <VStack padding="10px" spacing={2} align="center">
             <Heading as="h2" size="xl" color="blue.400">
-              {query.get("code") ? "Welcome Back!" : "Welcome!"}
+              {query.get("code") ? "Welcome Back!" : "Welcome,"}
             </Heading>
-            <Text>Week is a weekly budgeting app.</Text>
-            {emailed ? (
-              "Check your email!"
-            ) : (
-              <Button
-                size="lg"
-                variant="outline"
-                colorScheme="green"
-                onClick={onOpen}
+            <Text textAlign="center">
+              Week uses
+              <Text
+                as="span"
+                d="inline-block"
+                bgGradient="linear(to-r, red.400,orange.400,yellow.500,green.400,blue.400,purple.300)"
+                bgClip="text"
+                fontWeight="extrabold"
               >
-                Log In
-              </Button>
-            )}
-            <IfFirebaseAuthed>
-              {() => {
-                history.push("/app");
-              }}
-            </IfFirebaseAuthed>
-          </VStack>
-        </Box>
-        <Modal onClose={onClose} isOpen={isOpen} isCentered>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Login</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              Week uses ✨Magic Links✨ to handle accounts without ever
-              requiring a password. Enter your email below to log in / create an
-              account.
-              <FormControl mt="10px" colorScheme="green" isRequired>
-                <Input
-                  onChange={(event) => setEmail(event.target.value)}
-                  variant="outline"
-                  placeholder="test@test.com"
-                />
-              </FormControl>
-              <Divider mt="15px" mb="5px" />
-            </ModalBody>
-            <ModalFooter>
-              <Stack direction="row" spacing={3}>
+                &nbsp;magic links&nbsp;
+              </Text>
+              to handle accounts without requiring passwords.
+            </Text>
+
+            {emailed ? (
+              <Heading as="h3" size="md" color="cyan.400">
+                Check your email!
+              </Heading>
+            ) : (
+              <>
+                <FormControl mt="10px" colorScheme="green" isRequired>
+                  <InputGroup>
+                    <InputLeftAddon children="Email" />
+                    <Input
+                      onChange={(event) => setEmail(event.target.value)}
+                      variant="outline"
+                      placeholder="test@test.com"
+                    />
+                  </InputGroup>
+                </FormControl>
+                <Divider />
                 <Button
-                  variant="solid"
+                  size="lg"
+                  variant="outline"
                   colorScheme="green"
                   onClick={() => {
                     firebase
@@ -164,6 +166,59 @@ export const Login = () => {
                       isClosable: true,
                     });
                     setEmailed(true);
+                    onClose();
+                  }}
+                >
+                  Log In / Sign Up
+                </Button>
+              </>
+            )}
+          </VStack>
+        </Box>
+        <Modal
+          closeOnOverlayClick={false}
+          onClose={onClose}
+          isOpen={isOpen}
+          isCentered
+        >
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Login</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Text>
+                Welcome back! Looks like you may have came from another device
+                or we lost your email in the log-in process. Re-Enter here &amp;
+                we'll get you back on track in no time.
+              </Text>
+              <Divider mt="15px" mb="5px" />
+              <FormControl mt="10px" colorScheme="green" isRequired>
+                <InputGroup>
+                  <InputLeftAddon children="Email" />
+                  <Input
+                    onChange={(event) => setEmail(event.target.value)}
+                    variant="outline"
+                    placeholder="test@test.com"
+                  />
+                </InputGroup>
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Stack direction="row" spacing={3}>
+                <Button
+                  variant="solid"
+                  colorScheme="green"
+                  onClick={() => {
+                    firebase
+                      .auth()
+                      .sendSignInLinkToEmail(email, actionCodeSettings)
+                      .then(() => {
+                        window.localStorage.setItem("emailForSignIn", email);
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      });
+                    signInWithEmail();
                     onClose();
                   }}
                 >
