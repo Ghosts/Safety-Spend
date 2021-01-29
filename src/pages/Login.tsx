@@ -25,6 +25,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useCookies } from "react-cookie";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ export const Login = () => {
   const [user, , error] = useAuthState(firebase.auth());
   const toast = useToast();
   const history = useHistory();
+  const [cookies, setCookie, removeCookie] = useCookies(["login-email"]);
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -44,7 +46,7 @@ export const Login = () => {
       .auth()
       .signInWithEmailLink(email, window.location.href)
       .then((result) => {
-        window.localStorage.removeItem("emailForSignIn");
+        removeCookie("login-email");
       })
       .catch((error) => {
         console.error(error);
@@ -56,7 +58,7 @@ export const Login = () => {
           isClosable: true,
         });
       });
-  }, [email, toast]);
+  }, [email, removeCookie, toast]);
 
   useEffect(() => {
     if (user) {
@@ -73,8 +75,8 @@ export const Login = () => {
   }, [error, history, toast, user]);
 
   useEffect(() => {
-    if (window.localStorage.getItem("emailForSignIn")) {
-      setEmail(window.localStorage.getItem("emailForSignIn")!);
+    if (cookies["login-email"]) {
+      setEmail(cookies["login-email"]);
     }
     if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
       if (!email) {
@@ -83,7 +85,7 @@ export const Login = () => {
         signInWithEmail();
       }
     }
-  }, [email, onOpen, query, signInWithEmail]);
+  }, [cookies, email, onOpen, query, signInWithEmail]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
@@ -135,7 +137,6 @@ export const Login = () => {
                       onChange={(event) => setEmail(event.target.value)}
                       variant="outline"
                       type="email"
-                      defaultValue={email}
                       placeholder="test@test.com"
                     />
                   </InputGroup>
@@ -153,7 +154,7 @@ export const Login = () => {
                         handleCodeInApp: true,
                       })
                       .then(() => {
-                        window.localStorage.setItem("emailForSignIn", email);
+                        setCookie("login-email", email);
                       })
                       .catch((error) => {
                         console.log(error);
