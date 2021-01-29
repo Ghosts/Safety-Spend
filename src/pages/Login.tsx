@@ -20,12 +20,15 @@ import {
   useToast,
   InputLeftAddon,
   InputGroup,
+  FormErrorMessage,
+  Center,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCookies } from "react-cookie";
+import { Field, Form, Formik } from "formik";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -45,9 +48,7 @@ export const Login = () => {
     firebase
       .auth()
       .signInWithEmailLink(email, window.location.href)
-      .then((result) => {
-        removeCookie("login-email");
-      })
+      .then((result) => {})
       .catch((error) => {
         console.error(error);
         toast({
@@ -58,7 +59,7 @@ export const Login = () => {
           isClosable: true,
         });
       });
-  }, [email, removeCookie, toast]);
+  }, [email, toast]);
 
   useEffect(() => {
     if (user) {
@@ -129,50 +130,69 @@ export const Login = () => {
                 Check your email!
               </Heading>
             ) : (
-              <>
-                <FormControl mt="10px" colorScheme="green" isRequired>
-                  <InputGroup>
-                    <InputLeftAddon children="Email" />
-                    <Input
-                      onChange={(event) => setEmail(event.target.value)}
-                      variant="outline"
-                      type="email"
-                      placeholder="test@test.com"
-                    />
-                  </InputGroup>
-                </FormControl>
-                <Divider />
-                <Button
-                  size="lg"
-                  variant="outline"
-                  colorScheme="green"
-                  onClick={() => {
-                    firebase
-                      .auth()
-                      .sendSignInLinkToEmail(email, {
-                        url: "https://weekb.netlify.com",
-                        handleCodeInApp: true,
-                      })
-                      .then(() => {
-                        setCookie("login-email", email);
-                      })
-                      .catch((error) => {
-                        console.log(error);
-                      });
-                    toast({
-                      title: "Magic Link sent!",
-                      description: `Check your email for a link to log in.`,
-                      status: "success",
-                      duration: 5000,
-                      isClosable: true,
+              <Formik
+                onSubmit={(values) => {
+                  firebase
+                    .auth()
+                    .sendSignInLinkToEmail(values.email, {
+                      url: "https://weekb.netlify.app",
+                      handleCodeInApp: true,
+                    })
+                    .then(() => {
+                      setCookie("login-email", values.email);
+                    })
+                    .catch((error) => {
+                      console.error(error);
                     });
-                    setEmailed(true);
-                    onClose();
-                  }}
-                >
-                  Log In / Sign Up
-                </Button>
-              </>
+                  toast({
+                    title: "Magic Link sent!",
+                    description: `Check your email for a link to log in.`,
+                    status: "success",
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                  setEmailed(true);
+                  onClose();
+                }}
+                initialValues={{ email: "" }}
+              >
+                <Form>
+                  <Field name="email">
+                    {({ field, form }: any) => (
+                      <FormControl
+                        isInvalid={form.errors.name}
+                        mt="10px"
+                        colorScheme="green"
+                        isRequired
+                      >
+                        <InputGroup>
+                          <InputLeftAddon children="Email" />
+                          <Input
+                            {...field}
+                            variant="outline"
+                            type="email"
+                            placeholder="test@test.com"
+                          />
+                          <FormErrorMessage>
+                            {form.errors.email}
+                          </FormErrorMessage>
+                        </InputGroup>
+                      </FormControl>
+                    )}
+                  </Field>
+                  <Divider mt="10px" mb="10px" />
+                  <Center>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      variant="outline"
+                      colorScheme="green"
+                    >
+                      Log In / Sign Up
+                    </Button>
+                  </Center>
+                </Form>
+              </Formik>
             )}
           </VStack>
         </Box>
