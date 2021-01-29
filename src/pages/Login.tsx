@@ -37,7 +37,7 @@ export const Login = () => {
   const [user, , error] = useAuthState(firebase.auth());
   const toast = useToast();
   const history = useHistory();
-  const [cookies, setCookie, removeCookie] = useCookies(["login-email"]);
+  const [cookies, setCookie] = useCookies(["login-email"]);
 
   function useQuery() {
     return new URLSearchParams(useLocation().search);
