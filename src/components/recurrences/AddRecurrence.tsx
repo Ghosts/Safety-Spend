@@ -38,6 +38,7 @@ export const AddRecurrence = () => {
   const [type, setType] = useState("");
   const [frequency, setFrequency] = useState("");
   const toast = useToast();
+  const position = useBreakpointValue<"bottom" | "left">(["bottom", "left"]);
 
   const dispatch = useDispatch();
 
@@ -71,7 +72,7 @@ export const AddRecurrence = () => {
         />
       </Tooltip>
 
-      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+      <Drawer placement={position} onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay>
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Add Transaction</DrawerHeader>
