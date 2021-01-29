@@ -63,7 +63,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (user) {
-      history.push("/");
+      history.push("/app");
     } else if (error) {
       toast({
         title: "User error",
