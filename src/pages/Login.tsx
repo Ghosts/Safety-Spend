@@ -76,7 +76,10 @@ export const Login = () => {
   }, [error, history, toast, user]);
 
   useEffect(() => {
-    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    if (
+      !loading &&
+      firebase.auth().isSignInWithEmailLink(window.location.href)
+    ) {
       if (!cookies["login-email"]) {
         onOpen();
       } else {
