@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import {
   Box,
   Center,

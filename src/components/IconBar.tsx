@@ -46,16 +46,6 @@ export const IconBar = () => {
             icon={<Icon boxSize="1.5em" as={FiBookOpen} color="green.500" />}
           />
         </Tooltip>
-        <Tooltip label="Send feedback" fontSize="sm">
-          <IconButton
-            colorScheme="blue"
-            variant="ghost"
-            aria-label="Send feedback"
-            icon={
-              <Icon boxSize="1.5em" as={FiMessageCircle} color="blue.500" />
-            }
-          />
-        </Tooltip>
         <Tooltip label="Support" fontSize="sm">
           <IconButton
             colorScheme="red"
