@@ -103,7 +103,7 @@ export const TrackingCard = () => {
             p="25px"
           >
             <Box>
-              <Text fontSize="sm">Last week</Text>
+              <Text fontSize="sm">Next week</Text>
               <Divider mb="5px" mt="5px" orientation={orientation} />
               <Text fontSize="sm">$0.0</Text>
             </Box>
