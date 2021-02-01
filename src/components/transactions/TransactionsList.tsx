@@ -30,7 +30,7 @@ import {
 } from "./../../slices/appSlice";
 
 export const TransactionsList = () => {
-  const transactions = useSelector(transactionsSelectors.list);
+  const transactions = useSelector(transactionsSelectors.byWeek(new Date()));
   const dispatch = useDispatch();
   const isEditing = useSelector(appSelectors.editingTransaction);
   const week = getWeekByDate(new Date());
