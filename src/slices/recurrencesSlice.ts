@@ -29,6 +29,9 @@ const recurrencesSlice = createSlice({
         return transaction;
       });
     },
+    removeRecurrence(state, action: PayloadAction<number>) {
+      state.list = [...state.list.filter((t) => t.id !== action.payload)];
+    },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
@@ -39,9 +42,10 @@ export const {
   addRecurrence,
   updateRecurrence,
   setLoading,
+  removeRecurrence,
 } = recurrencesSlice.actions;
 
-export const createTransaction = (recurrence: Recurrence) => async (
+export const createRecurrence = (recurrence: Recurrence) => async (
   dispatch: Dispatch<any>
 ) => {
   dispatch(setLoading(true));
@@ -49,11 +53,19 @@ export const createTransaction = (recurrence: Recurrence) => async (
   dispatch(setLoading(false));
 };
 
-export const editTransaction = (recurrence: Recurrence) => async (
+export const editRecurrence = (recurrence: Recurrence) => async (
   dispatch: Dispatch<any>
 ) => {
   dispatch(setLoading(true));
   dispatch(updateRecurrence(recurrence));
+  dispatch(setLoading(false));
+};
+
+export const deleteRecurrence = (id: number) => async (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(setLoading(true));
+  dispatch(removeRecurrence(id));
   dispatch(setLoading(false));
 };
 

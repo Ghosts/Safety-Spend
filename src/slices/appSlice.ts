@@ -7,6 +7,8 @@ type AppState = {
   editingTransaction: boolean;
   editingTransactionId: number;
   managingRecurrences: boolean;
+  editingRecurrence: boolean;
+  editingRecurrenceId: number;
 };
 
 const initialState: AppState = {
@@ -14,6 +16,8 @@ const initialState: AppState = {
   editingTransaction: false,
   editingTransactionId: 0,
   managingRecurrences: false,
+  editingRecurrence: false,
+  editingRecurrenceId: 0,
 };
 
 const appSlice = createSlice({
@@ -32,6 +36,12 @@ const appSlice = createSlice({
     managingRecurrences(state, action: PayloadAction<boolean>) {
       state.managingRecurrences = action.payload;
     },
+    recurrenceEditing(state, action: PayloadAction<boolean>) {
+      state.editingRecurrence = action.payload;
+    },
+    recurrenceEditingId(state, action: PayloadAction<number>) {
+      state.editingRecurrenceId = action.payload;
+    },
   },
 });
 
@@ -40,6 +50,8 @@ export const {
   transactionEditing,
   transactionEditingId,
   managingRecurrences,
+  recurrenceEditing,
+  recurrenceEditingId,
 } = appSlice.actions;
 
 export const setTransactionEditing = (editing: boolean) => async (
@@ -52,6 +64,18 @@ export const setTransactionEditingId = (editingId: number) => async (
   dispatch: Dispatch<any>
 ) => {
   dispatch(transactionEditingId(editingId));
+};
+
+export const setRecurrenceEditing = (editing: boolean) => async (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(recurrenceEditing(editing));
+};
+
+export const setRecurrenceEditingId = (editingId: number) => async (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(recurrenceEditingId(editingId));
 };
 
 export const setManagingRecurrences = (managing: boolean) => async (
@@ -75,11 +99,15 @@ const editingTransactionId = (state: RootState) =>
   state.app.editingTransactionId;
 const areManagingRecurrences = (state: RootState) =>
   state.app.managingRecurrences;
+const editingRecurrence = (state: RootState) => state.app.editingRecurrence;
+const editingRecurrenceId = (state: RootState) => state.app.editingRecurrenceId;
 
 export const appSelectors = {
   openDays,
   editingTransaction,
   editingTransactionId,
   areManagingRecurrences,
+  editingRecurrence,
+  editingRecurrenceId,
 };
 export default appSlice;
