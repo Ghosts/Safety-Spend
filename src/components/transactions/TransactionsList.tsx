@@ -49,7 +49,7 @@ export const TransactionsList = () => {
                 ? transactions
                     .map((item) => item.amount)
                     .reduce((prev, next) => prev + next)
-                    .toFixed(2)
+                    ?.toFixed(2)
                 : 0}
               &nbsp;spent this week
             </Text>
@@ -71,7 +71,7 @@ export const TransactionsList = () => {
                           ? getTransactionsByDay(day, transactions)
                               .map((t) => t.amount)
                               .reduce((prev, next) => prev + next)
-                              .toFixed(2)
+                              ?.toFixed(2)
                           : 0}
                       </Text>
                     </Box>

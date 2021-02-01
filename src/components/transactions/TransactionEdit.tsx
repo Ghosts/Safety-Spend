@@ -10,45 +10,74 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
-  NumberInput,
-  NumberInputField,
   SlideFade,
   Select,
   Spacer,
   Stack,
   Tooltip,
+  FormErrorMessage,
+  useToast,
+  ButtonGroup,
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import React from "react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
+import { getTypedTransactionType, transactionTypes } from "../../models/common";
+import { Transaction } from "../../models/transaction";
 import { appSelectors, setTransactionEditing } from "../../slices/appSlice";
 import {
   editTransaction,
   transactionsSelectors,
+  deleteTransaction,
 } from "../../slices/transactionsSlice";
+import { toTitleCase } from "../../utils/string";
 
 export const TransactionEdit = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingTransactionId);
   const transaction = useSelector(transactionsSelectors.byId(editingId));
-  const [description, setDescription] = useState(transaction?.description);
-  const [amount, setAmount] = useState(transaction?.amount);
-  const [type, setType] = useState<string | undefined>(transaction?.type);
-  const [date, setDate] = useState(transaction?.date);
   const dispatch = useDispatch();
+  const toast = useToast();
 
-  const updateTransaction = () => {
-    if (type === "expense" || type === "income") {
-      console.log(date);
-      dispatch(
-        editTransaction({
-          id: transaction?.id,
-          type: type,
-          amount: amount!,
-          description: description!,
-          date: date!,
-        })
-      );
-    }
+  const removeTransaction = () => {
+    dispatch(setTransactionEditing(false));
+    dispatch(deleteTransaction(editingId));
+    toast({
+      title: "Transaction Deleted",
+      description: `Your Safe-To-Spend will update shortly.`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+    onClose();
+  };
+
+  const updateTransaction = (t: Transaction) => {
+    dispatch(
+      editTransaction({
+        id: transaction?.id,
+        type: t.type,
+        amount: t.amount,
+        description: t.description,
+        date: new Date(t.date).toISOString(),
+      })
+    );
+    toast({
+      title: "Transaction Updated",
+      description: `Your Safe-To-Spend will update shortly.`,
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+    dispatch(setTransactionEditing(false));
   };
 
   return (
@@ -72,67 +101,160 @@ export const TransactionEdit = () => {
         </Box>
         <Spacer />
       </Stack>
-
       <Box>
-        <form>
-          <Stack spacing={3}>
-            <InputGroup>
-              <InputLeftAddon children="Description" />
-              <FormControl isRequired>
-                <Input
-                  defaultValue={transaction?.description}
-                  onChange={(event) => setDescription(event.target.value)}
-                  variant="outline"
-                />
-              </FormControl>
-            </InputGroup>
-            <InputGroup>
-              <InputLeftAddon children="Type" />
-              <Select
-                defaultValue={transaction?.type}
-                onChange={(event) => setType(event.target.value)}
-                variant="outline"
-              >
-                <option value="expense">Expense</option>
-                <option value="income">Income</option>
-              </Select>
-            </InputGroup>
-            <InputGroup>
-              <InputLeftAddon children="Date" />
-              <Input
-                defaultValue={
-                  new Date(transaction?.date!).toISOString().split("T")[0]
-                }
-                onChange={(event) => setDate(event.target.value)}
-                type="date"
-                variant="outline"
-                placeholder="Today!"
-              />
-            </InputGroup>
-            <InputGroup>
-              <InputLeftAddon children="Amount" />
-              <NumberInput
-                defaultValue={transaction?.amount}
-                variant="outline"
-                onChange={(v, n) => setAmount(n)}
-                precision={2}
-              >
-                <NumberInputField />
-              </NumberInput>
-            </InputGroup>
-          </Stack>
-          <Divider mt="15px" mb="15px" />
-          <Flex>
-            <Spacer />
-            <Button
-              colorScheme="blue"
-              onClick={updateTransaction}
-              type="submit"
-            >
-              Update
-            </Button>
-          </Flex>
-        </form>
+        <Formik
+          initialValues={{
+            type: transaction?.type ?? "",
+            description: transaction?.description ?? "",
+            date:
+              new Date(transaction?.date!).toISOString().split("T")[0] ?? "",
+            amount: transaction?.amount ?? 0,
+          }}
+          onSubmit={async (values) => {
+            updateTransaction({
+              type: getTypedTransactionType(values.type),
+              description: values.description,
+              date: values.date,
+              amount: values.amount,
+            });
+          }}
+        >
+          <Form>
+            <Stack spacing={3}>
+              <Stack spacing={3}>
+                <Field name="description">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.description}
+                      mt="10px"
+                      colorScheme="green"
+                      isRequired
+                    >
+                      <InputGroup>
+                        <InputLeftAddon children="Description" />
+                        <Input
+                          {...field}
+                          variant="outline"
+                          placeholder="Coffee"
+                        />
+                        <FormErrorMessage>
+                          {form.errors.description}
+                        </FormErrorMessage>
+                      </InputGroup>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name="type">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.type}
+                      mt="10px"
+                      colorScheme="green"
+                      isRequired
+                    >
+                      <InputGroup>
+                        <InputLeftAddon children="Type" />
+                        <Select {...field} variant="outline">
+                          <option value="" disabled>
+                            Select Type
+                          </option>
+                          {transactionTypes.map((transactionType, idx) => {
+                            return (
+                              <option key={idx} value={transactionType}>
+                                {toTitleCase(transactionType)}
+                              </option>
+                            );
+                          })}
+                        </Select>
+
+                        <FormErrorMessage>{form.errors.type}</FormErrorMessage>
+                      </InputGroup>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name="date">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.date}
+                      mt="10px"
+                      colorScheme="green"
+                      isRequired
+                    >
+                      <InputGroup>
+                        <InputLeftAddon children="Date" />
+
+                        <Input
+                          {...field}
+                          type="date"
+                          variant="outline"
+                          placeholder="Today!"
+                        />
+                        <FormErrorMessage>{form.errors.date}</FormErrorMessage>
+                      </InputGroup>
+                    </FormControl>
+                  )}
+                </Field>
+                <Field name="amount">
+                  {({ field, form }: any) => (
+                    <FormControl
+                      isInvalid={form.errors.description}
+                      mt="10px"
+                      colorScheme="green"
+                      isRequired
+                    >
+                      <InputGroup>
+                        <InputLeftAddon children="Amount" />
+                        <Input
+                          type="number"
+                          {...field}
+                          variant="outline"
+                          precision={2}
+                        />
+                        <FormErrorMessage>
+                          {form.errors.description}
+                        </FormErrorMessage>
+                      </InputGroup>
+                    </FormControl>
+                  )}
+                </Field>
+              </Stack>
+            </Stack>
+            <Divider mt="15px" mb="15px" />
+            <Flex>
+              <Spacer />
+              <ButtonGroup>
+                <Button variant="ghost" onClick={onOpen} colorScheme="red">
+                  Delete
+                </Button>
+                <Button colorScheme="green" type="submit">
+                  Update
+                </Button>
+              </ButtonGroup>
+            </Flex>
+          </Form>
+        </Formik>
+        <AlertDialog
+          leastDestructiveRef={undefined}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <AlertDialogOverlay>
+            <AlertDialogContent>
+              <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                Delete Transaction
+              </AlertDialogHeader>
+              <AlertDialogBody>
+                Are you sure? You can't undo this action afterwards.
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button onClick={onClose}>Cancel</Button>
+                <Button colorScheme="red" onClick={removeTransaction} ml={3}>
+                  Delete
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialogOverlay>
+        </AlertDialog>
       </Box>
     </SlideFade>
   );
