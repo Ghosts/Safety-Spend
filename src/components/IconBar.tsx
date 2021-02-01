@@ -1,10 +1,4 @@
-import {
-  FiHeart,
-  FiBookOpen,
-  FiMessageCircle,
-  FiMoon,
-  FiSun,
-} from "react-icons/fi";
+import { FiHeart, FiBookOpen, FiMoon, FiSun } from "react-icons/fi";
 import {
   Icon,
   IconButton,
