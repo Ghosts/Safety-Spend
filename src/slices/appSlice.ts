@@ -2,22 +2,25 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
+export enum Views {
+  Transactions,
+  Recurrences,
+  Breakdown,
+  Default,
+}
+
 type AppState = {
   openDays: number[];
-  editingTransaction: boolean;
-  editingTransactionId: number;
-  managingRecurrences: boolean;
-  editingRecurrence: boolean;
-  editingRecurrenceId: number;
+  isEditing: boolean;
+  currentView: Views;
+  editingId: string;
 };
 
 const initialState: AppState = {
   openDays: [],
-  editingTransaction: false,
-  editingTransactionId: 0,
-  managingRecurrences: false,
-  editingRecurrence: false,
-  editingRecurrenceId: 0,
+  isEditing: false,
+  currentView: Views.Default,
+  editingId: "",
 };
 
 const appSlice = createSlice({
@@ -27,61 +30,39 @@ const appSlice = createSlice({
     setOpenDays(state, action: PayloadAction<number[]>) {
       state.openDays = action.payload;
     },
-    transactionEditing(state, action: PayloadAction<boolean>) {
-      state.editingTransaction = action.payload;
+    setView(state, action: PayloadAction<Views>) {
+      state.currentView = action.payload;
     },
-    transactionEditingId(state, action: PayloadAction<number>) {
-      state.editingTransactionId = action.payload;
+    setEditing(state, action: PayloadAction<boolean>) {
+      state.isEditing = action.payload;
     },
-    managingRecurrences(state, action: PayloadAction<boolean>) {
-      state.managingRecurrences = action.payload;
-    },
-    recurrenceEditing(state, action: PayloadAction<boolean>) {
-      state.editingRecurrence = action.payload;
-    },
-    recurrenceEditingId(state, action: PayloadAction<number>) {
-      state.editingRecurrenceId = action.payload;
+    setEditingId(state, action: PayloadAction<string>) {
+      state.editingId = action.payload;
     },
   },
 });
 
 export const {
   setOpenDays,
-  transactionEditing,
-  transactionEditingId,
-  managingRecurrences,
-  recurrenceEditing,
-  recurrenceEditingId,
+  setView,
+  setEditing,
+  setEditingId,
 } = appSlice.actions;
 
-export const setTransactionEditing = (editing: boolean) => async (
+export const updateEditingId = (editingId: string) => async (
   dispatch: Dispatch<any>
 ) => {
-  dispatch(transactionEditing(editing));
+  dispatch(setEditingId(editingId));
 };
 
-export const setTransactionEditingId = (editingId: number) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(transactionEditingId(editingId));
+export const updateView = (view: Views) => async (dispatch: Dispatch<any>) => {
+  dispatch(setView(view));
 };
 
-export const setRecurrenceEditing = (editing: boolean) => async (
+export const updateIsEditing = (isEditing: boolean) => async (
   dispatch: Dispatch<any>
 ) => {
-  dispatch(recurrenceEditing(editing));
-};
-
-export const setRecurrenceEditingId = (editingId: number) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(recurrenceEditingId(editingId));
-};
-
-export const setManagingRecurrences = (managing: boolean) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(managingRecurrences(managing));
+  dispatch(setEditing(isEditing));
 };
 
 export const toggleOpenDays = (days: number[] | number) => async (
@@ -94,20 +75,15 @@ export const toggleOpenDays = (days: number[] | number) => async (
 };
 
 const openDays = (state: RootState) => state.app.openDays;
-const editingTransaction = (state: RootState) => state.app.editingTransaction;
-const editingTransactionId = (state: RootState) =>
-  state.app.editingTransactionId;
-const areManagingRecurrences = (state: RootState) =>
-  state.app.managingRecurrences;
-const editingRecurrence = (state: RootState) => state.app.editingRecurrence;
-const editingRecurrenceId = (state: RootState) => state.app.editingRecurrenceId;
+
+const isEditing = (state: RootState) => state.app.isEditing;
+const currentView = (state: RootState) => state.app.currentView;
+const editingId = (state: RootState) => state.app.editingId;
 
 export const appSelectors = {
   openDays,
-  editingTransaction,
-  editingTransactionId,
-  areManagingRecurrences,
-  editingRecurrence,
-  editingRecurrenceId,
+  isEditing,
+  currentView,
+  editingId,
 };
 export default appSlice;

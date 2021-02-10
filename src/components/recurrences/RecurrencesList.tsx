@@ -16,6 +16,7 @@ import {
   StatNumber,
   StatHelpText,
   SlideFade,
+  Divider,
 } from "@chakra-ui/react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import React from "react";
@@ -23,17 +24,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { recurrencesSelectors } from "../../slices/recurrencesSlice";
 import {
   appSelectors,
-  setManagingRecurrences,
-  setRecurrenceEditing,
+  setEditing,
+  setEditingId,
+  setView,
+  Views,
 } from "../../slices/appSlice";
 import { AddRecurrence } from "./AddRecurrence";
-import { setRecurrenceEditingId } from "./../../slices/appSlice";
 import { RecurrenceEdit } from "./RecurrenceEdit";
+import { WeeklyBreakdown } from "./WeeklyBreakdown";
 
 export const RecurrencesList = () => {
   const dispatch = useDispatch();
   const recurrences = useSelector(recurrencesSelectors.list);
-  const isEditing = useSelector(appSelectors.editingRecurrence);
+  const isEditing = useSelector(appSelectors.isEditing);
 
   return (
     <>
@@ -43,7 +46,7 @@ export const RecurrencesList = () => {
           <Stack mb="10px" direction={["row"]}>
             <Tooltip label="Go back">
               <IconButton
-                onClick={() => dispatch(setManagingRecurrences(false))}
+                onClick={() => dispatch(setView(Views.Default))}
                 variant="ghost"
                 colorScheme="blue"
                 aria-label="Go back"
@@ -64,6 +67,8 @@ export const RecurrencesList = () => {
             <Spacer />
             <AddRecurrence />
           </Stack>
+          <WeeklyBreakdown />
+          <Divider m="15px" />
           <Flex justifyContent="space-evenly" wrap="wrap">
             {recurrences.length <= 0 ? (
               <>
@@ -86,8 +91,8 @@ export const RecurrencesList = () => {
                 return (
                   <Button
                     onClick={() => {
-                      dispatch(setRecurrenceEditingId(recurrence.id!));
-                      dispatch(setRecurrenceEditing(true));
+                      dispatch(setEditingId("" + recurrence.id!));
+                      dispatch(setEditing(true));
                     }}
                     key={idx}
                     variant="ghost"

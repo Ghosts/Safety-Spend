@@ -36,7 +36,7 @@ import {
   getTypedFrequency,
   Recurrence,
 } from "../../models/recurrence";
-import { appSelectors, setRecurrenceEditing } from "../../slices/appSlice";
+import { appSelectors, setEditing, setView } from "../../slices/appSlice";
 import {
   recurrencesSelectors,
   editRecurrence,
@@ -47,14 +47,16 @@ import { toTitleCase } from "../../utils/string";
 
 export const RecurrenceEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const editingId = useSelector(appSelectors.editingRecurrenceId);
-  const recurrence = useSelector(recurrencesSelectors.byId(editingId));
+  const editingId = useSelector(appSelectors.editingId);
+  const recurrence = useSelector(
+    recurrencesSelectors.byId(parseInt(editingId))
+  );
   const dispatch = useDispatch();
   const toast = useToast();
 
   const removeRecurrence = () => {
-    dispatch(setRecurrenceEditing(false));
-    dispatch(deleteRecurrence(editingId));
+    dispatch(setEditing(false));
+    dispatch(deleteRecurrence(parseInt(editingId)));
     toast({
       title: "Recurrence Deleted",
       description: `Your Safe-To-Spend will update shortly.`,
@@ -82,7 +84,7 @@ export const RecurrenceEdit = () => {
       duration: 5000,
       isClosable: true,
     });
-    dispatch(setRecurrenceEditing(false));
+    dispatch(setEditing(false));
   };
 
   return (
@@ -90,7 +92,7 @@ export const RecurrenceEdit = () => {
       <Stack mb="10px" direction={["row"]}>
         <Tooltip label="Go back">
           <IconButton
-            onClick={() => dispatch(setRecurrenceEditing(false))}
+            onClick={() => dispatch(setEditing(false))}
             variant="ghost"
             colorScheme="blue"
             aria-label="Go back"

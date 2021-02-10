@@ -24,15 +24,15 @@ import { getTransactionsByDay } from "../../utils/transactions";
 
 import {
   appSelectors,
-  setTransactionEditing,
-  setTransactionEditingId,
+  setEditing,
+  setEditingId,
   toggleOpenDays,
 } from "./../../slices/appSlice";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.byWeek(new Date()));
   const dispatch = useDispatch();
-  const isEditing = useSelector(appSelectors.editingTransaction);
+  const isEditing = useSelector(appSelectors.isEditing);
   const week = getWeekByDate(new Date());
   const color = useColorModeValue("gray.600", "gray.200");
   const openDays = useSelector(appSelectors.openDays);
@@ -84,10 +84,8 @@ export const TransactionsList = () => {
                           return (
                             <Button
                               onClick={() => {
-                                dispatch(
-                                  setTransactionEditingId(transaction.id!)
-                                );
-                                dispatch(setTransactionEditing(true));
+                                dispatch(setEditingId("" + transaction.id!));
+                                dispatch(setEditing(true));
                               }}
                               key={idx}
                               variant="ghost"

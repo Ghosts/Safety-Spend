@@ -32,7 +32,7 @@ import { FiArrowLeftCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { getTypedTransactionType, transactionTypes } from "../../models/common";
 import { Transaction } from "../../models/transaction";
-import { appSelectors, setTransactionEditing } from "../../slices/appSlice";
+import { appSelectors, setEditing } from "../../slices/appSlice";
 import {
   editTransaction,
   transactionsSelectors,
@@ -42,14 +42,16 @@ import { toTitleCase } from "../../utils/string";
 
 export const TransactionEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const editingId = useSelector(appSelectors.editingTransactionId);
-  const transaction = useSelector(transactionsSelectors.byId(editingId));
+  const editingId = useSelector(appSelectors.editingId);
+  const transaction = useSelector(
+    transactionsSelectors.byId(parseInt(editingId))
+  );
   const dispatch = useDispatch();
   const toast = useToast();
 
   const removeTransaction = () => {
-    dispatch(setTransactionEditing(false));
-    dispatch(deleteTransaction(editingId));
+    dispatch(setEditing(false));
+    dispatch(deleteTransaction(parseInt(editingId)));
     toast({
       title: "Transaction Deleted",
       description: `Your Safe-To-Spend will update shortly.`,
@@ -77,7 +79,7 @@ export const TransactionEdit = () => {
       duration: 5000,
       isClosable: true,
     });
-    dispatch(setTransactionEditing(false));
+    dispatch(setEditing(false));
   };
 
   return (
@@ -85,7 +87,7 @@ export const TransactionEdit = () => {
       <Stack mb="10px" direction={["row"]}>
         <Tooltip label="Go back">
           <IconButton
-            onClick={() => dispatch(setTransactionEditing(false))}
+            onClick={() => dispatch(setEditing(false))}
             variant="ghost"
             colorScheme="blue"
             aria-label="Go back"

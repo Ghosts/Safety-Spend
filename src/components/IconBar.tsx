@@ -1,4 +1,4 @@
-import { FiHeart, FiBookOpen, FiMoon, FiSun } from "react-icons/fi";
+import { FiHeart, FiMoon, FiSun } from "react-icons/fi";
 import {
   Icon,
   IconButton,
@@ -10,6 +10,7 @@ import {
 import React from "react";
 import { InfoModal } from "./iconBar/InfoModal";
 import { SignOut } from "./iconBar/SignOut";
+import { LearnModal } from "./iconBar/LearnModal";
 
 export const IconBar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -32,14 +33,7 @@ export const IconBar = () => {
             }
           />
         </Tooltip>
-        <Tooltip label="Start tutorial" fontSize="sm">
-          <IconButton
-            colorScheme="green"
-            variant="ghost"
-            aria-label="Start tutorial"
-            icon={<Icon boxSize="1.5em" as={FiBookOpen} color="green.500" />}
-          />
-        </Tooltip>
+        <LearnModal />
         <Tooltip label="Support" fontSize="sm">
           <IconButton
             colorScheme="red"

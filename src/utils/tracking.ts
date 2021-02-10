@@ -34,6 +34,22 @@ export const getSafeToSpend = (recurrences: Recurrence[]) => {
   return recurrenceIncome - recurrenceExpenses;
 };
 
+export const getWeeklyExpenses = (recurrences: Recurrence[]) => {
+  return recurrences.length > 0
+    ? recurrences
+        .map((r) => (r.type === "expense" ? getWeeklyFromSchedule(r) : 0))
+        .reduce((prev, next) => prev + next)
+    : 0;
+};
+
+export const getWeeklyIncome = (recurrences: Recurrence[]) => {
+  return recurrences.length > 0
+    ? recurrences
+        .map((r) => (r.type === "income" ? getWeeklyFromSchedule(r) : 0))
+        .reduce((prev, next) => prev + next)
+    : 0;
+};
+
 export const getCurrentSafeToSpend = (
   recurrences: Recurrence[],
   transactions: Transaction[]
