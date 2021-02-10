@@ -36,7 +36,7 @@ import {
   getTypedFrequency,
   Recurrence,
 } from "../../models/recurrence";
-import { appSelectors, setEditing, setView } from "../../slices/appSlice";
+import { appSelectors, setEditing } from "../../slices/appSlice";
 import {
   recurrencesSelectors,
   editRecurrence,
