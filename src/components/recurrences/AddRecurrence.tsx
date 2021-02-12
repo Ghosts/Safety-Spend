@@ -29,7 +29,7 @@ import {
   getTypedFrequency,
   Recurrence,
 } from "../../models/recurrence";
-import { addRecurrence } from "../../slices/recurrencesSlice";
+import { createRecurrence } from "../../slices/recurrencesSlice";
 import { toTitleCase } from "../../utils/string";
 import {
   getTypedTransactionType,
@@ -45,7 +45,7 @@ export const AddRecurrence = () => {
 
   const newRecurrence = (r: Recurrence) => {
     dispatch(
-      addRecurrence({
+      createRecurrence({
         id: "",
         type: r.type,
         amount: r.amount,

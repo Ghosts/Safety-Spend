@@ -150,10 +150,8 @@ export const RecurrencesList = () => {
                           ${recurrence.amount}
                           <Spacer />
                         </Flex>
-                        <StatHelpText>
-                          <Text fontWeight="normal">
-                            {recurrence.frequency}
-                          </Text>
+                        <StatHelpText fontWeight="normal">
+                          {recurrence.frequency}
                         </StatHelpText>
                       </StatNumber>
                     </Stat>

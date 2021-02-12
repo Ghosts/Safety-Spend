@@ -73,7 +73,7 @@ export const loadTransactions = (date?: Date) => (
   if (!date) date = new Date();
   const start = getWeekStart(date);
   const end = getWeekEnd(date);
-  return TransactionsApi.getTransactions(start, end, getState)
+  TransactionsApi.getTransactions(start, end, getState)
     .then((transactions) => {
       const transactionList = transactions.docs.map((t) => t.data());
       dispatch(setTransactions(transactionList));
@@ -90,12 +90,9 @@ export const createTransaction = (transaction: Transaction) => async (
 ) => {
   dispatch(setLoading(true));
   transaction.id = getRandomId();
-  return TransactionsApi.setTransaction(transaction, getState)
+  TransactionsApi.setTransaction(transaction, getState)
     .then((t) => {
       dispatch(addTransaction(transaction));
-    })
-    .catch((e) => {
-      dispatch(setError(e.toString()));
     })
     .catch((e) => {
       console.log(e);
@@ -107,7 +104,7 @@ export const editTransaction = (transaction: Transaction) => async (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
-  return TransactionsApi.setTransaction(transaction, getState)
+  TransactionsApi.setTransaction(transaction, getState)
     .then((t) => {
       dispatch(updateTransaction(transaction));
     })
@@ -121,7 +118,7 @@ export const deleteTransaction = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
-  return TransactionsApi.deleteTransaction(id, getState)
+  TransactionsApi.deleteTransaction(id, getState)
     .then((t) => {
       dispatch(removeTransaction(id));
     })
