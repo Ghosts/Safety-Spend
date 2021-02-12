@@ -7,7 +7,6 @@ import {
   Link,
   useToast,
   useColorMode,
-  Divider,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
