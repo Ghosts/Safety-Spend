@@ -13,6 +13,7 @@ import {
   StatNumber,
   Divider,
   useBreakpointValue,
+  Icon,
 } from "@chakra-ui/react";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,6 +28,7 @@ import {
   goNextWeek,
   setCurrentDay,
 } from "./../slices/appSlice";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 export const TrackingCard = () => {
   const dispatch = useDispatch();
@@ -73,8 +75,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Last week</Text>
-              <Divider mb="5px" mt="5px" orientation={orientation} />
-              <Text fontSize="sm">$0.0</Text>
+              <Icon as={FiArrowLeft} />
             </Box>
           </Button>
           <Box w={["sm"]} padding="10px" borderWidth="1px" borderRadius="lg">
@@ -131,8 +132,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Next week</Text>
-              <Divider mb="5px" mt="5px" orientation={orientation} />
-              <Text fontSize="sm">$0.0</Text>
+              <Icon as={FiArrowRight} />
             </Box>
           </Button>
         </Stack>
