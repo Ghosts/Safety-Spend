@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { Main } from "./pages/Main";
 import { NotFound } from "./pages/NotFound";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
 
 export const App = () => {
   return (
@@ -14,6 +16,12 @@ export const App = () => {
         </Route>
         <Route exact path="/">
           <Login />
+        </Route>
+        <Route path="/privacy">
+          <Privacy />
+        </Route>
+        <Route path="/terms">
+          <Terms />
         </Route>
         <Route path="/*">
           <NotFound />

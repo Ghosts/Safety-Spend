@@ -81,7 +81,7 @@ export const RecurrencesList = () => {
               />
             </Tooltip>
             <Box>
-              <Heading as="h2" size="xl" color="blue.400">
+              <Heading as="h2" size="lg" color="gray.600">
                 Recurrences
               </Heading>
             </Box>
@@ -111,6 +111,7 @@ export const RecurrencesList = () => {
               recurrences.map((recurrence, idx) => {
                 return (
                   <Button
+                    boxShadow="sm"
                     onClick={() => {
                       dispatch(setEditingId("" + recurrence.id!));
                       dispatch(setEditing(true));

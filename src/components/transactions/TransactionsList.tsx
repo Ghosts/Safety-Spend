@@ -106,6 +106,7 @@ export const TransactionsList = () => {
                         (transaction, idx) => {
                           return (
                             <Button
+                              boxShadow="sm"
                               onClick={() => {
                                 dispatch(setEditingId("" + transaction.id!));
                                 dispatch(setEditing(true));

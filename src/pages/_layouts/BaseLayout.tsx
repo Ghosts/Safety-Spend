@@ -8,17 +8,22 @@ interface BaseLayoutProps {
   children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
 }
 export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
+  const colors = ["blue", "cyan", "red", "orange", "purple", "green"];
+  const getColor = () => {
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
   return (
     <UserGuard>
       <VStack padding="10px" spacing={2} align="center">
         <Box>
           <Text
-            bgGradient="linear(to-r, blue.400,cyan.300)"
+            bgGradient={`linear(to-r, ${getColor()}.400,${getColor()}.300)`}
             bgClip="text"
             fontSize="6xl"
             fontWeight="extrabold"
           >
-            week
+            week.
           </Text>
         </Box>
         {children}

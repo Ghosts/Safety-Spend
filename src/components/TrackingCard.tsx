@@ -11,8 +11,6 @@ import {
   Button,
   StatLabel,
   StatNumber,
-  Divider,
-  useBreakpointValue,
   Icon,
 } from "@chakra-ui/react";
 import React from "react";
@@ -36,10 +34,6 @@ export const TrackingCard = () => {
   const transactions = useSelector(transactionsSelectors.list);
   const safeToSpend = getSafeToSpend(recurrences);
   const currentSafeToSpend = getCurrentSafeToSpend(recurrences, transactions);
-  const orientation = useBreakpointValue<"vertical" | "horizontal">([
-    "vertical",
-    "horizontal",
-  ]);
   const currentDay = useSelector(appSelectors.currentDay);
 
   const lastWeek = async () => {
@@ -65,6 +59,7 @@ export const TrackingCard = () => {
       <Box w={["sm", "md"]} alignItems="center">
         <Stack w={["sm", "md"]} direction={["column", "row"]} spacing={2}>
           <Button
+            boxShadow="sm"
             onClick={lastWeek}
             size="lg"
             colorScheme="gray"
@@ -122,6 +117,7 @@ export const TrackingCard = () => {
             </Center>
           </Box>
           <Button
+            boxShadow="sm"
             onClick={nextWeek}
             size="lg"
             colorScheme="gray"

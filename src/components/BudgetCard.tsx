@@ -30,7 +30,7 @@ export const BudgetCard = () => {
         ) : (
           <Stack mb="10px" direction={["row"]} spacing={0}>
             <Box>
-              <Heading as="h2" size="xl" color="blue.400">
+              <Heading as="h2" size="lg" color="gray.600">
                 Transactions
               </Heading>
             </Box>
