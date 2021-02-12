@@ -2,7 +2,6 @@ import { Box, Heading, SlideFade, Spacer, Stack } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
 import { appSelectors, Views } from "../slices/appSlice";
-import { BreakdownView } from "./breakdown/BreakdownView";
 import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
 import { AddTransaction } from "./transactions/AddTransaction";
@@ -16,8 +15,6 @@ export const BudgetCard = () => {
     switch (currentView) {
       case Views.Recurrences:
         return <RecurrencesList />;
-      case Views.Breakdown:
-        return <BreakdownView />;
       case Views.Transactions:
       case Views.Default:
       default:

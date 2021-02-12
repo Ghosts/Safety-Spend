@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   Spacer,
   SlideFade,
+  useToast,
 } from "@chakra-ui/react";
 import React from "react";
 import {
@@ -40,10 +41,24 @@ export const TransactionsList = () => {
   const currentDay = useSelector(appSelectors.currentDay);
   const color = useColorModeValue("gray.600", "gray.200");
   const openDays = useSelector(appSelectors.openDays);
+  const error = useSelector(transactionsSelectors.error);
+  const toast = useToast();
 
   useEffect(() => {
     dispatch(loadTransactions(new Date(currentDay)));
   }, [currentDay, dispatch]);
+
+  useEffect(() => {
+    if (error !== "") {
+      toast({
+        title: "Transactions Error",
+        description: "Please try again...",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [error, toast]);
 
   return (
     <>

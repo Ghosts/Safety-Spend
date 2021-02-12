@@ -7,7 +7,6 @@ import { getWeekEnd, getWeekStart } from "../utils/dates";
 export enum Views {
   Transactions,
   Recurrences,
-  Breakdown,
   Default,
 }
 

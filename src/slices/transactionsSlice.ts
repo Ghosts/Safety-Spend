@@ -2,7 +2,7 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Transaction } from "../models/transaction";
-import { getWeekEnd, getWeekNumber, getWeekStart } from "../utils/dates";
+import { getWeekEnd, getWeekStart } from "../utils/dates";
 import { getRandomId } from "./../utils/common";
 import { TransactionsApi } from "../api/transactions";
 
@@ -75,9 +75,7 @@ export const loadTransactions = (date?: Date) => (
   const end = getWeekEnd(date);
   return TransactionsApi.getTransactions(start, end, getState)
     .then((transactions) => {
-      const transactionList = transactions.docs.map((t) => {
-        return t.data();
-      });
+      const transactionList = transactions.docs.map((t) => t.data());
       dispatch(setTransactions(transactionList));
     })
     .catch((e) => {
@@ -98,6 +96,10 @@ export const createTransaction = (transaction: Transaction) => async (
     })
     .catch((e) => {
       dispatch(setError(e.toString()));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
     });
 };
 
@@ -105,18 +107,28 @@ export const editTransaction = (transaction: Transaction) => async (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
-  return TransactionsApi.setTransaction(transaction, getState).then((t) => {
-    dispatch(updateTransaction(transaction));
-  });
+  return TransactionsApi.setTransaction(transaction, getState)
+    .then((t) => {
+      dispatch(updateTransaction(transaction));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
 };
 
 export const deleteTransaction = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
-  return TransactionsApi.deleteTransaction(id, getState).then((t) => {
-    dispatch(removeTransaction(id));
-  });
+  return TransactionsApi.deleteTransaction(id, getState)
+    .then((t) => {
+      dispatch(removeTransaction(id));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
 };
 
 const list = (state: RootState) => state.transactions.list;
@@ -131,10 +143,13 @@ const total = (state: RootState) =>
 const byId = (id: string) => (state: RootState) =>
   state.transactions.list.find((t) => t.id === id);
 
-const byWeek = (date: Date) => (state: RootState) =>
-  state.transactions.list.filter(
-    (t) => getWeekNumber(date) === getWeekNumber(new Date(t.date))
-  );
+const error = (state: RootState) => state.transactions.error;
 
-export const transactionsSelectors = { list, loading, total, byId, byWeek };
+export const transactionsSelectors = {
+  error,
+  list,
+  loading,
+  total,
+  byId,
+};
 export default transactionsSlice;

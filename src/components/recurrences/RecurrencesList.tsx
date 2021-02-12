@@ -17,11 +17,15 @@ import {
   StatHelpText,
   SlideFade,
   Divider,
+  useToast,
 } from "@chakra-ui/react";
 import { FiArrowLeftCircle } from "react-icons/fi";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { recurrencesSelectors } from "../../slices/recurrencesSlice";
+import {
+  loadRecurrences,
+  recurrencesSelectors,
+} from "../../slices/recurrencesSlice";
 import {
   appSelectors,
   setEditing,
@@ -37,10 +41,27 @@ export const RecurrencesList = () => {
   const dispatch = useDispatch();
   const recurrences = useSelector(recurrencesSelectors.list);
   const isEditing = useSelector(appSelectors.isEditing);
+  const error = useSelector(recurrencesSelectors.error);
+  const toast = useToast();
+
+  useEffect(() => {
+    dispatch(loadRecurrences());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error !== "") {
+      toast({
+        title: "Recurrences Error",
+        description: "Please try again...",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  }, [error, toast]);
 
   return (
     <>
-      {" "}
       {!isEditing ? (
         <SlideFade in offsetX="-50px" offsetY="0">
           <Stack mb="10px" direction={["row"]}>

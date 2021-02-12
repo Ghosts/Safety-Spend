@@ -2,15 +2,19 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Recurrence } from "../models/recurrence";
+import { RecurrencesApi } from "../api/recurrences";
+import { getRandomId } from "../utils/common";
 
 type RecurrencesState = {
   loading: boolean;
   list: Recurrence[];
+  error: string;
 };
 
 const initialState: RecurrencesState = {
   loading: false,
   list: [],
+  error: "",
 };
 
 const recurrencesSlice = createSlice({
@@ -18,8 +22,8 @@ const recurrencesSlice = createSlice({
   initialState,
   reducers: {
     addRecurrence(state, action: PayloadAction<Recurrence>) {
-      action.payload.id = "" + state.list.length + 1;
       state.list = [...state.list, action.payload];
+      state.loading = false;
     },
     updateRecurrence(state, action: PayloadAction<Recurrence>) {
       state.list = state.list.map((transaction) => {
@@ -28,12 +32,22 @@ const recurrencesSlice = createSlice({
         }
         return transaction;
       });
+      state.loading = false;
     },
     removeRecurrence(state, action: PayloadAction<string>) {
       state.list = [...state.list.filter((t) => t.id !== action.payload)];
+      state.loading = false;
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
+    },
+    setRecurrences(state, action: PayloadAction<Recurrence[]>) {
+      state.list = action.payload;
+      state.loading = false;
+    },
+    setError(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });
@@ -43,30 +57,68 @@ export const {
   updateRecurrence,
   setLoading,
   removeRecurrence,
+  setRecurrences,
+  setError,
 } = recurrencesSlice.actions;
 
+export const loadRecurrences = () => (
+  dispatch: Dispatch<any>,
+  getState: () => RootState
+) => {
+  return RecurrencesApi.getRecurrences(getState)
+    .then((recurrences) => {
+      const recurrencesList = recurrences.docs.map((r) => r.data());
+      dispatch(setRecurrences(recurrencesList));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
+};
+
 export const createRecurrence = (recurrence: Recurrence) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
   dispatch(setLoading(true));
-  dispatch(addRecurrence(recurrence));
-  dispatch(setLoading(false));
+  recurrence.id = getRandomId();
+  RecurrencesApi.setRecurrence(recurrence, getState)
+    .then(() => {
+      dispatch(addRecurrence(recurrence));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
 };
 
 export const editRecurrence = (recurrence: Recurrence) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
   dispatch(setLoading(true));
-  dispatch(updateRecurrence(recurrence));
-  dispatch(setLoading(false));
+  RecurrencesApi.setRecurrence(recurrence, getState)
+    .then(() => {
+      dispatch(updateRecurrence(recurrence));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
 };
 
 export const deleteRecurrence = (id: string) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
-  dispatch(setLoading(true));
-  dispatch(removeRecurrence(id));
-  dispatch(setLoading(false));
+  RecurrencesApi.deleteRecurrence(id, getState)
+    .then(() => {
+      dispatch(removeRecurrence(id));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
 };
 
 const list = (state: RootState) => state.recurrences.list;
@@ -81,5 +133,7 @@ const total = (state: RootState) =>
 const byId = (id: string) => (state: RootState) =>
   state.recurrences.list.find((t) => t.id === id);
 
-export const recurrencesSelectors = { list, loading, total, byId };
+const error = (state: RootState) => state.recurrences.error;
+
+export const recurrencesSelectors = { error, list, loading, total, byId };
 export default recurrencesSlice;
