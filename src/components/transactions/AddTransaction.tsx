@@ -24,9 +24,13 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { useDispatch } from "react-redux";
-import { getTypedTransactionType, transactionTypes } from "../../models/common";
-import { Transaction } from "../../models/transaction";
-import { addTransaction } from "../../slices/transactionsSlice";
+
+import {
+  Transaction,
+  getTypedTransactionType,
+  transactionTypes,
+} from "../../models/transaction";
+import { createTransaction } from "../../slices/transactionsSlice";
 import { toTitleCase } from "../../utils/string";
 
 export const AddTransaction = () => {
@@ -38,11 +42,12 @@ export const AddTransaction = () => {
 
   const newTransaction = (t: Transaction) => {
     dispatch(
-      addTransaction({
+      createTransaction({
+        id: "",
         type: t.type,
         amount: t.amount,
         description: t.description,
-        date: new Date(t.date).toISOString(),
+        date: new Date(t.date),
       })
     );
     toast({
@@ -65,7 +70,12 @@ export const AddTransaction = () => {
           icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="cyan.400" />}
         />
       </Tooltip>
-      <Drawer placement={position} onClose={onClose} isOpen={isOpen}>
+      <Drawer
+        autoFocus={false}
+        placement={position}
+        onClose={onClose}
+        isOpen={isOpen}
+      >
         <DrawerOverlay>
           <DrawerContent>
             <DrawerHeader borderBottomWidth="1px">Add Transaction</DrawerHeader>
@@ -78,9 +88,10 @@ export const AddTransaction = () => {
               }}
               onSubmit={async (values) => {
                 newTransaction({
+                  id: "",
                   type: getTypedTransactionType(values.type),
                   description: values.description,
-                  date: values.date,
+                  date: new Date(values.date),
                   amount: values.amount,
                 });
               }}

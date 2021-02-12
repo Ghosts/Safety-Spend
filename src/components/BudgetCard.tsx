@@ -10,6 +10,7 @@ import { TransactionsList } from "./transactions/TransactionsList";
 
 export const BudgetCard = () => {
   const currentView = useSelector(appSelectors.currentView);
+  const isEditing = useSelector(appSelectors.isEditing);
 
   const getCurrentView = () => {
     switch (currentView) {
@@ -23,16 +24,17 @@ export const BudgetCard = () => {
         return <TransactionsList />;
     }
   };
+
   return (
     <SlideFade in offsetX="0" offsetY="50px">
       <Box w={["sm", "xl"]} padding="20px" borderWidth="1px" borderRadius="lg">
-        {currentView !== Views.Default ? (
+        {currentView !== Views.Default || isEditing ? (
           <></>
         ) : (
           <Stack mb="10px" direction={["row"]} spacing={0}>
             <Box>
               <Heading as="h2" size="xl" color="blue.400">
-                Activity
+                Transactions
               </Heading>
             </Box>
             <Spacer />

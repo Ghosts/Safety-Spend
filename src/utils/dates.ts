@@ -4,6 +4,17 @@ export const getLastSunday = (d: Date) => {
   return t;
 };
 
+export const getWeekStart = (d: Date) => {
+  var first = d.getDate() - d.getDay();
+  return new Date(d.setDate(first));
+};
+
+export const getWeekEnd = (d: Date) => {
+  var first = d.getDate() - d.getDay();
+  var last = first + 6;
+  return new Date(d.setDate(last));
+};
+
 export const getWeekNumber = (d: Date) => {
   var yearStart = +new Date(d.getFullYear(), 0, 1);
   var day = +new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -15,9 +26,8 @@ export const getWeekByDate = (d: Date) => {
   var lastSunday = getLastSunday(d);
   const week = [];
   for (let i = 0; i < 7; i++) {
-    var weekDay = new Date();
-    weekDay.setDate(lastSunday.getDate() + i);
-    week.push(weekDay);
+    week.push(new Date(lastSunday));
+    lastSunday.setDate(lastSunday.getDate() + 1);
   }
   return week;
 };

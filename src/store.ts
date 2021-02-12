@@ -19,7 +19,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
-export const whiteList = ["transactions", "app", "recurrences"];
+export const whiteList = ["app"];
 
 const reducers = combineReducers({
   transactions: transactionsSlice.reducer,
@@ -39,6 +39,8 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware({
     serializableCheck: {
+      ignoredActionPaths: ["payload.date", "payload"],
+      ignoredPaths: ["transactions.list", "app.currentDay"],
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
   }),

@@ -30,8 +30,11 @@ import { Formik, Form, Field } from "formik";
 import React from "react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { getTypedTransactionType, transactionTypes } from "../../models/common";
-import { Transaction } from "../../models/transaction";
+import {
+  Transaction,
+  getTypedTransactionType,
+  transactionTypes,
+} from "../../models/transaction";
 import { appSelectors, setEditing } from "../../slices/appSlice";
 import {
   editTransaction,
@@ -43,20 +46,29 @@ import { toTitleCase } from "../../utils/string";
 export const TransactionEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingId);
-  const transaction = useSelector(
-    transactionsSelectors.byId(parseInt(editingId))
-  );
+  const transaction = useSelector(transactionsSelectors.byId(editingId));
   const dispatch = useDispatch();
   const toast = useToast();
 
+  if (!transaction) {
+    toast({
+      title: "Transaction Error",
+      description: `There was a problem loading the transaction`,
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    });
+    dispatch(setEditing(false));
+  }
+
   const removeTransaction = () => {
     dispatch(setEditing(false));
-    dispatch(deleteTransaction(parseInt(editingId)));
+    dispatch(deleteTransaction(editingId));
     toast({
       title: "Transaction Deleted",
       description: `Your Safe-To-Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     onClose();
@@ -65,11 +77,11 @@ export const TransactionEdit = () => {
   const updateTransaction = (t: Transaction) => {
     dispatch(
       editTransaction({
-        id: transaction?.id,
+        id: transaction!.id,
         type: t.type,
         amount: t.amount,
         description: t.description,
-        date: new Date(t.date).toISOString(),
+        date: new Date(t.date),
       })
     );
     toast({
@@ -114,9 +126,10 @@ export const TransactionEdit = () => {
           }}
           onSubmit={async (values) => {
             updateTransaction({
+              id: "",
               type: getTypedTransactionType(values.type),
               description: values.description,
-              date: values.date,
+              date: new Date(values.date),
               amount: values.amount,
             });
           }}

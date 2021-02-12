@@ -5,57 +5,77 @@ import {
   Heading,
   VStack,
   useToast,
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
   Button,
   Flex,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { EmailMagicLink } from "./login/EmailMagicLink";
 import { FaGoogle } from "react-icons/fa";
+import { UsersApi } from "../api/users";
+import { appSelectors, updateCurrentUesr } from "./../slices/appSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { User } from "../models/user";
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(firebase.auth());
   const toast = useToast();
   const history = useHistory();
+  const currentUser = useSelector(appSelectors.currentUser);
 
   const logInWithGoogle = () => {
     firebase
       .auth()
       .signInWithPopup(new firebase.auth.GoogleAuthProvider())
-      .then((result) => {
-        toast({
-          title: "Logged In!",
-          description: `Welcome to Week.`,
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
-      })
+      .then((result) => {})
       .catch((error) => {
-        console.error(error);
+        logInError();
       });
   };
 
+  const logInError = useCallback(() => {
+    toast({
+      title: "Login error",
+      description: "There was a problem... please try logging in again!",
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  }, [toast]);
+
   useEffect(() => {
-    if (user) {
+    if (user && currentUser) {
       history.push("/app");
-    } else if (error) {
       toast({
-        title: "User error",
-        description: error.toString(),
-        status: "error",
-        duration: 2000,
+        title: "Logged In!",
+        status: "success",
+        duration: 700,
         isClosable: true,
       });
     }
-  }, [error, history, toast, user]);
+  });
+
+  useEffect(() => {
+    if (user) {
+      UsersApi.getUser(user.uid)
+        .then((u) => {
+          if (!u.exists) {
+            UsersApi.addUser(
+              new User(user.email, user.uid, "", false, user.photoUrl, [])
+            ).catch((e) => {
+              logInError();
+            });
+          } else {
+            dispatch(updateCurrentUesr(u.data()!));
+          }
+        })
+        .catch((e) => {
+          logInError();
+        });
+    }
+  }, [dispatch, error, history, logInError, toast, user]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
@@ -91,8 +111,18 @@ export const Login = () => {
               <Heading as="h2" size="xl" color="blue.400">
                 Welcome!
               </Heading>
-              <EmailMagicLink />
-              <Accordion w="100%" allowToggle>
+              <Text>Week is a weekly-based budgeting app.</Text>
+              <Flex justifyContent="center">
+                <Button
+                  leftIcon={<FaGoogle />}
+                  variant="solid"
+                  colorScheme="blue"
+                  onClick={logInWithGoogle}
+                >
+                  Sign In With Google
+                </Button>
+              </Flex>
+              {/* <Accordion w="100%" allowToggle>
                 <AccordionItem>
                   <AccordionButton>
                     <Box flex="1" textAlign="center">
@@ -101,19 +131,10 @@ export const Login = () => {
                     <AccordionIcon />
                   </AccordionButton>
                   <AccordionPanel pb={4}>
-                    <Flex justifyContent="center">
-                      <Button
-                        leftIcon={<FaGoogle />}
-                        variant="solid"
-                        colorScheme="blue"
-                        onClick={logInWithGoogle}
-                      >
-                        Sign In With Google
-                      </Button>
-                    </Flex>
+                    <EmailMagicLink />
                   </AccordionPanel>
                 </AccordionItem>
-              </Accordion>
+              </Accordion> */}
             </VStack>
           )}
         </Box>

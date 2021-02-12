@@ -34,7 +34,7 @@ import { toTitleCase } from "../../utils/string";
 import {
   getTypedTransactionType,
   transactionTypes,
-} from "./../../models/common";
+} from "./../../models/transaction";
 
 export const AddRecurrence = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,6 +46,7 @@ export const AddRecurrence = () => {
   const newRecurrence = (r: Recurrence) => {
     dispatch(
       addRecurrence({
+        id: "",
         type: r.type,
         amount: r.amount,
         description: r.description,
@@ -73,7 +74,12 @@ export const AddRecurrence = () => {
         />
       </Tooltip>
 
-      <Drawer placement={position} onClose={onClose} isOpen={isOpen}>
+      <Drawer
+        autoFocus={false}
+        placement={position}
+        onClose={onClose}
+        isOpen={isOpen}
+      >
         <DrawerOverlay>
           <DrawerContent>
             <Formik
@@ -85,6 +91,7 @@ export const AddRecurrence = () => {
               }}
               onSubmit={async (values) => {
                 newRecurrence({
+                  id: "",
                   type: getTypedTransactionType(values.type),
                   description: values.description,
                   frequency: getTypedFrequency(values.frequency),
@@ -94,7 +101,7 @@ export const AddRecurrence = () => {
             >
               <Form>
                 <DrawerHeader borderBottomWidth="1px">
-                  Add Transaction
+                  Add Recurrence
                 </DrawerHeader>
                 <DrawerBody>
                   <Stack spacing={3}>
@@ -158,7 +165,7 @@ export const AddRecurrence = () => {
                           isRequired
                         >
                           <InputGroup>
-                            <InputLeftAddon children="Type" />
+                            <InputLeftAddon children="Frequency" />
                             <Select {...field} variant="outline">
                               <option value="" disabled>
                                 Select Frequency

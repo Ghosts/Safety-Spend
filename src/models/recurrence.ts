@@ -1,7 +1,7 @@
-import { TransactionType } from "./common";
+import { TransactionType } from "./transaction";
 
 export type Recurrence = {
-  id?: number;
+  id: string;
   description: string;
   frequency: Frequencies;
   type: TransactionType;

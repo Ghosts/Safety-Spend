@@ -1,6 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../models/user";
 import { RootState } from "../store";
+import { getWeekEnd, getWeekStart } from "../utils/dates";
 
 export enum Views {
   Transactions,
@@ -14,6 +16,8 @@ type AppState = {
   isEditing: boolean;
   currentView: Views;
   editingId: string;
+  currentUser: User | null;
+  currentDay: Date;
 };
 
 const initialState: AppState = {
@@ -21,6 +25,8 @@ const initialState: AppState = {
   isEditing: false,
   currentView: Views.Default,
   editingId: "",
+  currentUser: null,
+  currentDay: new Date(),
 };
 
 const appSlice = createSlice({
@@ -39,6 +45,12 @@ const appSlice = createSlice({
     setEditingId(state, action: PayloadAction<string>) {
       state.editingId = action.payload;
     },
+    setCurrentUser(state, action: PayloadAction<User>) {
+      state.currentUser = action.payload;
+    },
+    setCurrentDay(state, action: PayloadAction<Date>) {
+      state.currentDay = action.payload;
+    },
   },
 });
 
@@ -47,6 +59,8 @@ export const {
   setView,
   setEditing,
   setEditingId,
+  setCurrentUser,
+  setCurrentDay,
 } = appSlice.actions;
 
 export const updateEditingId = (editingId: string) => async (
@@ -65,6 +79,32 @@ export const updateIsEditing = (isEditing: boolean) => async (
   dispatch(setEditing(isEditing));
 };
 
+export const goLastWeek = () => async (
+  dispatch: Dispatch<any>,
+  getState: () => RootState
+) => {
+  return new Promise((resolve, reject) => {
+    const currentDay = new Date(getState().app.currentDay);
+    const weekStart = getWeekStart(currentDay);
+    weekStart.setDate(weekStart.getDate() - 6);
+    dispatch(setCurrentDay(weekStart));
+    resolve("");
+  });
+};
+
+export const goNextWeek = () => async (
+  dispatch: Dispatch<any>,
+  getState: () => RootState
+) => {
+  return new Promise<void>((resolve, reject) => {
+    const currentDay = new Date(getState().app.currentDay);
+    const weekEnd = getWeekEnd(currentDay);
+    weekEnd.setDate(weekEnd.getDate() + 6);
+    dispatch(setCurrentDay(weekEnd));
+    resolve();
+  });
+};
+
 export const toggleOpenDays = (days: number[] | number) => async (
   dispatch: Dispatch<any>
 ) => {
@@ -74,16 +114,25 @@ export const toggleOpenDays = (days: number[] | number) => async (
   dispatch(setOpenDays(days));
 };
 
-const openDays = (state: RootState) => state.app.openDays;
+export const updateCurrentUesr = (user: User) => async (
+  dispatch: Dispatch<any>
+) => {
+  dispatch(setCurrentUser(user));
+};
 
+const openDays = (state: RootState) => state.app.openDays;
 const isEditing = (state: RootState) => state.app.isEditing;
 const currentView = (state: RootState) => state.app.currentView;
 const editingId = (state: RootState) => state.app.editingId;
+const currentUser = (state: RootState) => state.app.currentUser;
+const currentDay = (state: RootState) => state.app.currentDay;
 
 export const appSelectors = {
   openDays,
   isEditing,
   currentView,
   editingId,
+  currentUser,
+  currentDay,
 };
 export default appSlice;

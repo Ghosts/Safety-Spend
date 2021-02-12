@@ -75,7 +75,7 @@ export const EmailMagicLink = () => {
   return (
     <>
       <Text textAlign="center">
-        Week uses
+        Week can use
         <Text
           as="span"
           d="inline-block"

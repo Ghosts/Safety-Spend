@@ -15,27 +15,42 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { transactionsSelectors } from "../slices/transactionsSlice";
 import { DayTags } from "./DayTags";
 import { recurrencesSelectors } from "./../slices/recurrencesSlice";
 import { getSafeToSpend, getCurrentSafeToSpend } from "../utils/tracking";
 import { getLastSunday } from "../utils/dates";
+import {
+  appSelectors,
+  goLastWeek,
+  goNextWeek,
+  setCurrentDay,
+} from "./../slices/appSlice";
 
 export const TrackingCard = () => {
+  const dispatch = useDispatch();
   const recurrences = useSelector(recurrencesSelectors.list);
-  const transactions = useSelector(transactionsSelectors.byWeek(new Date()));
+  const transactions = useSelector(transactionsSelectors.list);
   const safeToSpend = getSafeToSpend(recurrences);
   const currentSafeToSpend = getCurrentSafeToSpend(recurrences, transactions);
   const orientation = useBreakpointValue<"vertical" | "horizontal">([
     "vertical",
     "horizontal",
   ]);
-  const currentDate = new Date();
+  const currentDay = useSelector(appSelectors.currentDay);
+
+  const lastWeek = async () => {
+    dispatch(goLastWeek());
+  };
+
+  const nextWeek = async () => {
+    dispatch(goNextWeek());
+  };
 
   const getWeekOfText = () => {
-    const lastSunday = getLastSunday(currentDate);
-    const nextSunday = new Date();
+    const lastSunday = getLastSunday(currentDay);
+    const nextSunday = new Date(lastSunday);
     nextSunday.setDate(lastSunday.getDate() + 6);
 
     return `${lastSunday.getMonth() + 1}/${lastSunday.getDate()} - ${
@@ -48,6 +63,7 @@ export const TrackingCard = () => {
       <Box w={["sm", "md"]} alignItems="center">
         <Stack w={["sm", "md"]} direction={["column", "row"]} spacing={2}>
           <Button
+            onClick={lastWeek}
             size="lg"
             colorScheme="gray"
             variant="outline"
@@ -93,8 +109,19 @@ export const TrackingCard = () => {
               </Stack>
               <DayTags />
             </Stack>
+            <Center>
+              <Button
+                variant="ghost"
+                size="sm"
+                colorScheme="blue"
+                onClick={() => dispatch(setCurrentDay(new Date()))}
+              >
+                <small>Go to Today</small>
+              </Button>
+            </Center>
           </Box>
           <Button
+            onClick={nextWeek}
             size="lg"
             colorScheme="gray"
             variant="outline"

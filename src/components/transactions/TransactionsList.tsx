@@ -16,7 +16,10 @@ import {
   SlideFade,
 } from "@chakra-ui/react";
 import React from "react";
-import { transactionsSelectors } from "../../slices/transactionsSlice";
+import {
+  loadTransactions,
+  transactionsSelectors,
+} from "../../slices/transactionsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
 import { getWeekByDate } from "../../utils/dates";
@@ -28,14 +31,19 @@ import {
   setEditingId,
   toggleOpenDays,
 } from "./../../slices/appSlice";
+import { useEffect } from "react";
 
 export const TransactionsList = () => {
-  const transactions = useSelector(transactionsSelectors.byWeek(new Date()));
+  const transactions = useSelector(transactionsSelectors.list);
   const dispatch = useDispatch();
   const isEditing = useSelector(appSelectors.isEditing);
-  const week = getWeekByDate(new Date());
+  const currentDay = useSelector(appSelectors.currentDay);
   const color = useColorModeValue("gray.600", "gray.200");
   const openDays = useSelector(appSelectors.openDays);
+
+  useEffect(() => {
+    dispatch(loadTransactions(new Date(currentDay)));
+  }, [currentDay, dispatch]);
 
   return (
     <>
@@ -59,7 +67,7 @@ export const TransactionsList = () => {
             defaultIndex={openDays}
             allowMultiple
           >
-            {week.map((day, idx) => {
+            {getWeekByDate(currentDay).map((day, idx) => {
               return (
                 <AccordionItem key={idx}>
                   <AccordionButton>

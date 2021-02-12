@@ -30,7 +30,10 @@ import { Formik, Form, Field } from "formik";
 import React from "react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { getTypedTransactionType, transactionTypes } from "../../models/common";
+import {
+  getTypedTransactionType,
+  transactionTypes,
+} from "../../models/transaction";
 import {
   frequencies,
   getTypedFrequency,
@@ -46,22 +49,31 @@ import {
 import { toTitleCase } from "../../utils/string";
 
 export const RecurrenceEdit = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const editingId = useSelector(appSelectors.editingId);
-  const recurrence = useSelector(
-    recurrencesSelectors.byId(parseInt(editingId))
-  );
   const dispatch = useDispatch();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const editingId = useSelector(appSelectors.editingId);
+  const recurrence = useSelector(recurrencesSelectors.byId(editingId));
+
+  if (!recurrence) {
+    toast({
+      title: "Recurrence Error",
+      description: `There was a problem loading the recurrence`,
+      status: "error",
+      duration: 5000,
+      isClosable: true,
+    });
+    dispatch(setEditing(false));
+  }
 
   const removeRecurrence = () => {
     dispatch(setEditing(false));
-    dispatch(deleteRecurrence(parseInt(editingId)));
+    dispatch(deleteRecurrence(editingId));
     toast({
       title: "Recurrence Deleted",
       description: `Your Safe-To-Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     onClose();
@@ -70,7 +82,7 @@ export const RecurrenceEdit = () => {
   const updateRecurrence = (r: Recurrence) => {
     dispatch(
       editRecurrence({
-        id: recurrence?.id,
+        id: recurrence!.id,
         type: r.type,
         amount: r.amount,
         description: r.description,
@@ -118,6 +130,7 @@ export const RecurrenceEdit = () => {
           }}
           onSubmit={async (values) => {
             updateRecurrence({
+              id: "",
               type: getTypedTransactionType(values.type),
               description: values.description,
               frequency: getTypedFrequency(values.frequency),

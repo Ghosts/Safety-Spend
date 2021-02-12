@@ -2,15 +2,19 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 import { Transaction } from "../models/transaction";
-import { getWeekNumber } from "../utils/dates";
+import { getWeekEnd, getWeekNumber, getWeekStart } from "../utils/dates";
+import { getRandomId } from "./../utils/common";
+import { TransactionsApi } from "../api/transactions";
 
 type TransactionsState = {
   loading: boolean;
+  error: string;
   list: Transaction[];
 };
 
 const initialState: TransactionsState = {
   loading: false,
+  error: "",
   list: [],
 };
 
@@ -19,8 +23,9 @@ const transactionsSlice = createSlice({
   initialState,
   reducers: {
     addTransaction(state, action: PayloadAction<Transaction>) {
-      action.payload.id = state.list.length + 1;
       state.list = [...state.list, action.payload];
+      state.loading = false;
+      state.error = "";
     },
     updateTransaction(state, action: PayloadAction<Transaction>) {
       state.list = state.list.map((transaction) => {
@@ -29,9 +34,22 @@ const transactionsSlice = createSlice({
         }
         return transaction;
       });
+      state.loading = false;
+      state.error = "";
     },
-    removeTransaction(state, action: PayloadAction<number>) {
+    removeTransaction(state, action: PayloadAction<string>) {
       state.list = [...state.list.filter((t) => t.id !== action.payload)];
+      state.loading = false;
+      state.error = "";
+    },
+    setError(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+      state.loading = false;
+    },
+    setTransactions(state, action: PayloadAction<Transaction[]>) {
+      state.list = action.payload;
+      state.loading = false;
+      state.error = "";
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
@@ -43,31 +61,62 @@ export const {
   addTransaction,
   updateTransaction,
   removeTransaction,
+  setError,
   setLoading,
+  setTransactions,
 } = transactionsSlice.actions;
 
+export const loadTransactions = (date?: Date) => (
+  dispatch: Dispatch<any>,
+  getState: () => RootState
+) => {
+  if (!date) date = new Date();
+  const start = getWeekStart(date);
+  const end = getWeekEnd(date);
+  return TransactionsApi.getTransactions(start, end, getState)
+    .then((transactions) => {
+      const transactionList = transactions.docs.map((t) => {
+        return t.data();
+      });
+      dispatch(setTransactions(transactionList));
+    })
+    .catch((e) => {
+      console.log(e);
+      dispatch(setError(e.toString()));
+    });
+};
+
 export const createTransaction = (transaction: Transaction) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
   dispatch(setLoading(true));
-  dispatch(addTransaction(transaction));
-  dispatch(setLoading(false));
+  transaction.id = getRandomId();
+  return TransactionsApi.setTransaction(transaction, getState)
+    .then((t) => {
+      dispatch(addTransaction(transaction));
+    })
+    .catch((e) => {
+      dispatch(setError(e.toString()));
+    });
 };
 
 export const editTransaction = (transaction: Transaction) => async (
-  dispatch: Dispatch<any>
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
-  dispatch(setLoading(true));
-  dispatch(updateTransaction(transaction));
-  dispatch(setLoading(false));
+  return TransactionsApi.setTransaction(transaction, getState).then((t) => {
+    dispatch(updateTransaction(transaction));
+  });
 };
 
-export const deleteTransaction = (id: number) => async (
-  dispatch: Dispatch<any>
+export const deleteTransaction = (id: string) => async (
+  dispatch: Dispatch<any>,
+  getState: () => RootState
 ) => {
-  dispatch(setLoading(true));
-  dispatch(removeTransaction(id));
-  dispatch(setLoading(false));
+  return TransactionsApi.deleteTransaction(id, getState).then((t) => {
+    dispatch(removeTransaction(id));
+  });
 };
 
 const list = (state: RootState) => state.transactions.list;
@@ -79,7 +128,7 @@ const total = (state: RootState) =>
         .reduce((prev, next) => prev + next)
     : 0;
 
-const byId = (id: number) => (state: RootState) =>
+const byId = (id: string) => (state: RootState) =>
   state.transactions.list.find((t) => t.id === id);
 
 const byWeek = (date: Date) => (state: RootState) =>
