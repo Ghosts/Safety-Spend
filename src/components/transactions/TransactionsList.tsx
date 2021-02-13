@@ -24,7 +24,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
 import { getWeekByDate } from "../../utils/dates";
 import { getTransactionsByDay } from "../../utils/transactions";
-import { DateTime } from "luxon";
 
 import {
   appSelectors,
@@ -33,6 +32,7 @@ import {
   toggleOpenDays,
 } from "./../../slices/appSlice";
 import { useEffect } from "react";
+import moment from "moment";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.list);
@@ -81,9 +81,7 @@ export const TransactionsList = () => {
             defaultIndex={openDays}
             allowMultiple
           >
-            {getWeekByDate(
-              DateTime.fromISO(currentDay.toString()).toJSDate()
-            ).map((day, idx) => {
+            {getWeekByDate(moment(currentDay).toDate()).map((day, idx) => {
               return (
                 <AccordionItem key={idx}>
                   <AccordionButton>
