@@ -1,4 +1,4 @@
-import { VStack, Box, Text } from "@chakra-ui/react";
+import { VStack, Box, Text, Link } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
 import { IconBar } from "../../components/IconBar";
 import { getColor } from "../../utils/common";
@@ -30,6 +30,15 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
         ) : (
           <></>
         )}
+        <Box textAlign="center">
+          <Link color="blue.400" href="/privacy">
+            <small>Privacy Policy</small>
+          </Link>
+          &nbsp;&amp;&nbsp;
+          <Link color="blue.400" href="/terms">
+            <small>Terms</small>
+          </Link>
+        </Box>
       </VStack>
     </UserGuard>
   );
