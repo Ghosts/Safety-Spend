@@ -67,10 +67,10 @@ export const AddRecurrence = () => {
       <Tooltip label="Add recurrence">
         <IconButton
           variant="ghost"
-          colorScheme="cyan"
+          colorScheme="messenger"
           onClick={onOpen}
           aria-label="Add recurrence"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="cyan.400" />}
+          icon={<Icon boxSize="1.5em" as={FiPlusCircle} />}
         />
       </Tooltip>
 

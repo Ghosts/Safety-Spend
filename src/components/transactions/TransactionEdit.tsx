@@ -25,7 +25,6 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   useDisclosure,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import React from "react";
@@ -50,7 +49,6 @@ export const TransactionEdit = () => {
   const transaction = useSelector(transactionsSelectors.byId(editingId));
   const dispatch = useDispatch();
   const toast = useToast();
-  const color = useColorModeValue("gray.600", "gray.100");
 
   if (!transaction) {
     toast({
@@ -103,15 +101,13 @@ export const TransactionEdit = () => {
           <IconButton
             onClick={() => dispatch(setEditing(false))}
             variant="ghost"
-            colorScheme="blue"
+            colorScheme="messenger"
             aria-label="Go back"
-            icon={
-              <Icon boxSize="1.5em" as={FiArrowLeftCircle} color="blue.400" />
-            }
+            icon={<Icon boxSize="1.5em" as={FiArrowLeftCircle} />}
           />
         </Tooltip>
         <Box>
-          <Heading as="h2" size="lg" color={color}>
+          <Heading as="h2" size="lg">
             {transaction?.description}
           </Heading>
         </Box>

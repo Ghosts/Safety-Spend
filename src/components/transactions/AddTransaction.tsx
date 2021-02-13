@@ -64,10 +64,10 @@ export const AddTransaction = () => {
       <Tooltip label="Add manual transaction">
         <IconButton
           variant="ghost"
-          colorScheme="cyan"
+          colorScheme="messenger"
           onClick={onOpen}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} color="cyan.400" />}
+          icon={<Icon boxSize="1.5em" as={FiPlusCircle} />}
         />
       </Tooltip>
       <Drawer

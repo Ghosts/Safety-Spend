@@ -48,7 +48,7 @@ export const DayTags = () => {
                     ? "outline"
                     : "subtle"
                 }
-                colorScheme="blue"
+                colorScheme="messenger"
               >
                 {day.display}
               </Tag>

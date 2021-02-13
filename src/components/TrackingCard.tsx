@@ -12,6 +12,7 @@ import {
   StatLabel,
   StatNumber,
   Icon,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,6 +39,8 @@ export const TrackingCard = () => {
   const safeToSpend = getSafeToSpend(recurrences);
   const currentSafeToSpend = getCurrentSafeToSpend(recurrences, transactions);
   const currentDay = useSelector(appSelectors.currentDay);
+  const bgColor = useColorModeValue("#fcfcfc", "#171c26");
+  const trackBg = useColorModeValue("gray.100", "gray.700");
 
   useEffect(() => {
     dispatch(loadRecurrences());
@@ -66,11 +69,10 @@ export const TrackingCard = () => {
       <Box w={["sm", "md"]} alignItems="center">
         <Stack w={["sm", "md"]} direction={["column", "row"]} spacing={2}>
           <Button
-            boxShadow="sm"
+            boxShadow="base"
             onClick={lastWeek}
             size="lg"
             colorScheme="gray"
-            variant="outline"
             verticalAlign="middle"
             aria-label="Next week"
             p="25px"
@@ -80,7 +82,13 @@ export const TrackingCard = () => {
               <Icon as={FiArrowLeft} />
             </Box>
           </Button>
-          <Box w={["sm"]} padding="10px" borderWidth="1px" borderRadius="lg">
+          <Box
+            bgColor={bgColor}
+            w={["sm"]}
+            padding="10px"
+            borderWidth="1px"
+            borderRadius="lg"
+          >
             <Stack mb="10px" direction={["column"]}>
               <Stack direction="row" spacing={1}>
                 <Stat>
@@ -93,11 +101,11 @@ export const TrackingCard = () => {
                       <CircularProgress
                         capIsRound={true}
                         max={safeToSpend}
-                        trackColor="gray.100"
-                        color={currentSafeToSpend > 0 ? "green.300" : "red.300"}
+                        trackColor={trackBg}
+                        color={currentSafeToSpend > 0 ? "green.400" : "red.400"}
                         value={currentSafeToSpend}
                         size="124px"
-                        thickness="10px"
+                        thickness="8px"
                       >
                         <CircularProgressLabel fontSize="18px">
                           ${currentSafeToSpend.toFixed(2)}
@@ -116,7 +124,7 @@ export const TrackingCard = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                colorScheme="blue"
+                colorScheme="messenger"
                 onClick={() => dispatch(setCurrentDay(new Date()))}
               >
                 <small>Go to Today</small>
@@ -124,11 +132,10 @@ export const TrackingCard = () => {
             </Center>
           </Box>
           <Button
-            boxShadow="sm"
+            boxShadow="base"
             onClick={nextWeek}
             size="lg"
             colorScheme="gray"
-            variant="outline"
             verticalAlign="middle"
             aria-label="Next week"
             p="25px"

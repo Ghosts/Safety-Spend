@@ -17,8 +17,3 @@ export const getRandomId = () => {
     S4()
   );
 };
-const colors = ["blue", "cyan", "red", "orange", "purple", "green"];
-
-export const getColor = () => {
-  return colors[Math.floor(Math.random() * colors.length)];
-};

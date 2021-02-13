@@ -12,10 +12,10 @@ export const ManageRecurrences = () => {
       <Tooltip label="Manage recurring transactions">
         <IconButton
           variant="ghost"
-          colorScheme="cyan"
+          colorScheme="messenger"
           onClick={() => dispatch(setView(Views.Recurrences))}
           aria-label="Manage recurring transactions"
-          icon={<Icon boxSize="1.5em" as={FiCalendar} color="cyan.400" />}
+          icon={<Icon boxSize="1.5em" as={FiCalendar} />}
         />
       </Tooltip>
     </>

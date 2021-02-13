@@ -11,7 +11,6 @@ import {
   StatNumber,
   Flex,
   Button,
-  useColorModeValue,
   Spacer,
   SlideFade,
   useToast,
@@ -39,7 +38,6 @@ export const TransactionsList = () => {
   const dispatch = useDispatch();
   const isEditing = useSelector(appSelectors.isEditing);
   const currentDay = useSelector(appSelectors.currentDay);
-  const color = useColorModeValue("gray.600", "gray.200");
   const openDays = useSelector(appSelectors.openDays);
   const error = useSelector(transactionsSelectors.error);
   const toast = useToast();
@@ -114,7 +112,6 @@ export const TransactionsList = () => {
                               key={idx}
                               variant="ghost"
                               colorScheme="gray"
-                              color={color}
                               h="auto"
                               m="5px"
                               minW="125px"

@@ -112,8 +112,7 @@ export const LearnModal = () => {
                 </Button>
               )}
               <Button
-                color="white"
-                colorScheme="cyan"
+                colorScheme="messenger"
                 disabled={!(currentStep < steps.length - 1)}
                 onClick={() => setCurrentStep(currentStep + 1)}
               >

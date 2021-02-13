@@ -9,7 +9,6 @@ import {
 import React from "react";
 import { useSelector } from "react-redux";
 import { appSelectors, Views } from "../slices/appSlice";
-import { getColor } from "../utils/common";
 import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
 import { AddTransaction } from "./transactions/AddTransaction";
@@ -18,7 +17,7 @@ import { TransactionsList } from "./transactions/TransactionsList";
 export const BudgetCard = () => {
   const currentView = useSelector(appSelectors.currentView);
   const isEditing = useSelector(appSelectors.isEditing);
-  const color = useColorModeValue("gray.600", "gray.100");
+  const bgColor = useColorModeValue("#fcfcfc", "#171c26");
 
   const getCurrentView = () => {
     switch (currentView) {
@@ -33,13 +32,19 @@ export const BudgetCard = () => {
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
-      <Box w={["sm", "xl"]} padding="20px" borderWidth="1px" borderRadius="lg">
+      <Box
+        bgColor={bgColor}
+        w={["sm", "xl"]}
+        padding="20px"
+        borderWidth="1px"
+        borderRadius="lg"
+      >
         {currentView !== Views.Default || isEditing ? (
           <></>
         ) : (
           <Stack mb="10px" direction={["row"]} spacing={0}>
             <Box>
-              <Heading as="h2" size="lg" color={color}>
+              <Heading as="h2" size="lg">
                 Transactions
               </Heading>
             </Box>

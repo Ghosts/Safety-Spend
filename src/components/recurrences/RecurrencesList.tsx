@@ -18,7 +18,6 @@ import {
   SlideFade,
   Divider,
   useToast,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import React, { useEffect } from "react";
@@ -44,7 +43,6 @@ export const RecurrencesList = () => {
   const isEditing = useSelector(appSelectors.isEditing);
   const error = useSelector(recurrencesSelectors.error);
   const toast = useToast();
-  const color = useColorModeValue("gray.600", "gray.100");
 
   useEffect(() => {
     dispatch(loadRecurrences());
@@ -71,19 +69,13 @@ export const RecurrencesList = () => {
               <IconButton
                 onClick={() => dispatch(setView(Views.Default))}
                 variant="ghost"
-                colorScheme="blue"
+                colorScheme="messenger"
                 aria-label="Go back"
-                icon={
-                  <Icon
-                    boxSize="1.5em"
-                    as={FiArrowLeftCircle}
-                    color="blue.400"
-                  />
-                }
+                icon={<Icon boxSize="1.5em" as={FiArrowLeftCircle} />}
               />
             </Tooltip>
             <Box>
-              <Heading as="h2" size="lg" color={color}>
+              <Heading as="h2" size="lg">
                 Recurrences
               </Heading>
             </Box>
@@ -121,7 +113,6 @@ export const RecurrencesList = () => {
                     key={idx}
                     variant="ghost"
                     colorScheme="gray"
-                    color={color}
                     h="auto"
                     m="5px"
                     minW="125px"

@@ -6,7 +6,8 @@ import {
   VStack,
   Link,
   useToast,
-  useColorMode,
+  useColorModeValue,
+  Divider,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -25,9 +26,7 @@ export const Login = () => {
   const toast = useToast();
   const history = useHistory();
   const currentUser = useSelector(appSelectors.currentUser);
-  const { colorMode } = useColorMode();
-  const bgColor = colorMode === "light" ? "gray.50" : "gray.700";
-  const color = colorMode === "light" ? "black" : "white";
+  const bgColor = useColorModeValue("#fcfcfc", "#171c26");
 
   const logInError = useCallback(
     (error?: string) => {
@@ -81,7 +80,12 @@ export const Login = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Text color={color} fontSize="6xl" fontWeight="extrabold">
+          <Text
+            bgGradient={`linear(to-r, blue,cyan.400)`}
+            bgClip="text"
+            fontSize="6xl"
+            fontWeight="extrabold"
+          >
             week.
           </Text>
         </Box>
@@ -94,20 +98,21 @@ export const Login = () => {
         >
           {loading ? (
             <>
-              <Heading textAlign="center" as="h2" size="xl" color="blue.400">
+              <Heading textAlign="center" as="h2" size="xl">
                 Hang tight!
                 <br />
               </Heading>
-              <Heading textAlign="center" as="h2" size="sm" color="blue.300">
+              <Heading textAlign="center" as="h2" size="sm">
                 (loading...)
               </Heading>
             </>
           ) : (
             <VStack padding="10px" spacing={2} align="center">
-              <Heading as="h2" size="xl" color="blue.400">
+              <Heading as="h2" size="lg">
                 Welcome,
               </Heading>
               <Text>Week is a weekly-based budgeting app.</Text>
+              <Divider pt="10px" mb="10px" w="50%" />
               <VStack justifyContent="center">
                 <GoogleLogin error={logInError} />
                 <TwitterLogin error={logInError} />

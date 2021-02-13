@@ -1,7 +1,6 @@
 import { VStack, Box, Text, Link } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
 import { IconBar } from "../../components/IconBar";
-import { getColor } from "../../utils/common";
 import { UserGuard } from "./UserGuard";
 
 interface BaseLayoutProps {
@@ -14,7 +13,7 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
       <VStack padding="10px" spacing={2} align="center">
         <Box>
           <Text
-            bgGradient={`linear(to-r, ${getColor()}.400,${getColor()}.300)`}
+            bgGradient={`linear(to-r, blue,cyan.400)`}
             bgClip="text"
             fontSize="6xl"
             fontWeight="extrabold"
