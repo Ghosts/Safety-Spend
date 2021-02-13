@@ -38,7 +38,7 @@ export const Terms = () => {
               textAlign="center"
               as="h1"
               size="xl"
-              color="blue.400"
+              color="blue.500"
             >
               Terms
             </Heading>
@@ -47,7 +47,7 @@ export const Terms = () => {
                 Not sure what to write here to be honest so let's just lay out
                 some groundwork:
               </Text>
-              <Heading p="10px" as="h2" size="md" color="blue.400">
+              <Heading p="10px" as="h2" size="md" color="blue.500">
                 Things week lets you do
               </Heading>
               <UnorderedList>
@@ -59,7 +59,7 @@ export const Terms = () => {
                 <ListItem>Track spending / budgets.</ListItem>
                 <ListItem>Maybe more?</ListItem>
               </UnorderedList>
-              <Heading p="10px" as="h2" size="md" color="blue.400">
+              <Heading p="10px" as="h2" size="md" color="blue.500">
                 Things you shouldn't do
               </Heading>
               <UnorderedList>

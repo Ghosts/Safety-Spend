@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
-import { StringLiteral } from "typescript";
 import { User } from "../models/user";
 import { RootState } from "../store";
 import { getWeekEnd, getWeekStart } from "../utils/dates";

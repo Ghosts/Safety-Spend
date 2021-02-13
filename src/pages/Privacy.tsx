@@ -38,7 +38,7 @@ export const Privacy = () => {
               textAlign="center"
               as="h1"
               size="xl"
-              color="blue.400"
+              color="blue.500"
             >
               Privacy Policy
             </Heading>
@@ -47,7 +47,7 @@ export const Privacy = () => {
                 Going to be short and sweet because this is an open-sourced
                 project with no intention to monetize your data.
               </Text>
-              <Heading p="10px" as="h2" size="md" color="blue.400">
+              <Heading p="10px" as="h2" size="md" color="blue.500">
                 What we gather
               </Heading>
               <UnorderedList>
@@ -64,7 +64,7 @@ export const Privacy = () => {
                   (Plaid, OAuth, etc.)
                 </ListItem>
               </UnorderedList>
-              <Heading p="10px" as="h2" size="md" color="blue.400">
+              <Heading p="10px" as="h2" size="md" color="blue.500">
                 How we use it
               </Heading>
               <Text>
