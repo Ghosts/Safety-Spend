@@ -38,6 +38,7 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
             <small>Terms</small>
           </Link>
         </Box>
+        <br />
       </VStack>
     </UserGuard>
   );
