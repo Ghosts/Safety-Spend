@@ -111,7 +111,7 @@ export const TransactionEdit = () => {
           />
         </Tooltip>
         <Box>
-          <Heading as="h2" size="xl" color={color}>
+          <Heading as="h2" size="lg" color={color}>
             {transaction?.description}
           </Heading>
         </Box>

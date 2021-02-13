@@ -116,7 +116,7 @@ export const RecurrenceEdit = () => {
           />
         </Tooltip>
         <Box>
-          <Heading as="h2" size="xl" color={color}>
+          <Heading as="h2" size="lg" color={color}>
             {recurrence?.description}
           </Heading>
         </Box>
