@@ -3,7 +3,6 @@ export class User {
   userId: string;
   subscriptionId: string;
   subscriptionActive: boolean;
-  photoUrl?: string;
   attributes: string[];
 
   constructor(
@@ -18,7 +17,6 @@ export class User {
     this.userId = userId;
     this.subscriptionId = subscriptionId;
     this.subscriptionActive = subscriptionActive;
-    this.photoUrl = photoUrl;
     this.attributes = attributes;
   }
 }
