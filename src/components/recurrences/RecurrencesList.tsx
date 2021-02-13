@@ -9,7 +9,6 @@ import {
   Heading,
   Image,
   Button,
-  color,
   Flex,
   Stat,
   StatLabel,
