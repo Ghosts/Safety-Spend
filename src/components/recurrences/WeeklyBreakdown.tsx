@@ -5,7 +5,7 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { FiActivity, FiTrendingDown, FiTrendingUp } from "react-icons/fi";
@@ -19,9 +19,7 @@ export const WeeklyBreakdown = () => {
   const weeklyIncome = getWeeklyIncome(recurrences);
   const weeklyExpenses = getWeeklyExpenses(recurrences);
   const safeToSpend = getSafeToSpend(recurrences);
-
-  const { colorMode } = useColorMode();
-  const bgColor = colorMode === "light" ? "gray.100" : "gray.700";
+  const bgColor = useColorModeValue("gray.100", "gray.700");
 
   return (
     <Stack justifyContent="center" direction={["column", "row"]} spacing={5}>

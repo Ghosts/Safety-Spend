@@ -1,6 +1,7 @@
 import { VStack, Box, Text } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
 import { IconBar } from "../../components/IconBar";
+import { getColor } from "../../utils/common";
 import { UserGuard } from "./UserGuard";
 
 interface BaseLayoutProps {
@@ -8,11 +9,6 @@ interface BaseLayoutProps {
   children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
 }
 export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
-  const colors = ["blue", "cyan", "red", "orange", "purple", "green"];
-  const getColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   return (
     <UserGuard>
       <VStack padding="10px" spacing={2} align="center">

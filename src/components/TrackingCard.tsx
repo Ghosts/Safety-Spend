@@ -13,11 +13,14 @@ import {
   StatNumber,
   Icon,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { transactionsSelectors } from "../slices/transactionsSlice";
 import { DayTags } from "./DayTags";
-import { recurrencesSelectors } from "./../slices/recurrencesSlice";
+import {
+  loadRecurrences,
+  recurrencesSelectors,
+} from "./../slices/recurrencesSlice";
 import { getSafeToSpend, getCurrentSafeToSpend } from "../utils/tracking";
 import { getLastSunday } from "../utils/dates";
 import {
@@ -35,6 +38,10 @@ export const TrackingCard = () => {
   const safeToSpend = getSafeToSpend(recurrences);
   const currentSafeToSpend = getCurrentSafeToSpend(recurrences, transactions);
   const currentDay = useSelector(appSelectors.currentDay);
+
+  useEffect(() => {
+    dispatch(loadRecurrences());
+  }, [dispatch]);
 
   const lastWeek = async () => {
     dispatch(goLastWeek());

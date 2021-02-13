@@ -25,6 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import React from "react";
@@ -54,6 +55,7 @@ export const RecurrenceEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingId);
   const recurrence = useSelector(recurrencesSelectors.byId(editingId));
+  const color = useColorModeValue("gray.600", "gray.100");
 
   if (!recurrence) {
     toast({
@@ -114,7 +116,7 @@ export const RecurrenceEdit = () => {
           />
         </Tooltip>
         <Box>
-          <Heading as="h2" size="xl" color="blue.400">
+          <Heading as="h2" size="xl" color={color}>
             {recurrence?.description}
           </Heading>
         </Box>

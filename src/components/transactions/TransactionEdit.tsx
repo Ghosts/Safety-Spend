@@ -25,6 +25,7 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import React from "react";
@@ -49,6 +50,7 @@ export const TransactionEdit = () => {
   const transaction = useSelector(transactionsSelectors.byId(editingId));
   const dispatch = useDispatch();
   const toast = useToast();
+  const color = useColorModeValue("gray.600", "gray.100");
 
   if (!transaction) {
     toast({
@@ -109,7 +111,7 @@ export const TransactionEdit = () => {
           />
         </Tooltip>
         <Box>
-          <Heading as="h2" size="xl" color="blue.400">
+          <Heading as="h2" size="xl" color={color}>
             {transaction?.description}
           </Heading>
         </Box>
