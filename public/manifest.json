@@ -14,12 +14,17 @@
       "sizes": "192x192"
     },
     {
+      "src": "logo256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
   "display": "standalone",
-  "theme_color": "#68D395",
-  "background_color": "#68D395"
+  "theme_color": "#ffffff",
+  "background_color": "#291AFA"
 }
