@@ -86,7 +86,7 @@ export const Login = () => {
             fontSize="6xl"
             fontWeight="extrabold"
           >
-            week.
+            week
           </Text>
         </Box>
         <Box

@@ -82,7 +82,10 @@ export const Privacy = () => {
               </Text>
             </Box>
             <br />
-            <Button onClick={() => history.push("/app")} colorScheme="twitter">
+            <Button
+              onClick={() => history.push("/app")}
+              colorScheme="messenger"
+            >
               Back to week
             </Button>
           </Flex>

@@ -18,7 +18,7 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
             fontSize="6xl"
             fontWeight="extrabold"
           >
-            week.
+            week
           </Text>
         </Box>
         {children}
