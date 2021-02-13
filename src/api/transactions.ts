@@ -35,7 +35,7 @@ const getTransactions = (
 ) => {
   const userId = getState().app.currentUser?.userId ?? "";
   weekStart.setHours(0, 0, 0, 0);
-  weekEnd.setHours(0, 0, 0, 0);
+  weekEnd.setHours(23, 59, 59, 0);
   return db
     .collection("users")
     .doc(userId)
@@ -51,6 +51,7 @@ const setTransaction = (
   getState: () => RootState
 ) => {
   const userId = getState().app.currentUser?.userId ?? "";
+  transaction.date.setHours(12, 0, 0, 0);
   return db
     .collection("users")
     .doc(userId)

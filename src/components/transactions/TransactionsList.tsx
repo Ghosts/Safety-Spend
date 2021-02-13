@@ -32,7 +32,6 @@ import {
   toggleOpenDays,
 } from "./../../slices/appSlice";
 import { useEffect } from "react";
-import moment from "moment";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.list);
@@ -81,7 +80,7 @@ export const TransactionsList = () => {
             defaultIndex={openDays}
             allowMultiple
           >
-            {getWeekByDate(moment(currentDay).toDate()).map((day, idx) => {
+            {getWeekByDate(new Date(currentDay)).map((day, idx) => {
               return (
                 <AccordionItem key={idx}>
                   <AccordionButton>

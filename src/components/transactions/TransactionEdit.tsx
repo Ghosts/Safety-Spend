@@ -27,6 +27,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
+import moment from "moment";
 import React from "react";
 import { FiArrowLeftCircle } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -81,7 +82,7 @@ export const TransactionEdit = () => {
         type: t.type,
         amount: t.amount,
         description: t.description,
-        date: new Date(t.date),
+        date: t.date,
       })
     );
     toast({
@@ -127,7 +128,7 @@ export const TransactionEdit = () => {
               id: "",
               type: getTypedTransactionType(values.type),
               description: values.description,
-              date: new Date(values.date),
+              date: moment(values.date).toDate(),
               amount: values.amount,
             });
           }}

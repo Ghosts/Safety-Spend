@@ -21,6 +21,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
+import moment from "moment";
 import React from "react";
 import { FiPlusCircle } from "react-icons/fi";
 import { useDispatch } from "react-redux";
@@ -47,7 +48,7 @@ export const AddTransaction = () => {
         type: t.type,
         amount: t.amount,
         description: t.description,
-        date: new Date(t.date),
+        date: t.date,
       })
     );
     toast({
@@ -91,7 +92,7 @@ export const AddTransaction = () => {
                   id: "",
                   type: getTypedTransactionType(values.type),
                   description: values.description,
-                  date: new Date(values.date),
+                  date: moment(values.date).toDate(),
                   amount: values.amount,
                 });
               }}
@@ -162,12 +163,7 @@ export const AddTransaction = () => {
                           <InputGroup>
                             <InputLeftAddon children="Date" />
 
-                            <Input
-                              {...field}
-                              type="date"
-                              variant="outline"
-                              placeholder="Today!"
-                            />
+                            <Input {...field} type="date" variant="outline" />
                             <FormErrorMessage>
                               {form.errors.date}
                             </FormErrorMessage>

@@ -55,7 +55,7 @@ export const TrackingCard = () => {
   };
 
   const getWeekOfText = () => {
-    const lastSunday = getLastSunday(currentDay);
+    const lastSunday = getLastSunday(new Date(currentDay));
     const nextSunday = new Date(lastSunday);
     nextSunday.setDate(lastSunday.getDate() + 6);
 
@@ -125,7 +125,9 @@ export const TrackingCard = () => {
                 variant="ghost"
                 size="sm"
                 colorScheme="messenger"
-                onClick={() => dispatch(setCurrentDay(new Date()))}
+                onClick={() =>
+                  dispatch(setCurrentDay(new Date().toISOString()))
+                }
               >
                 <small>Go to Today</small>
               </Button>

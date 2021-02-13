@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { StringLiteral } from "typescript";
 import { User } from "../models/user";
 import { RootState } from "../store";
 import { getWeekEnd, getWeekStart } from "../utils/dates";
@@ -16,7 +17,7 @@ type AppState = {
   currentView: Views;
   editingId: string;
   currentUser: User | null;
-  currentDay: Date;
+  currentDay: string;
 };
 
 const initialState: AppState = {
@@ -25,7 +26,7 @@ const initialState: AppState = {
   currentView: Views.Default,
   editingId: "",
   currentUser: null,
-  currentDay: new Date(),
+  currentDay: new Date().toISOString(),
 };
 
 const appSlice = createSlice({
@@ -47,7 +48,7 @@ const appSlice = createSlice({
     setCurrentUser(state, action: PayloadAction<User>) {
       state.currentUser = action.payload;
     },
-    setCurrentDay(state, action: PayloadAction<Date>) {
+    setCurrentDay(state, action: PayloadAction<string>) {
       state.currentDay = action.payload;
     },
   },
@@ -86,7 +87,7 @@ export const goLastWeek = () => async (
     const currentDay = new Date(getState().app.currentDay);
     const weekStart = getWeekStart(currentDay);
     weekStart.setDate(weekStart.getDate() - 6);
-    dispatch(setCurrentDay(weekStart));
+    dispatch(setCurrentDay(weekStart.toISOString()));
     resolve("");
   });
 };
@@ -99,7 +100,7 @@ export const goNextWeek = () => async (
     const currentDay = new Date(getState().app.currentDay);
     const weekEnd = getWeekEnd(currentDay);
     weekEnd.setDate(weekEnd.getDate() + 6);
-    dispatch(setCurrentDay(weekEnd));
+    dispatch(setCurrentDay(weekEnd.toISOString()));
     resolve();
   });
 };
