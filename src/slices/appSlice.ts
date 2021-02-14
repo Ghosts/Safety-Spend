@@ -8,6 +8,7 @@ export enum Views {
   Transactions,
   Recurrences,
   Default,
+  Settings,
 }
 
 type AppState = {

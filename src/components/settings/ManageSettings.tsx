@@ -14,7 +14,7 @@ export const ManageSettings = () => {
           className="step4"
           variant="ghost"
           colorScheme="messenger"
-          onClick={() => dispatch(setView(Views.Recurrences))}
+          onClick={() => dispatch(setView(Views.Settings))}
           aria-label="Manage recurring transactions"
           icon={<Icon boxSize="1.5em" as={IoSettingsOutline} />}
         />

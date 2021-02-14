@@ -13,6 +13,7 @@ import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
 import { RefreshButton } from "./RefreshButton";
 import { ManageSettings } from "./settings/ManageSettings";
+import { SettingsPage } from "./settings/SettingsPage";
 import { AddTransaction } from "./transactions/AddTransaction";
 import { TransactionsList } from "./transactions/TransactionsList";
 
@@ -25,6 +26,8 @@ export const BudgetCard = () => {
     switch (currentView) {
       case Views.Recurrences:
         return <RecurrencesList />;
+      case Views.Settings:
+        return <SettingsPage />;
       case Views.Transactions:
       case Views.Default:
       default:
