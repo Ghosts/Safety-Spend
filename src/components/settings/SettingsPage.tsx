@@ -1,5 +1,4 @@
 import {
-  Spacer,
   Stack,
   IconButton,
   Icon,
