@@ -6,3 +6,7 @@
 body {
   overflow-y: scroll;
 }
+
+.chakra-accordion__item .chakra-icon {
+  color: #277afb;
+}

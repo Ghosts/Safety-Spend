@@ -25,11 +25,11 @@ export const InfoModal = () => {
     <>
       <Tooltip label="Info" fontSize="sm">
         <IconButton
-          colorScheme="gray"
+          colorScheme="blue"
           onClick={onOpen}
           variant="ghost"
           aria-label="Info"
-          icon={<Icon boxSize="1.5em" as={FiInfo} color="gray.500" />}
+          icon={<Icon boxSize="1.5em" as={FiInfo} />}
         />
       </Tooltip>
 
