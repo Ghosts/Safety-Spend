@@ -86,7 +86,7 @@ export const RecurrencesList = () => {
 
           <WeeklyBreakdown />
           <Divider m="15px" />
-          <Flex justifyContent="space-evenly" wrap="wrap">
+          <Flex className="step9" justifyContent="space-evenly" wrap="wrap">
             {recurrences.length <= 0 ? (
               <>
                 <Flex direction="column">

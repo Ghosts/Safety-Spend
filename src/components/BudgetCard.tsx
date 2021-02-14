@@ -39,6 +39,7 @@ export const BudgetCard = () => {
         padding="20px"
         borderWidth="1px"
         borderRadius="lg"
+        className="step3 step6"
       >
         {currentView !== Views.Default || isEditing ? (
           <></>

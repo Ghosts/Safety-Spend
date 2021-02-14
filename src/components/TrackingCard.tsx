@@ -106,6 +106,7 @@ export const TrackingCard = () => {
                         value={currentSafeToSpend}
                         size="124px"
                         thickness="8px"
+                        className="step2"
                       >
                         <CircularProgressLabel fontSize="18px">
                           ${currentSafeToSpend.toFixed(2)}
@@ -113,7 +114,7 @@ export const TrackingCard = () => {
                       </CircularProgress>
                     </Center>
                   </StatNumber>
-                  <StatHelpText textAlign="center">
+                  <StatHelpText className="step1" textAlign="center">
                     of ${safeToSpend.toFixed(2)}
                   </StatHelpText>
                 </Stat>

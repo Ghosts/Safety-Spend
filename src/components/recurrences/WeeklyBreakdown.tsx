@@ -22,7 +22,12 @@ export const WeeklyBreakdown = () => {
   const bgColor = useColorModeValue("gray.100", "gray.700");
 
   return (
-    <Stack justifyContent="center" direction={["column", "row"]} spacing={5}>
+    <Stack
+      className="step8"
+      justifyContent="center"
+      direction={["column", "row"]}
+      spacing={5}
+    >
       <Box borderRadius="lg" bg={bgColor}>
         <Stat m="5px" textAlign="center">
           <StatLabel>Weekly Income</StatLabel>

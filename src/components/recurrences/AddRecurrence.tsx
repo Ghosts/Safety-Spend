@@ -66,6 +66,7 @@ export const AddRecurrence = () => {
     <>
       <Tooltip label="Add recurrence">
         <IconButton
+          className="step7"
           variant="ghost"
           colorScheme="messenger"
           onClick={onOpen}

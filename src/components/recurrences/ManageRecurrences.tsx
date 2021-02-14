@@ -11,6 +11,7 @@ export const ManageRecurrences = () => {
     <>
       <Tooltip label="Manage recurring transactions">
         <IconButton
+          className="step5"
           variant="ghost"
           colorScheme="messenger"
           onClick={() => dispatch(setView(Views.Recurrences))}

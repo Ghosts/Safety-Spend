@@ -1,80 +1,128 @@
 import React, { useState } from "react";
-import {
-  Text,
-  Button,
-  Box,
-  ButtonGroup,
-  Icon,
-  IconButton,
-  Tooltip,
-  useDisclosure,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Spacer,
-} from "@chakra-ui/react";
+import { Text, Icon, IconButton, Tooltip } from "@chakra-ui/react";
 import { FiBookOpen } from "react-icons/fi";
+import Tour from "reactour";
+import { useDispatch } from "react-redux";
+import { updateView, Views } from "../../slices/appSlice";
+import { updateIsEditing } from "./../../slices/appSlice";
 
 export const LearnModal = () => {
-  const [currentStep, setCurrentStep] = useState(0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isTourOpen, setIsTourOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const startTour = () => {
+    dispatch(updateView(Views.Default));
+    dispatch(updateIsEditing(false));
+
+    setIsTourOpen(true);
+  };
 
   const steps = [
     {
       title: "Welcome to week!",
+      selector: ".step1",
       content: (
         <Text as="p">
           The philosophy of week is simple: <br />
-          <i>Stay under your weekly Safe-To-Spend.</i>
+          Stay under your weekly <b>Safe-To-Spend</b>. Everything in week is
+          based on a per-week basis.
         </Text>
       ),
     },
     {
       title: "What is Safe-To-Spend?",
+      selector: ".step2",
       content: (
         <Text as="p">
-          Your weekly Safe-To-Spend is calculated by taking your income
-          Recurrences and subtracting your expense Recurrences. Let's take a
-          look at Recurrences...
+          Your weekly <b>Safe-To-Spend</b> is automatically calculated by taking
+          income <b>Recurrences</b>&nbsp;(more on this later...), subtracting
+          expense <b>Recurrences</b>, and then finally subtracting
+          one-time&nbsp;<b>Transactions</b>.
         </Text>
       ),
     },
     {
-      title: "Recurrences?",
+      title: "What is Safe-To-Spend?",
+      selector: ".step3",
       content: (
         <Text as="p">
-          A Recurrence is any transaction that has a schedule. Think bills,
-          paychecks, or savings goals / investments you want to be recurring.
-          Recurrences are always known ahead of time and accounted for! You can
-          add Recurrences by clicking the calendar icon on the Activity card.
+          <b>Transactions</b> are one-time expenses or incomes, such as getting
+          paid for a split cost by a friend, or paying for coffee at a cafe.
         </Text>
       ),
     },
     {
-      title: "What about one-time things?",
+      title: "What is Safe-To-Spend?",
+      selector: ".step4",
       content: (
         <Text as="p">
-          Anything that's a one-off is just considered a Transaction. This means
-          things like coffee purchases or getting paid by a friend will reduce
-          or increase your Safe-To-Spend for that week. You can add Transactions
-          to be tracked by using the plus icon on the Activity card.
+          You can add new <b>Transactions</b> here.
         </Text>
       ),
     },
     {
-      title: "... Will this work?",
+      title: "What is Safe-To-Spend?",
+      selector: ".step5",
+      action: () => {
+        dispatch(updateView(Views.Default));
+      },
       content: (
         <Text as="p">
-          Yes! Week makes budgeting easy. There's no tracking spending on a
-          million categories or having to adjust everything each month.
-          <br />
-          <br />
-          The idea is simple: as long as you spend less on average than you make
-          + need for expenses, you're all set.
+          Here you can view &amp; manage <b>Recurrences</b>.
+        </Text>
+      ),
+    },
+    {
+      title: "What is Safe-To-Spend?",
+      selector: ".step6",
+      action: () => {
+        dispatch(updateView(Views.Recurrences));
+      },
+      content: (
+        <Text as="p">
+          <b>Recurrences</b> are simply <b>Transactions</b> that have a
+          schedule. They are known expenses or incomes (like pay checks or rent)
+          that <i>do not count toward your Safe-To-Spend</i>.
+        </Text>
+      ),
+    },
+    {
+      title: "What is Safe-To-Spend?",
+      selector: ".step7",
+      content: (
+        <Text as="p">
+          You can add new <b>Recurrences</b> here. Make sure you track regular
+          bills (rent, utilities, subscriptions), along with savings or
+          investment goals.
+        </Text>
+      ),
+    },
+    {
+      title: "What is Safe-To-Spend?",
+      selector: ".step8",
+      content: (
+        <Text as="p">
+          Here you can see a breakdown of your weekly income, expenses, and how
+          the weekly Safe-To-Spend is calculated.
+        </Text>
+      ),
+    },
+    {
+      title: "What is Safe-To-Spend?",
+      selector: ".step9",
+      content: (
+        <Text as="p">
+          And here you can see what <b>Recurrences</b> you are tracking. Click
+          on them to edit!
+        </Text>
+      ),
+    },
+    {
+      content: (
+        <Text as="p">
+          That's about all there is to know! The idea is simple: as long as you
+          spend less on average than you make + need for expenses, you're all
+          set.
         </Text>
       ),
     },
@@ -83,45 +131,20 @@ export const LearnModal = () => {
     <>
       <Tooltip label="Start tutorial" fontSize="sm">
         <IconButton
-          onClick={onOpen}
+          onClick={startTour}
           colorScheme="green"
           variant="ghost"
           aria-label="Start tutorial"
           icon={<Icon boxSize="1.5em" as={FiBookOpen} color="green.500" />}
         />
       </Tooltip>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader> {steps[currentStep].title}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{steps[currentStep].content}</ModalBody>
-
-          <ModalFooter>
-            <Box fontSize="sm">
-              Step {currentStep + 1} of {steps.length}
-            </Box>
-            <Spacer />
-            <ButtonGroup size="sm">
-              {currentStep > 0 && (
-                <Button
-                  onClick={() => setCurrentStep(currentStep - 1)}
-                  colorScheme="gray"
-                >
-                  Previous
-                </Button>
-              )}
-              <Button
-                colorScheme="messenger"
-                disabled={!(currentStep < steps.length - 1)}
-                onClick={() => setCurrentStep(currentStep + 1)}
-              >
-                Next
-              </Button>
-            </ButtonGroup>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <Tour
+        startAt={0}
+        accentColor="#277AFB"
+        steps={steps}
+        isOpen={isTourOpen}
+        onRequestClose={() => setIsTourOpen(false)}
+      />
     </>
   );
 };

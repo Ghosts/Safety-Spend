@@ -64,6 +64,7 @@ export const AddTransaction = () => {
     <>
       <Tooltip label="Add manual transaction">
         <IconButton
+          className="step4"
           variant="ghost"
           colorScheme="messenger"
           onClick={onOpen}
