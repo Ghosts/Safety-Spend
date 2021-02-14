@@ -9,13 +9,13 @@ export const ManageSettings = () => {
 
   return (
     <>
-      <Tooltip label="Manage recurring transactions">
+      <Tooltip label="Settings">
         <IconButton
           className="step4"
           variant="ghost"
           colorScheme="messenger"
           onClick={() => dispatch(setView(Views.Settings))}
-          aria-label="Manage recurring transactions"
+          aria-label="Settings"
           icon={<Icon boxSize="1.5em" as={IoSettingsOutline} />}
         />
       </Tooltip>
