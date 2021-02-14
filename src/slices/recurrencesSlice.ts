@@ -65,7 +65,8 @@ export const loadRecurrences = () => (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
-  return RecurrencesApi.getRecurrences(getState)
+  dispatch(setLoading(true));
+  RecurrencesApi.getRecurrences(getState)
     .then((recurrences) => {
       const recurrencesList = recurrences.docs.map((r) => r.data());
       dispatch(setRecurrences(recurrencesList));
@@ -111,6 +112,8 @@ export const deleteRecurrence = (id: string) => async (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
+  dispatch(setLoading(true));
+
   RecurrencesApi.deleteRecurrence(id, getState)
     .then(() => {
       dispatch(removeRecurrence(id));

@@ -56,7 +56,7 @@ export const TransactionEdit = () => {
       title: "Transaction Error",
       description: `There was a problem loading the transaction`,
       status: "error",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     dispatch(setEditing(false));
@@ -89,7 +89,7 @@ export const TransactionEdit = () => {
       title: "Transaction Updated",
       description: `Your Safe-To-Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     dispatch(setEditing(false));

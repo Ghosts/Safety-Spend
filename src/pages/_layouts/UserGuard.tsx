@@ -17,7 +17,7 @@ export const UserGuard = ({ children }: UserGuardProps) => {
       history.push("/");
     } else if (error) {
       toast({
-        title: "User rror",
+        title: "User Error",
         description: error,
         status: "error",
         duration: 5000,

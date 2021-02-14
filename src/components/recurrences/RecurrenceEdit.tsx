@@ -60,7 +60,7 @@ export const RecurrenceEdit = () => {
       title: "Recurrence Error",
       description: `There was a problem loading the recurrence`,
       status: "error",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     dispatch(setEditing(false));

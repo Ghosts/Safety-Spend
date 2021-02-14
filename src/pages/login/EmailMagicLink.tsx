@@ -48,7 +48,7 @@ export const EmailMagicLink = () => {
       .catch((error) => {
         console.error(error);
         toast({
-          title: "User rror",
+          title: "User Error",
           description: error.toString(),
           status: "error",
           duration: 5000,

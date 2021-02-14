@@ -52,10 +52,10 @@ export const AddTransaction = () => {
       })
     );
     toast({
-      title: "Transaction added",
+      title: "Transaction Added",
       description: `Your Safe-To-Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     onClose();

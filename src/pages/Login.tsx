@@ -31,13 +31,13 @@ export const Login = () => {
   const logInError = useCallback(
     (error?: string) => {
       toast({
-        title: "Login error",
+        title: "Login Error",
         description:
           error !== undefined
             ? error
             : "There was a problem... please try logging in again!",
         status: "error",
-        duration: 3000,
+        duration: 5000,
         isClosable: true,
       });
     },
@@ -47,12 +47,6 @@ export const Login = () => {
   useEffect(() => {
     if (user && currentUser) {
       history.push("/app");
-      toast({
-        title: "Logged In!",
-        status: "success",
-        duration: 700,
-        isClosable: true,
-      });
     }
   });
 

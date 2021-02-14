@@ -70,6 +70,7 @@ export const loadTransactions = (date?: Date) => (
   dispatch: Dispatch<any>,
   getState: () => RootState
 ) => {
+  dispatch(setLoading(true));
   if (!date) date = new Date();
   const start = getWeekStart(date);
   const end = getWeekEnd(date);

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { appSelectors, Views } from "../slices/appSlice";
 import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
+import { RefreshButton } from "./RefreshButton";
 import { AddTransaction } from "./transactions/AddTransaction";
 import { TransactionsList } from "./transactions/TransactionsList";
 
@@ -49,6 +50,7 @@ export const BudgetCard = () => {
               </Heading>
             </Box>
             <Spacer />
+            <RefreshButton />
             <ManageRecurrences />
             <AddTransaction />
           </Stack>

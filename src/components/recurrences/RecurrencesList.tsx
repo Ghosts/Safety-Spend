@@ -35,6 +35,7 @@ import {
 import { AddRecurrence } from "./AddRecurrence";
 import { RecurrenceEdit } from "./RecurrenceEdit";
 import { WeeklyBreakdown } from "./WeeklyBreakdown";
+import { RefreshButton } from "../RefreshButton";
 
 export const RecurrencesList = () => {
   const dispatch = useDispatch();
@@ -79,8 +80,10 @@ export const RecurrencesList = () => {
               </Heading>
             </Box>
             <Spacer />
+            <RefreshButton />
             <AddRecurrence />
           </Stack>
+
           <WeeklyBreakdown />
           <Divider m="15px" />
           <Flex justifyContent="space-evenly" wrap="wrap">

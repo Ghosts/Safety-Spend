@@ -54,10 +54,10 @@ export const AddRecurrence = () => {
       })
     );
     toast({
-      title: "Recurrence added",
+      title: "Recurrence Added",
       description: `Your Safe-To-Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     onClose();
