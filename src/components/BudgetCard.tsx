@@ -12,6 +12,7 @@ import { appSelectors, Views } from "../slices/appSlice";
 import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
 import { RefreshButton } from "./RefreshButton";
+import { ManageSettings } from "./settings/ManageSettings";
 import { AddTransaction } from "./transactions/AddTransaction";
 import { TransactionsList } from "./transactions/TransactionsList";
 
@@ -39,7 +40,7 @@ export const BudgetCard = () => {
         padding="20px"
         borderWidth="1px"
         borderRadius="lg"
-        className="step3 step6"
+        className="step3 step7"
       >
         {currentView !== Views.Default || isEditing ? (
           <></>
@@ -51,9 +52,10 @@ export const BudgetCard = () => {
               </Heading>
             </Box>
             <Spacer />
-            <RefreshButton />
+            <ManageSettings />
             <ManageRecurrences />
             <AddTransaction />
+            <RefreshButton />
           </Stack>
         )}
         {getCurrentView()}

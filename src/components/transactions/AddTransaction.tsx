@@ -23,7 +23,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
 import React from "react";
-import { FiPlusCircle } from "react-icons/fi";
+import { IoAddCircleOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 import {
@@ -64,12 +64,12 @@ export const AddTransaction = () => {
     <>
       <Tooltip label="Add manual transaction">
         <IconButton
-          className="step4"
+          className="step5"
           variant="ghost"
           colorScheme="messenger"
           onClick={onOpen}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} />}
+          icon={<Icon boxSize="1.5em" as={IoAddCircleOutline} />}
         />
       </Tooltip>
       <Drawer

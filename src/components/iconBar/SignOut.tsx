@@ -1,6 +1,6 @@
 import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import React from "react";
-import { FiLogOut } from "react-icons/fi";
+import { IoLogOutOutline } from "react-icons/io5";
 import firebase from "firebase/app";
 
 export const SignOut = () => {
@@ -13,7 +13,7 @@ export const SignOut = () => {
         colorScheme="messenger"
         variant="ghost"
         aria-label="Sign Out"
-        icon={<Icon boxSize="1.5em" as={FiLogOut} />}
+        icon={<Icon boxSize="1.5em" as={IoLogOutOutline} />}
       />
     </Tooltip>
   );

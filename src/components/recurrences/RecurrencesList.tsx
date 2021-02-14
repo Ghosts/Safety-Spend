@@ -18,7 +18,7 @@ import {
   Divider,
   useToast,
 } from "@chakra-ui/react";
-import { FiArrowLeftCircle } from "react-icons/fi";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -71,7 +71,7 @@ export const RecurrencesList = () => {
                 variant="ghost"
                 colorScheme="messenger"
                 aria-label="Go back"
-                icon={<Icon boxSize="1.5em" as={FiArrowLeftCircle} />}
+                icon={<Icon boxSize="1.5em" as={IoArrowBackCircleOutline} />}
               />
             </Tooltip>
             <Box>
@@ -80,13 +80,13 @@ export const RecurrencesList = () => {
               </Heading>
             </Box>
             <Spacer />
-            <RefreshButton />
             <AddRecurrence />
+            <RefreshButton />
           </Stack>
 
           <WeeklyBreakdown />
           <Divider m="15px" />
-          <Flex className="step9" justifyContent="space-evenly" wrap="wrap">
+          <Flex className="step10" justifyContent="space-evenly" wrap="wrap">
             {recurrences.length <= 0 ? (
               <>
                 <Flex direction="column">

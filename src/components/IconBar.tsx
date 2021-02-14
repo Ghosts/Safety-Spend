@@ -1,45 +1,23 @@
-import { FiHeart, FiMoon, FiSun } from "react-icons/fi";
-import {
-  Icon,
-  IconButton,
-  SlideFade,
-  Stack,
-  Tooltip,
-  useColorMode,
-} from "@chakra-ui/react";
+import { IoHeartOutline } from "react-icons/io5";
+import { Icon, IconButton, SlideFade, Stack, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { InfoModal } from "./iconBar/InfoModal";
 import { SignOut } from "./iconBar/SignOut";
 import { LearnModal } from "./iconBar/LearnModal";
+import { ThemeSwitch } from "./iconBar/ThemeSwitch";
 
 export const IconBar = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   return (
     <SlideFade in offsetX="0" offsetY="50px">
       <Stack direction="row" spacing={1}>
-        <Tooltip label="Switch theme" fontSize="sm">
-          <IconButton
-            colorScheme={colorMode === "light" ? "purple" : "orange"}
-            onClick={toggleColorMode}
-            variant="ghost"
-            aria-label="Switch theme"
-            icon={
-              colorMode === "light" ? (
-                <Icon boxSize="1.5em" as={FiMoon} color="purple.500" />
-              ) : (
-                <Icon boxSize="1.5em" as={FiSun} color="orange.500" />
-              )
-            }
-          />
-        </Tooltip>
+        <ThemeSwitch />
         <LearnModal />
         <Tooltip label="Support" fontSize="sm">
           <IconButton
             colorScheme="red"
             variant="ghost"
             aria-label="Support"
-            icon={<Icon boxSize="1.5em" as={FiHeart} color="red.500" />}
+            icon={<Icon boxSize="1.5em" as={IoHeartOutline} />}
           />
         </Tooltip>
         <InfoModal />

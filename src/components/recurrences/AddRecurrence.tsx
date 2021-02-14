@@ -22,7 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import React from "react";
-import { FiPlusCircle } from "react-icons/fi";
+import { IoAddCircleOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import {
   frequencies,
@@ -66,12 +66,12 @@ export const AddRecurrence = () => {
     <>
       <Tooltip label="Add recurrence">
         <IconButton
-          className="step7"
+          className="step8"
           variant="ghost"
           colorScheme="messenger"
           onClick={onOpen}
           aria-label="Add recurrence"
-          icon={<Icon boxSize="1.5em" as={FiPlusCircle} />}
+          icon={<Icon boxSize="1.5em" as={IoAddCircleOutline} />}
         />
       </Tooltip>
 

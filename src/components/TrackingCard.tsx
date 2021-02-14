@@ -30,7 +30,7 @@ import {
   goNextWeek,
   setCurrentDay,
 } from "./../slices/appSlice";
-import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
+import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 
 export const TrackingCard = () => {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Last week</Text>
-              <Icon as={FiArrowLeft} />
+              <Icon as={IoArrowBack} />
             </Box>
           </Button>
           <Box
@@ -145,7 +145,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Next week</Text>
-              <Icon as={FiArrowRight} />
+              <Icon as={IoArrowForward} />
             </Box>
           </Button>
         </Stack>

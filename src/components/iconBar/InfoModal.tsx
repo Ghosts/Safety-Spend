@@ -16,7 +16,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiInfo } from "react-icons/fi";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 export const InfoModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -29,7 +29,7 @@ export const InfoModal = () => {
           onClick={onOpen}
           variant="ghost"
           aria-label="Info"
-          icon={<Icon boxSize="1.5em" as={FiInfo} />}
+          icon={<Icon boxSize="1.5em" as={IoInformationCircleOutline} />}
         />
       </Tooltip>
 

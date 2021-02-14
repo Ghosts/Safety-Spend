@@ -28,7 +28,7 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import React from "react";
-import { FiArrowLeftCircle } from "react-icons/fi";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getTypedTransactionType,
@@ -106,11 +106,9 @@ export const RecurrenceEdit = () => {
           <IconButton
             onClick={() => dispatch(setEditing(false))}
             variant="ghost"
-            colorScheme="blue"
+            colorScheme="messenger"
             aria-label="Go back"
-            icon={
-              <Icon boxSize="1.5em" as={FiArrowLeftCircle} color="blue.400" />
-            }
+            icon={<Icon boxSize="1.5em" as={IoArrowBackCircleOutline} />}
           />
         </Tooltip>
         <Box>

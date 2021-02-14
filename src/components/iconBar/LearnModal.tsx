@@ -6,7 +6,7 @@ import {
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { FiBookOpen } from "react-icons/fi";
+import { IoBookOutline } from "react-icons/io5";
 import Tour from "reactour";
 import { useDispatch } from "react-redux";
 import { updateView, Views } from "../../slices/appSlice";
@@ -25,7 +25,6 @@ export const LearnModal = () => {
 
   const steps = [
     {
-      title: "Welcome to week!",
       selector: ".step1",
       content: (
         <Text as="p">
@@ -36,7 +35,6 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
       selector: ".step2",
       content: (
         <Text as="p">
@@ -48,7 +46,6 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
       selector: ".step3",
       content: (
         <Text as="p">
@@ -58,8 +55,11 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
       selector: ".step4",
+      content: <Text as="p">You can manage settings here.</Text>,
+    },
+    {
+      selector: ".step5",
       content: (
         <Text as="p">
           You can add new <b>Transactions</b> here.
@@ -67,8 +67,7 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
-      selector: ".step5",
+      selector: ".step6",
       action: () => {
         dispatch(updateView(Views.Default));
       },
@@ -79,8 +78,7 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
-      selector: ".step6",
+      selector: ".step7",
       action: () => {
         dispatch(updateView(Views.Recurrences));
       },
@@ -93,8 +91,7 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
-      selector: ".step7",
+      selector: ".step8",
       content: (
         <Text as="p">
           You can add new <b>Recurrences</b> here. Make sure you track regular
@@ -104,8 +101,7 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
-      selector: ".step8",
+      selector: ".step9",
       content: (
         <Text as="p">
           Here you can see a breakdown of your weekly income, expenses, and how
@@ -114,8 +110,7 @@ export const LearnModal = () => {
       ),
     },
     {
-      title: "What is Safe-To-Spend?",
-      selector: ".step9",
+      selector: ".step10",
       content: (
         <Text as="p">
           And here you can see what <b>Recurrences</b> you are tracking. Click
@@ -141,7 +136,7 @@ export const LearnModal = () => {
           colorScheme="green"
           variant="ghost"
           aria-label="Start tutorial"
-          icon={<Icon boxSize="1.5em" as={FiBookOpen} color="green.500" />}
+          icon={<Icon boxSize="1.5em" as={IoBookOutline} color="green.500" />}
         />
       </Tooltip>
       <Tour

@@ -8,7 +8,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { FiActivity, FiTrendingDown, FiTrendingUp } from "react-icons/fi";
+import { IoPulseOutline, IoTrendingDown, IoTrendingUp } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { recurrencesSelectors } from "../../slices/recurrencesSlice";
 import { getWeeklyIncome, getWeeklyExpenses } from "../../utils/tracking";
@@ -23,7 +23,7 @@ export const WeeklyBreakdown = () => {
 
   return (
     <Stack
-      className="step8"
+      className="step9"
       justifyContent="center"
       direction={["column", "row"]}
       spacing={5}
@@ -32,7 +32,7 @@ export const WeeklyBreakdown = () => {
         <Stat m="5px" textAlign="center">
           <StatLabel>Weekly Income</StatLabel>
           <StatNumber>
-            <Icon m="5px" color="green.400" as={FiTrendingUp} />$
+            <Icon m="5px" color="green.400" as={IoTrendingUp} />$
             {weeklyIncome.toFixed(2)}
           </StatNumber>
         </Stat>
@@ -41,7 +41,7 @@ export const WeeklyBreakdown = () => {
         <Stat m="5px" textAlign="center">
           <StatLabel>Weekly Expenses</StatLabel>
           <StatNumber>
-            <Icon m="5px" color="red.400" as={FiTrendingDown} />$
+            <Icon m="5px" color="red.400" as={IoTrendingDown} />$
             {weeklyExpenses.toFixed(2)}
           </StatNumber>
         </Stat>
@@ -50,7 +50,7 @@ export const WeeklyBreakdown = () => {
         <Stat m="5px" textAlign="center">
           <StatLabel>Weekly Safe-To-Spend</StatLabel>
           <StatNumber>
-            <Icon m="5px" color="cyan.400" as={FiActivity} />$
+            <Icon m="5px" color="cyan.400" as={IoPulseOutline} />$
             {safeToSpend.toFixed(2)}
           </StatNumber>
         </Stat>

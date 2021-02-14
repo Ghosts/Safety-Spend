@@ -29,7 +29,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import moment from "moment";
 import React from "react";
-import { FiArrowLeftCircle } from "react-icons/fi";
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Transaction,
@@ -104,7 +104,7 @@ export const TransactionEdit = () => {
             variant="ghost"
             colorScheme="messenger"
             aria-label="Go back"
-            icon={<Icon boxSize="1.5em" as={FiArrowLeftCircle} />}
+            icon={<Icon boxSize="1.5em" as={IoArrowBackCircleOutline} />}
           />
         </Tooltip>
         <Box>

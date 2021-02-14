@@ -1,6 +1,6 @@
 import { Icon, IconButton, Tooltip, useToast } from "@chakra-ui/react";
 import React from "react";
-import { FiRefreshCw } from "react-icons/fi";
+import { IoReload } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { loadRecurrences } from "../slices/recurrencesSlice";
 import { loadTransactions } from "../slices/transactionsSlice";
@@ -29,7 +29,7 @@ export const RefreshButton = () => {
           colorScheme="messenger"
           onClick={refreshData}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={FiRefreshCw} />}
+          icon={<Icon boxSize="1.5em" as={IoReload} />}
         />
       </Tooltip>
     </>
