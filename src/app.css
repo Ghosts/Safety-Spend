@@ -10,3 +10,11 @@ body {
 .chakra-accordion__item .chakra-icon {
   color: #277afb;
 }
+
+.bgLight {
+  background-color: white !important;
+}
+
+.bgDark {
+  background-color: #1a202c !important;
+}

@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Text, Icon, IconButton, Tooltip } from "@chakra-ui/react";
+import {
+  Text,
+  Icon,
+  IconButton,
+  Tooltip,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FiBookOpen } from "react-icons/fi";
 import Tour from "reactour";
 import { useDispatch } from "react-redux";
@@ -9,11 +15,11 @@ import { updateIsEditing } from "./../../slices/appSlice";
 export const LearnModal = () => {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const dispatch = useDispatch();
+  const bgClass = useColorModeValue("bgLight", "bgDark");
 
   const startTour = () => {
     dispatch(updateView(Views.Default));
     dispatch(updateIsEditing(false));
-
     setIsTourOpen(true);
   };
 
@@ -139,6 +145,8 @@ export const LearnModal = () => {
         />
       </Tooltip>
       <Tour
+        className={bgClass}
+        rounded={20}
         startAt={0}
         accentColor="#277AFB"
         steps={steps}
