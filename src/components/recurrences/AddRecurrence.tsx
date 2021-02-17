@@ -55,7 +55,7 @@ export const AddRecurrence = () => {
     );
     toast({
       title: "Recurrence Added",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
       isClosable: true,

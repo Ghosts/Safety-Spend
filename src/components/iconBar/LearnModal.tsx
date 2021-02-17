@@ -29,8 +29,8 @@ export const LearnModal = () => {
       selector: ".step1",
       content: (
         <Text as="p">
-          The philosophy of week is simple: <br />
-          Stay under your weekly <b>Safe-To-Spend</b>. Everything in week is
+          The philosophy of Safety Spend is simple: <br />
+          Stay under your weekly <b>Safety Spend</b>. Everything in week is
           based on a per-week basis. &nbsp;
           <span>
             You can click, or use <Kbd>←</Kbd> and <Kbd>→</Kbd> to navigate.
@@ -42,7 +42,7 @@ export const LearnModal = () => {
       selector: ".step2",
       content: (
         <Text as="p">
-          Your weekly <b>Safe-To-Spend</b> is automatically calculated by taking
+          Your weekly <b>Safety Spend</b> is automatically calculated by taking
           income <b>Recurrences</b>&nbsp;(more on this later...), subtracting
           expense <b>Recurrences</b>, and then finally subtracting
           one-time&nbsp;<b>Transactions</b>.
@@ -90,7 +90,7 @@ export const LearnModal = () => {
         <Text as="p">
           <b>Recurrences</b> are simply <b>Transactions</b> that have a
           schedule. They are known expenses or incomes (like pay checks or rent)
-          that <i>do not count toward your Safe-To-Spend</i>.
+          that <i>do not count toward your Safety Spend</i>.
         </Text>
       ),
     },
@@ -109,7 +109,7 @@ export const LearnModal = () => {
       content: (
         <Text as="p">
           Here you can see a breakdown of your weekly income, expenses, and how
-          the weekly Safe-To-Spend is calculated.
+          the weekly Safety Spend is calculated.
         </Text>
       ),
     },

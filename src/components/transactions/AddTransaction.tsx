@@ -53,7 +53,7 @@ export const AddTransaction = () => {
     );
     toast({
       title: "Transaction Added",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
       isClosable: true,

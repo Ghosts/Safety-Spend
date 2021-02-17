@@ -67,7 +67,7 @@ export const TransactionEdit = () => {
     dispatch(deleteTransaction(editingId));
     toast({
       title: "Transaction Deleted",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -87,7 +87,7 @@ export const TransactionEdit = () => {
     );
     toast({
       title: "Transaction Updated",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
       isClosable: true,

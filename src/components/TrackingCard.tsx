@@ -93,7 +93,7 @@ export const TrackingCard = () => {
               <Stack direction="row" spacing={1}>
                 <Stat>
                   <StatLabel textAlign="center">
-                    <b>Safe-To-Spend</b>
+                    <b>Safety Spend</b>
                     <br /> {getWeekOfText()}
                   </StatLabel>
                   <StatNumber>

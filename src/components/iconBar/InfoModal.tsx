@@ -39,7 +39,7 @@ export const InfoModal = () => {
           <ModalHeader>Info</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Week is an open-sourced budgeting app designed to break down
+            Safety Spend is an open-sourced budgeting app designed to break down
             finances on a per-week level so you always know how much you have to
             spend.
             <Divider mt="15px" mb="5px" />

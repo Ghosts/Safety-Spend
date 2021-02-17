@@ -1,1 +1,1 @@
-[DEMO](http://weekb.netlify.app/).
+[safetyspend.app](http://safetyspend.app/).

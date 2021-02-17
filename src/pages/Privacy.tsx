@@ -9,22 +9,32 @@ import {
   UnorderedList,
   Flex,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 import React from "react";
+import { RiHeartPulseFill } from "react-icons/ri";
 import { useHistory } from "react-router-dom";
 
 export const Privacy = () => {
-  const { colorMode } = useColorMode();
   const history = useHistory();
-  const color = colorMode === "light" ? "black" : "white";
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Text color={color} fontSize="6xl" fontWeight="extrabold">
-            week
-          </Text>
+          <Flex direction="row">
+            <Icon
+              alignSelf="center"
+              w={30}
+              h={30}
+              p={0}
+              m={0}
+              as={RiHeartPulseFill}
+            />
+            <Text fontSize="6xl" fontWeight="extrabold">
+              safety
+            </Text>
+          </Flex>
         </Box>
         <Box
           w={["sm", "md"]}

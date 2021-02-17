@@ -68,7 +68,7 @@ export const RecurrenceEdit = () => {
     dispatch(deleteRecurrence(editingId));
     toast({
       title: "Recurrence Deleted",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -88,7 +88,7 @@ export const RecurrenceEdit = () => {
     );
     toast({
       title: "Recurrence Updated",
-      description: `Your Safe-To-Spend will update shortly.`,
+      description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 5000,
       isClosable: true,

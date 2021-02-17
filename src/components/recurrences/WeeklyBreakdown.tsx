@@ -48,7 +48,7 @@ export const WeeklyBreakdown = () => {
       </Box>
       <Box borderRadius="lg" bg={bgColor}>
         <Stat m="5px" textAlign="center">
-          <StatLabel>Weekly Safe-To-Spend</StatLabel>
+          <StatLabel>Weekly Safety Spend</StatLabel>
           <StatNumber>
             <Icon m="5px" color="cyan.400" as={BiPulse} />$
             {safeToSpend.toFixed(2)}

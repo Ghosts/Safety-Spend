@@ -8,6 +8,8 @@ import {
   useToast,
   useColorModeValue,
   Divider,
+  Flex,
+  Icon,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -19,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User } from "../models/user";
 import { GoogleLogin } from "./login/GoogleLogin";
 import { TwitterLogin } from "./login/TwitterLogin";
+import { RiHeartPulseFill } from "react-icons/ri";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -74,14 +77,25 @@ export const Login = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Text
-            bgGradient={`linear(to-r, blue,cyan.400)`}
-            bgClip="text"
-            fontSize="6xl"
-            fontWeight="extrabold"
-          >
-            week
-          </Text>
+          <Flex direction="row">
+            <Icon
+              alignSelf="center"
+              color="blue.700"
+              w={30}
+              h={30}
+              p={0}
+              m={0}
+              as={RiHeartPulseFill}
+            />
+            <Text
+              bgGradient={`linear(to-r, blue.500,cyan.400)`}
+              bgClip="text"
+              fontSize="6xl"
+              fontWeight="extrabold"
+            >
+              safety
+            </Text>
+          </Flex>
         </Box>
         <Box
           bg={bgColor}
@@ -105,7 +119,7 @@ export const Login = () => {
               <Heading as="h2" size="lg">
                 Welcome,
               </Heading>
-              <Text>Week is a weekly-based budgeting app.</Text>
+              <Text>Safety Spend is a weekly-based budgeting app.</Text>
               <Divider pt="10px" mb="10px" w="50%" />
               <VStack justifyContent="center">
                 <GoogleLogin error={logInError} />

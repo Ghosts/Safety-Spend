@@ -1,5 +1,6 @@
-import { VStack, Box, Text, Link } from "@chakra-ui/react";
+import { VStack, Box, Text, Link, Icon, Flex } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
+import { RiHeartPulseFill } from "react-icons/ri";
 import { IconBar } from "../../components/IconBar";
 import { UserGuard } from "./UserGuard";
 
@@ -12,14 +13,25 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
     <UserGuard>
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Text
-            bgGradient={`linear(to-r, blue,cyan.400)`}
-            bgClip="text"
-            fontSize="6xl"
-            fontWeight="extrabold"
-          >
-            week
-          </Text>
+          <Flex direction="row">
+            <Icon
+              alignSelf="center"
+              color="blue.700"
+              w={30}
+              h={30}
+              p={0}
+              m={0}
+              as={RiHeartPulseFill}
+            />
+            <Text
+              bgGradient={`linear(to-r, blue.500,cyan.400)`}
+              bgClip="text"
+              fontSize="6xl"
+              fontWeight="extrabold"
+            >
+              safety
+            </Text>
+          </Flex>
         </Box>
         {children}
         {showIconBar ? (

@@ -51,7 +51,7 @@ export const SettingsPage = () => {
             </Heading>
             <Text>
               Here you can manage account settings, Plaid integration, and
-              subscription to Week.
+              subscription to Safety Spend.
             </Text>
             <Box>
               {/* <Button disabled={!ready} onClick={() => open()}>

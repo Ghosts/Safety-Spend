@@ -75,7 +75,7 @@ export const EmailMagicLink = () => {
   return (
     <>
       <Text textAlign="center">
-        Week can use
+        Safety Spend can use
         <Text
           as="span"
           d="inline-block"
