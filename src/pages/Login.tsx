@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { User } from "../models/user";
 import { GoogleLogin } from "./login/GoogleLogin";
 import { TwitterLogin } from "./login/TwitterLogin";
-import { RiHeartPulseFill } from "react-icons/ri";
+import { ImLifebuoy } from "react-icons/im";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -80,15 +80,15 @@ export const Login = () => {
           <Flex direction="row">
             <Icon
               alignSelf="center"
-              color="blue.700"
+              color="blue.400"
               w={30}
               h={30}
               p={0}
               m={0}
-              as={RiHeartPulseFill}
+              as={ImLifebuoy}
             />
             <Text
-              bgGradient={`linear(to-r, blue.500,cyan.400)`}
+              bgGradient={`linear(to-r, blue.400,cyan.400)`}
               bgClip="text"
               fontSize="6xl"
               fontWeight="extrabold"

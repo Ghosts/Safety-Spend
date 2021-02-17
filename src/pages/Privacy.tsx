@@ -4,7 +4,6 @@ import {
   SlideFade,
   Heading,
   VStack,
-  useColorMode,
   ListItem,
   UnorderedList,
   Flex,
@@ -12,7 +11,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import React from "react";
-import { RiHeartPulseFill } from "react-icons/ri";
+import { ImLifebuoy } from "react-icons/im";
 import { useHistory } from "react-router-dom";
 
 export const Privacy = () => {
@@ -29,7 +28,7 @@ export const Privacy = () => {
               h={30}
               p={0}
               m={0}
-              as={RiHeartPulseFill}
+              as={ImLifebuoy}
             />
             <Text fontSize="6xl" fontWeight="extrabold">
               safety

@@ -1,6 +1,6 @@
 import { VStack, Box, Text, Link, Icon, Flex } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
-import { RiHeartPulseFill } from "react-icons/ri";
+import { ImLifebuoy } from "react-icons/im";
 import { IconBar } from "../../components/IconBar";
 import { UserGuard } from "./UserGuard";
 
@@ -16,15 +16,15 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
           <Flex direction="row">
             <Icon
               alignSelf="center"
-              color="blue.700"
+              color="blue.400"
               w={30}
               h={30}
               p={0}
               m={0}
-              as={RiHeartPulseFill}
+              as={ImLifebuoy}
             />
             <Text
-              bgGradient={`linear(to-r, blue.500,cyan.400)`}
+              bgGradient={`linear(to-r, blue.400,cyan.400)`}
               bgClip="text"
               fontSize="6xl"
               fontWeight="extrabold"

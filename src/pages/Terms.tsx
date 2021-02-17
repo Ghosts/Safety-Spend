@@ -11,7 +11,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import React from "react";
-import { RiHeartPulseFill } from "react-icons/ri";
+import { ImLifebuoy } from "react-icons/im";
 import { useHistory } from "react-router-dom";
 
 export const Terms = () => {
@@ -28,7 +28,7 @@ export const Terms = () => {
               h={30}
               p={0}
               m={0}
-              as={RiHeartPulseFill}
+              as={ImLifebuoy}
             />
             <Text fontSize="6xl" fontWeight="extrabold">
               safety
