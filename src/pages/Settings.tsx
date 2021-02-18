@@ -13,11 +13,11 @@ import {
 import { BiUndo } from "react-icons/bi";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSelectors, setView, Views } from "../../slices/appSlice";
-import { PlaidLink } from "./PlaidLink";
-import { BackButton } from "../BackButton";
+import { appSelectors, setView, Views } from "../slices/appSlice";
+import { PlaidLink } from "../components/settings/PlaidLink";
+import { BackButton } from "../components/BackButton";
 
-export const SettingsPage = () => {
+export const Settings = () => {
   const currentUser = useSelector(appSelectors.currentUser);
   const [token, setToken] = useState("");
   const toast = useToast();
@@ -29,7 +29,7 @@ export const SettingsPage = () => {
   }, []);
 
   useEffect(() => {
-    fetch(`/getToken?id=${currentUser?.userId}&email=${currentUser?.email}`)
+    fetch(`/api/getToken?id=${currentUser?.userId}&email=${currentUser?.email}`)
       .then((res) => res.json())
       .then((t) => {
         console.log(t.link_token);

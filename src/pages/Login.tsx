@@ -9,7 +9,6 @@ import {
   useColorModeValue,
   Divider,
   Flex,
-  Icon,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -21,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { User } from "../models/user";
 import { GoogleLogin } from "./login/GoogleLogin";
 import { TwitterLogin } from "./login/TwitterLogin";
-import { ImLifebuoy } from "react-icons/im";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -29,7 +27,7 @@ export const Login = () => {
   const toast = useToast();
   const history = useHistory();
   const currentUser = useSelector(appSelectors.currentUser);
-  const bgColor = useColorModeValue("#fcfcfc", "#171c26");
+  const bgColor = useColorModeValue("gray.50", "gray.900");
 
   const logInError = useCallback(
     (error?: string) => {
@@ -77,23 +75,23 @@ export const Login = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Flex direction="row">
-            <Icon
-              alignSelf="center"
-              color="blue.400"
-              w={30}
-              h={30}
-              p={0}
-              m={0}
-              as={ImLifebuoy}
-            />
+          <Flex direction="column">
             <Text
-              bgGradient={`linear(to-r, blue.400,cyan.400)`}
+              bgGradient={`linear(to-r, #2167d1,#2581F4)`}
               bgClip="text"
               fontSize="6xl"
               fontWeight="extrabold"
             >
-              safety
+              Safety
+            </Text>
+            <Text
+              mt="-25px"
+              fontWeight="bold"
+              color="#2581F4"
+              alignSelf="center"
+              fontSize="md"
+            >
+              Spend
             </Text>
           </Flex>
         </Box>
@@ -101,7 +99,7 @@ export const Login = () => {
           bg={bgColor}
           w={["sm", "md"]}
           padding="10px"
-          borderWidth="1px"
+          boxShadow="inner"
           borderRadius="lg"
         >
           {loading ? (
@@ -119,7 +117,10 @@ export const Login = () => {
               <Heading as="h2" size="lg">
                 Welcome,
               </Heading>
-              <Text>Safety Spend is a weekly-based budgeting app.</Text>
+              <Text textAlign="center">
+                Safety Spend is a weekly-based budgeting app where you don't
+                have to track spending categories.
+              </Text>
               <Divider pt="10px" mb="10px" w="50%" />
               <VStack justifyContent="center">
                 <GoogleLogin error={logInError} />

@@ -69,10 +69,13 @@ export const TrackingCard = () => {
       <Box w={["sm", "md"]} alignItems="center">
         <Stack w={["sm", "md"]} direction={["column", "row"]} spacing={2}>
           <Button
-            boxShadow="base"
-            onClick={lastWeek}
+            boxShadow="sm"
+            borderWidth="1px"
+            colorScheme="messenger"
+            variant="ghost"
+            onClick={nextWeek}
             size="lg"
-            colorScheme="gray"
+            bg={bgColor}
             verticalAlign="middle"
             aria-label="Next week"
             p="25px"
@@ -135,10 +138,13 @@ export const TrackingCard = () => {
             </Center>
           </Box>
           <Button
-            boxShadow="base"
+            boxShadow="sm"
+            borderWidth="1px"
+            colorScheme="messenger"
+            variant="ghost"
             onClick={nextWeek}
             size="lg"
-            colorScheme="gray"
+            bg={bgColor}
             verticalAlign="middle"
             aria-label="Next week"
             p="25px"

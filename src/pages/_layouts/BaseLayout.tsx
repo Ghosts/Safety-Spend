@@ -1,6 +1,5 @@
 import { VStack, Box, Text, Link, Icon, Flex } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
-import { ImLifebuoy } from "react-icons/im";
 import { IconBar } from "../../components/IconBar";
 import { UserGuard } from "./UserGuard";
 
@@ -13,23 +12,23 @@ export const BaseLayout = ({ children, showIconBar }: BaseLayoutProps) => {
     <UserGuard>
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Flex direction="row">
-            <Icon
-              alignSelf="center"
-              color="blue.400"
-              w={30}
-              h={30}
-              p={0}
-              m={0}
-              as={ImLifebuoy}
-            />
+          <Flex direction="column">
             <Text
-              bgGradient={`linear(to-r, blue.400,cyan.400)`}
+              bgGradient={`linear(to-r, #2167d1,#2581F4)`}
               bgClip="text"
               fontSize="6xl"
               fontWeight="extrabold"
             >
-              safety
+              Safety
+            </Text>
+            <Text
+              mt="-25px"
+              fontWeight="bold"
+              color="#2581F4"
+              alignSelf="center"
+              fontSize="md"
+            >
+              Spend
             </Text>
           </Flex>
         </Box>

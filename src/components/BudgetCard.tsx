@@ -13,21 +13,21 @@ import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
 import { RefreshButton } from "./RefreshButton";
 import { ManageSettings } from "./settings/ManageSettings";
-import { SettingsPage } from "./settings/SettingsPage";
+import { Settings } from "../pages/Settings";
 import { AddTransaction } from "./transactions/AddTransaction";
 import { TransactionsList } from "./transactions/TransactionsList";
 
 export const BudgetCard = () => {
   const currentView = useSelector(appSelectors.currentView);
   const isEditing = useSelector(appSelectors.isEditing);
-  const bgColor = useColorModeValue("#fcfcfc", "#171c26");
+  const bgColor = useColorModeValue("white", "#171c26");
 
   const getCurrentView = () => {
     switch (currentView) {
       case Views.Recurrences:
         return <RecurrencesList />;
       case Views.Settings:
-        return <SettingsPage />;
+        return <Settings />;
       case Views.Transactions:
       case Views.Default:
       default:
@@ -41,8 +41,8 @@ export const BudgetCard = () => {
         bgColor={bgColor}
         w={["sm", "xl"]}
         padding="20px"
-        borderWidth="1px"
         borderRadius="lg"
+        boxShadow="inner"
         className="step3 step7"
       >
         {currentView !== Views.Default || isEditing ? (

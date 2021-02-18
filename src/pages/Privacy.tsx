@@ -8,10 +8,8 @@ import {
   UnorderedList,
   Flex,
   Button,
-  Icon,
 } from "@chakra-ui/react";
 import React from "react";
-import { ImLifebuoy } from "react-icons/im";
 import { useHistory } from "react-router-dom";
 
 export const Privacy = () => {
@@ -21,17 +19,12 @@ export const Privacy = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
         <Box>
-          <Flex direction="row">
-            <Icon
-              alignSelf="center"
-              w={30}
-              h={30}
-              p={0}
-              m={0}
-              as={ImLifebuoy}
-            />
+          <Flex direction="column">
             <Text fontSize="6xl" fontWeight="extrabold">
-              safety
+              Safety
+            </Text>
+            <Text mt="-25px" fontWeight="bold" alignSelf="center" fontSize="md">
+              Spend
             </Text>
           </Flex>
         </Box>
@@ -95,7 +88,7 @@ export const Privacy = () => {
               onClick={() => history.push("/app")}
               colorScheme="messenger"
             >
-              Back to week
+              Back to Safety Spend
             </Button>
           </Flex>
         </Box>

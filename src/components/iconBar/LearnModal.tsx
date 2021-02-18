@@ -30,8 +30,8 @@ export const LearnModal = () => {
       content: (
         <Text as="p">
           The philosophy of Safety Spend is simple: <br />
-          Stay under your weekly <b>Safety Spend</b>. Everything in week is
-          based on a per-week basis. &nbsp;
+          Stay under your weekly <b>Safety Spend</b>. Everything in Safety Spend
+          is based on a per-week basis. &nbsp;
           <span>
             You can click, or use <Kbd>←</Kbd> and <Kbd>→</Kbd> to navigate.
           </span>
