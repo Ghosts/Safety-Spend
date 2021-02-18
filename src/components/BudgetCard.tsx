@@ -39,6 +39,7 @@ export const BudgetCard = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <Box
         bgColor={bgColor}
+        borderWidth="1px"
         w={["sm", "xl"]}
         padding="20px"
         borderRadius="lg"
