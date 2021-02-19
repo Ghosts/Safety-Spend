@@ -1,4 +1,4 @@
-import { VStack, Box, Text, Link, Icon, Flex } from "@chakra-ui/react";
+import { VStack, Box, Text, Link, Flex } from "@chakra-ui/react";
 import React, { ReactChild, ReactChildren } from "react";
 import { IconBar } from "../../components/IconBar";
 import { UserGuard } from "./UserGuard";

@@ -18,12 +18,13 @@ const initialState: RecurrencesState = {
 };
 
 const recurrencesSlice = createSlice({
-  name: "incomes",
+  name: "recurrences",
   initialState,
   reducers: {
     addRecurrence(state, action: PayloadAction<Recurrence>) {
       state.list = [...state.list, action.payload];
       state.loading = false;
+      state.error = "";
     },
     updateRecurrence(state, action: PayloadAction<Recurrence>) {
       state.list = state.list.map((transaction) => {
@@ -33,17 +34,21 @@ const recurrencesSlice = createSlice({
         return transaction;
       });
       state.loading = false;
+      state.error = "";
     },
     removeRecurrence(state, action: PayloadAction<string>) {
       state.list = [...state.list.filter((t) => t.id !== action.payload)];
       state.loading = false;
+      state.error = "";
     },
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
+      state.error = "";
     },
     setRecurrences(state, action: PayloadAction<Recurrence[]>) {
       state.list = action.payload;
       state.loading = false;
+      state.error = "";
     },
     setError(state, action: PayloadAction<string>) {
       state.error = action.payload;

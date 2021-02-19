@@ -1,6 +1,6 @@
 import { Tooltip, IconButton, Icon, useColorMode } from "@chakra-ui/react";
 import React from "react";
-import { BiMoon, BiSun } from "react-icons/bi";
+import { Moon, Sun } from "akar-icons";
 
 export const ThemeSwitch = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -14,9 +14,9 @@ export const ThemeSwitch = () => {
         aria-label="Switch theme"
         icon={
           colorMode === "light" ? (
-            <Icon boxSize="1.5em" as={BiMoon} color="purple.500" />
+            <Icon boxSize="1.5em" as={Moon} color="purple.500" />
           ) : (
-            <Icon boxSize="1.5em" as={BiSun} color="orange.500" />
+            <Icon boxSize="1.5em" as={Sun} color="orange.500" />
           )
         }
       />

@@ -12,7 +12,7 @@ import { BiPulse, BiTrendingUp, BiTrendingDown } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { recurrencesSelectors } from "../../slices/recurrencesSlice";
 import { getWeeklyIncome, getWeeklyExpenses } from "../../utils/tracking";
-import { getSafeToSpend } from "./../../utils/tracking";
+import { getSafeToSpend } from "../../utils/tracking";
 
 export const WeeklyBreakdown = () => {
   const recurrences = useSelector(recurrencesSelectors.list);

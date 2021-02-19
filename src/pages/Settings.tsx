@@ -1,26 +1,22 @@
 import {
   Stack,
-  IconButton,
-  Icon,
-  Tooltip,
   Box,
   Text,
   Heading,
   SlideFade,
   Button,
-  useToast,
+  Divider,
 } from "@chakra-ui/react";
-import { BiUndo } from "react-icons/bi";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSelectors, setView, Views } from "../slices/appSlice";
-import { PlaidLink } from "../components/settings/PlaidLink";
+import { appSelectors } from "../slices/appSlice";
+import { PlaidLink } from "./settings/PlaidLink";
 import { BackButton } from "../components/BackButton";
 
 export const Settings = () => {
   const currentUser = useSelector(appSelectors.currentUser);
   const [token, setToken] = useState("");
-  const toast = useToast();
+  const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const onSuccess = useCallback((token, metadata) => {
     // send token to server
@@ -32,13 +28,27 @@ export const Settings = () => {
     fetch(`/api/getToken?id=${currentUser?.userId}&email=${currentUser?.email}`)
       .then((res) => res.json())
       .then((t) => {
-        console.log(t.link_token);
-        setToken(t.link_token);
+        if (t.error) {
+          setIsError(true);
+        } else {
+          setToken(t.link_token);
+        }
       })
       .catch((e) => {
         console.log(e);
+        setIsError(true);
       });
   }, [currentUser?.email, currentUser?.userId]);
+
+  const getLoadingButton = () => {
+    return isError ? (
+      <Button colorScheme="red" disabled>
+        Error loading Plaid
+      </Button>
+    ) : (
+      <Button disabled>Loading Plaid...</Button>
+    );
+  };
 
   return (
     <>
@@ -49,22 +59,16 @@ export const Settings = () => {
             <Heading as="h2" size="lg">
               Settings
             </Heading>
-            <Text>
-              Here you can manage account settings, Plaid integration, and
-              subscription to Safety Spend.
-            </Text>
-            <Box>
-              {/* <Button disabled={!ready} onClick={() => open()}>
-              Connect Accounts with Plaid
-            </Button> */}
-              {token !== "" ? (
-                <PlaidLink token={token} />
-              ) : (
-                <Button disabled>Loading Plaid...</Button>
-              )}
-            </Box>
           </Box>
         </Stack>
+        <Text>
+          Here you can manage account settings, Plaid integration, and
+          subscription to Safety Spend.
+        </Text>
+        <Divider m="10px" />
+        <Box>
+          {token !== "" ? <PlaidLink token={token} /> : getLoadingButton()}
+        </Box>
       </SlideFade>
     </>
   );

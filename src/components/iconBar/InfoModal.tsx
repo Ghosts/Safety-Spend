@@ -16,8 +16,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import React from "react";
-import { BiInfoCircle } from "react-icons/bi";
-
+import { Info } from "akar-icons";
 export const InfoModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -29,7 +28,7 @@ export const InfoModal = () => {
           onClick={onOpen}
           variant="ghost"
           aria-label="Info"
-          icon={<Icon boxSize="1.5em" as={BiInfoCircle} />}
+          icon={<Icon boxSize="1.5em" as={Info} />}
         />
       </Tooltip>
 

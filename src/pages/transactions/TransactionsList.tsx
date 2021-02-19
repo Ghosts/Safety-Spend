@@ -30,7 +30,7 @@ import {
   setEditing,
   setEditingId,
   toggleOpenDays,
-} from "./../../slices/appSlice";
+} from "../../slices/appSlice";
 import { useEffect } from "react";
 
 export const TransactionsList = () => {

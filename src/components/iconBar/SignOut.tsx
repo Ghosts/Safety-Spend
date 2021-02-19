@@ -1,7 +1,7 @@
 import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import React from "react";
-import { BiLogOutCircle } from "react-icons/bi";
 import firebase from "firebase/app";
+import { SignOut as SignOutIcon } from "akar-icons";
 
 export const SignOut = () => {
   return (
@@ -13,7 +13,7 @@ export const SignOut = () => {
         colorScheme="messenger"
         variant="ghost"
         aria-label="Sign Out"
-        icon={<Icon boxSize="1.5em" as={BiLogOutCircle} />}
+        icon={<Icon boxSize="1.5em" as={SignOutIcon} />}
       />
     </Tooltip>
   );

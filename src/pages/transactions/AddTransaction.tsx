@@ -23,7 +23,7 @@ import {
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
 import React from "react";
-import { BiPlus } from "react-icons/bi";
+import { Plus } from "akar-icons";
 import { useDispatch } from "react-redux";
 
 import {
@@ -69,7 +69,7 @@ export const AddTransaction = () => {
           colorScheme="messenger"
           onClick={onOpen}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={BiPlus} />}
+          icon={<Icon boxSize="1.2em" as={Plus} />}
         />
       </Tooltip>
       <Drawer

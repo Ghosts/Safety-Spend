@@ -1,8 +1,8 @@
 import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import React from "react";
-import { BiUndo } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setEditing } from "../slices/appSlice";
+import { ArrowBackThick } from "akar-icons";
 
 export const CancelEditingButton = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export const CancelEditingButton = () => {
         variant="ghost"
         colorScheme="messenger"
         aria-label="Go back"
-        icon={<Icon boxSize="1.5em" as={BiUndo} />}
+        icon={<Icon boxSize="1.5em" as={ArrowBackThick} />}
       />
     </Tooltip>
   );

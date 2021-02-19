@@ -17,11 +17,11 @@ import {
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { transactionsSelectors } from "../slices/transactionsSlice";
-import { DayTags } from "./DayTags";
+import { DayTags } from "../components/DayTags";
 import {
   loadRecurrences,
   recurrencesSelectors,
-} from "./../slices/recurrencesSlice";
+} from "../slices/recurrencesSlice";
 import { getSafeToSpend, getCurrentSafeToSpend } from "../utils/tracking";
 import { getLastSunday } from "../utils/dates";
 import {
@@ -29,8 +29,8 @@ import {
   goLastWeek,
   goNextWeek,
   setCurrentDay,
-} from "./../slices/appSlice";
-import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
+} from "../slices/appSlice";
+import { ArrowLeft, ArrowRight } from "akar-icons";
 
 export const TrackingCard = () => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ export const TrackingCard = () => {
             borderWidth="1px"
             colorScheme="messenger"
             variant="ghost"
-            onClick={nextWeek}
+            onClick={lastWeek}
             size="lg"
             bg={bgColor}
             verticalAlign="middle"
@@ -82,7 +82,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Last week</Text>
-              <Icon as={BiLeftArrowAlt} />
+              <Icon as={ArrowLeft} />
             </Box>
           </Button>
           <Box
@@ -151,7 +151,7 @@ export const TrackingCard = () => {
           >
             <Box>
               <Text fontSize="sm">Next week</Text>
-              <Icon as={BiRightArrowAlt} />
+              <Icon as={ArrowRight} />
             </Box>
           </Button>
         </Stack>

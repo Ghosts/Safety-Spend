@@ -1,8 +1,8 @@
 import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import React from "react";
-import { BiArrowBack } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setView, Views } from "../slices/appSlice";
+import { ArrowBack } from "akar-icons";
 
 export const BackButton = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ export const BackButton = () => {
         variant="ghost"
         colorScheme="messenger"
         aria-label="Go back"
-        icon={<Icon boxSize="1.5em" as={BiArrowBack} />}
+        icon={<Icon boxSize="1.5em" as={ArrowBack} />}
       />
     </Tooltip>
   );

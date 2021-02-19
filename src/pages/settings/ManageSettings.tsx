@@ -1,9 +1,8 @@
 import { Icon, IconButton, Tooltip } from "@chakra-ui/react";
 import React from "react";
-import { BiSliderAlt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setView, Views } from "../../slices/appSlice";
-
+import { Gear } from "akar-icons";
 export const ManageSettings = () => {
   const dispatch = useDispatch();
 
@@ -16,7 +15,7 @@ export const ManageSettings = () => {
           colorScheme="messenger"
           onClick={() => dispatch(setView(Views.Settings))}
           aria-label="Settings"
-          icon={<Icon boxSize="1.5em" as={BiSliderAlt} />}
+          icon={<Icon boxSize="1.2em" as={Gear} />}
         />
       </Tooltip>
     </>

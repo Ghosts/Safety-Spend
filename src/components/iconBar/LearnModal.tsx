@@ -7,12 +7,11 @@ import {
   useColorModeValue,
   Kbd,
 } from "@chakra-ui/react";
-import { BiBookOpen } from "react-icons/bi";
 import Tour from "reactour";
 import { useDispatch } from "react-redux";
 import { updateView, Views } from "../../slices/appSlice";
 import { updateIsEditing } from "./../../slices/appSlice";
-
+import { Book } from "akar-icons";
 export const LearnModal = () => {
   const [isTourOpen, setIsTourOpen] = useState(false);
   const dispatch = useDispatch();
@@ -140,7 +139,7 @@ export const LearnModal = () => {
           colorScheme="green"
           variant="ghost"
           aria-label="Start tutorial"
-          icon={<Icon boxSize="1.5em" as={BiBookOpen} color="green.500" />}
+          icon={<Icon boxSize="1.5em" as={Book} color="green.500" />}
         />
       </Tooltip>
       <Tour

@@ -1,10 +1,10 @@
 import { Icon, IconButton, Tooltip, useToast } from "@chakra-ui/react";
 import React from "react";
-import { BiRefresh } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { appSelectors } from "../slices/appSlice";
 import { loadRecurrences } from "../slices/recurrencesSlice";
 import { loadTransactions } from "../slices/transactionsSlice";
+import { ArrowClockwise } from "akar-icons";
 
 export const RefreshButton = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export const RefreshButton = () => {
           colorScheme="messenger"
           onClick={refreshData}
           aria-label="Add manual transaction"
-          icon={<Icon boxSize="1.5em" as={BiRefresh} />}
+          icon={<Icon boxSize="1.2em" as={ArrowClockwise} />}
         />
       </Tooltip>
     </>

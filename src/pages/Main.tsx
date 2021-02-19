@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import { BudgetCard } from "../components/BudgetCard";
-import { TrackingCard } from "../components/TrackingCard";
+import { BudgetCard } from "./BudgetCard";
+import { TrackingCard } from "./TrackingCard";
 import { BaseLayout } from "./_layouts/BaseLayout";
 
 export const Main = () => {

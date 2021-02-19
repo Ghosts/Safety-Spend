@@ -1,9 +1,6 @@
 import {
   Spacer,
   Stack,
-  IconButton,
-  Icon,
-  Tooltip,
   Text,
   Box,
   Heading,
@@ -18,25 +15,18 @@ import {
   Divider,
   useToast,
 } from "@chakra-ui/react";
-import { BiUndo } from "react-icons/bi";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   loadRecurrences,
   recurrencesSelectors,
 } from "../../slices/recurrencesSlice";
-import {
-  appSelectors,
-  setEditing,
-  setEditingId,
-  setView,
-  Views,
-} from "../../slices/appSlice";
+import { appSelectors, setEditing, setEditingId } from "../../slices/appSlice";
 import { AddRecurrence } from "./AddRecurrence";
 import { RecurrenceEdit } from "./RecurrenceEdit";
 import { WeeklyBreakdown } from "./WeeklyBreakdown";
-import { RefreshButton } from "../RefreshButton";
-import { BackButton } from "../BackButton";
+import { RefreshButton } from "../../components/RefreshButton";
+import { BackButton } from "../../components/BackButton";
 
 export const RecurrencesList = () => {
   const dispatch = useDispatch();
@@ -51,6 +41,7 @@ export const RecurrencesList = () => {
 
   useEffect(() => {
     if (error !== "") {
+      console.log(error);
       toast({
         title: "Recurrences Error",
         description: "Please try again...",
@@ -73,8 +64,10 @@ export const RecurrencesList = () => {
               </Heading>
             </Box>
             <Spacer />
-            <AddRecurrence />
-            <RefreshButton />
+            <Box boxShadow="base" borderWidth="1px" borderRadius="lg">
+              <AddRecurrence />
+              <RefreshButton />
+            </Box>
           </Stack>
 
           <WeeklyBreakdown />

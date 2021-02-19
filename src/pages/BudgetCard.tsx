@@ -11,9 +11,9 @@ import { useSelector } from "react-redux";
 import { appSelectors, Views } from "../slices/appSlice";
 import { ManageRecurrences } from "./recurrences/ManageRecurrences";
 import { RecurrencesList } from "./recurrences/RecurrencesList";
-import { RefreshButton } from "./RefreshButton";
+import { RefreshButton } from "../components/RefreshButton";
 import { ManageSettings } from "./settings/ManageSettings";
-import { Settings } from "../pages/Settings";
+import { Settings } from "./Settings";
 import { AddTransaction } from "./transactions/AddTransaction";
 import { TransactionsList } from "./transactions/TransactionsList";
 
@@ -56,10 +56,12 @@ export const BudgetCard = () => {
               </Heading>
             </Box>
             <Spacer />
-            <ManageSettings />
-            <ManageRecurrences />
-            <AddTransaction />
-            <RefreshButton />
+            <Box boxShadow="base" borderWidth="1px" borderRadius="lg">
+              <ManageSettings />
+              <ManageRecurrences />
+              <AddTransaction />
+              <RefreshButton />
+            </Box>
           </Stack>
         )}
         {getCurrentView()}

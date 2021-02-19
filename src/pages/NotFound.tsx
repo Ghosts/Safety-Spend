@@ -1,26 +1,19 @@
-import { Box, Heading, SlideFade, Stack } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import React from "react";
-import { BaseLayout } from "./_layouts/BaseLayout";
+import { SimpleLayout } from "./_layouts/SimpleLayout";
 
 export const NotFound = () => {
   return (
-    <BaseLayout showIconBar={false}>
+    <SimpleLayout>
       <Box>
-        <SlideFade in offsetX="0" offsetY="50px">
-          <Box
-            w={["sm", "md"]}
-            padding="10px"
-            borderWidth="1px"
-            borderRadius="lg"
-          >
-            <Stack mb="10px" direction={["column"]}>
-              <Heading as="h2" size="xl" color="blue.400">
-                ?
-              </Heading>
-            </Stack>
-          </Box>
-        </SlideFade>
+        <Heading textAlign="center" as="h1" fontSize="6xl" color="blue.400">
+          404
+        </Heading>
+        <Text textAlign="center">
+          The page you were looking for doesn't seem to exist. If this problem
+          persists please report a bug using the feedback button.
+        </Text>
       </Box>
-    </BaseLayout>
+    </SimpleLayout>
   );
 };

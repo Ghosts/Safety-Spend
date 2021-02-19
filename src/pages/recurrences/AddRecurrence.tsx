@@ -34,7 +34,7 @@ import { toTitleCase } from "../../utils/string";
 import {
   getTypedTransactionType,
   transactionTypes,
-} from "./../../models/transaction";
+} from "../../models/transaction";
 
 export const AddRecurrence = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

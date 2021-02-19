@@ -24,38 +24,34 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
+import moment from "moment";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  Transaction,
   getTypedTransactionType,
   transactionTypes,
 } from "../../models/transaction";
-import {
-  frequencies,
-  getTypedFrequency,
-  Recurrence,
-} from "../../models/recurrence";
 import { appSelectors, setEditing } from "../../slices/appSlice";
 import {
-  recurrencesSelectors,
-  editRecurrence,
-  deleteRecurrence,
-} from "../../slices/recurrencesSlice";
-
+  editTransaction,
+  transactionsSelectors,
+  deleteTransaction,
+} from "../../slices/transactionsSlice";
 import { toTitleCase } from "../../utils/string";
-import { CancelEditingButton } from "../CancelEditingButton";
+import { CancelEditingButton } from "../../components/CancelEditingButton";
 
-export const RecurrenceEdit = () => {
-  const dispatch = useDispatch();
-  const toast = useToast();
+export const TransactionEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingId);
-  const recurrence = useSelector(recurrencesSelectors.byId(editingId));
+  const transaction = useSelector(transactionsSelectors.byId(editingId));
+  const dispatch = useDispatch();
+  const toast = useToast();
 
-  if (!recurrence) {
+  if (!transaction) {
     toast({
-      title: "Recurrence Error",
-      description: `There was a problem loading the recurrence`,
+      title: "Transaction Error",
+      description: `There was a problem loading the transaction`,
       status: "error",
       duration: 3000,
       isClosable: true,
@@ -63,11 +59,11 @@ export const RecurrenceEdit = () => {
     dispatch(setEditing(false));
   }
 
-  const removeRecurrence = () => {
+  const removeTransaction = () => {
     dispatch(setEditing(false));
-    dispatch(deleteRecurrence(editingId));
+    dispatch(deleteTransaction(editingId));
     toast({
-      title: "Recurrence Deleted",
+      title: "Transaction Deleted",
       description: `Your Safety Spend will update shortly.`,
       status: "success",
       duration: 3000,
@@ -76,21 +72,21 @@ export const RecurrenceEdit = () => {
     onClose();
   };
 
-  const updateRecurrence = (r: Recurrence) => {
+  const updateTransaction = (t: Transaction) => {
     dispatch(
-      editRecurrence({
-        id: recurrence!.id,
-        type: r.type,
-        amount: r.amount,
-        description: r.description,
-        frequency: r.frequency,
+      editTransaction({
+        id: transaction!.id,
+        type: t.type,
+        amount: t.amount,
+        description: t.description,
+        date: t.date,
       })
     );
     toast({
-      title: "Recurrence Updated",
+      title: "Transaction Updated",
       description: `Your Safety Spend will update shortly.`,
       status: "success",
-      duration: 5000,
+      duration: 3000,
       isClosable: true,
     });
     dispatch(setEditing(false));
@@ -102,7 +98,7 @@ export const RecurrenceEdit = () => {
         <CancelEditingButton />
         <Box>
           <Heading as="h2" size="lg">
-            {recurrence?.description}
+            {transaction?.description}
           </Heading>
         </Box>
         <Spacer />
@@ -110,17 +106,18 @@ export const RecurrenceEdit = () => {
       <Box>
         <Formik
           initialValues={{
-            type: recurrence?.type ?? "",
-            description: recurrence?.description ?? "",
-            frequency: recurrence?.frequency ?? "",
-            amount: recurrence?.amount ?? 0,
+            type: transaction?.type ?? "",
+            description: transaction?.description ?? "",
+            date:
+              new Date(transaction?.date!).toISOString().split("T")[0] ?? "",
+            amount: transaction?.amount ?? 0,
           }}
           onSubmit={async (values) => {
-            updateRecurrence({
+            updateTransaction({
               id: "",
               type: getTypedTransactionType(values.type),
               description: values.description,
-              frequency: getTypedFrequency(values.frequency),
+              date: moment(values.date).toDate(),
               amount: values.amount,
             });
           }}
@@ -178,32 +175,24 @@ export const RecurrenceEdit = () => {
                     </FormControl>
                   )}
                 </Field>
-                <Field name="frequency">
+                <Field name="date">
                   {({ field, form }: any) => (
                     <FormControl
-                      isInvalid={form.errors.frequency}
+                      isInvalid={form.errors.date}
                       mt="10px"
                       colorScheme="green"
                       isRequired
                     >
                       <InputGroup>
-                        <InputLeftAddon children="Type" />
-                        <Select {...field} variant="outline">
-                          <option value="" disabled>
-                            Select Frequency
-                          </option>
-                          {frequencies.map((frequency, idx) => {
-                            return (
-                              <option key={idx} value={frequency}>
-                                {toTitleCase(frequency)}
-                              </option>
-                            );
-                          })}
-                        </Select>
+                        <InputLeftAddon children="Date" />
 
-                        <FormErrorMessage>
-                          {form.errors.frequency}
-                        </FormErrorMessage>
+                        <Input
+                          {...field}
+                          type="date"
+                          variant="outline"
+                          placeholder="Today!"
+                        />
+                        <FormErrorMessage>{form.errors.date}</FormErrorMessage>
                       </InputGroup>
                     </FormControl>
                   )}
@@ -262,7 +251,7 @@ export const RecurrenceEdit = () => {
               </AlertDialogBody>
               <AlertDialogFooter>
                 <Button onClick={onClose}>Cancel</Button>
-                <Button colorScheme="red" onClick={removeRecurrence} ml={3}>
+                <Button colorScheme="red" onClick={removeTransaction} ml={3}>
                   Delete
                 </Button>
               </AlertDialogFooter>

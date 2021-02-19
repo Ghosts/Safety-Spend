@@ -5,7 +5,7 @@ import { User } from "../models/user";
 
 const db = initFirebase.firestore();
 
-const userConverter = {
+export const userConverter = {
   toFirestore: (user: User) => {
     return { ...user };
   },
@@ -17,6 +17,14 @@ const getUser = (userId: string) => {
   return db.collection("users").withConverter(userConverter).doc(userId).get();
 };
 
+const setBankAuthId = (bankAuthid: string, userId: string) => {
+  return db
+    .collection("users")
+    .withConverter(userConverter)
+    .doc(userId)
+    .update({ bankAuthId: bankAuthid });
+};
+
 const addUser = (user: User) => {
   return db
     .collection("users")
@@ -25,4 +33,4 @@ const addUser = (user: User) => {
     .set(user);
 };
 
-export const UsersApi = { getUser, addUser };
+export const UsersApi = { getUser, addUser, setBankAuthId };

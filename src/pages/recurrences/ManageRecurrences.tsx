@@ -1,8 +1,8 @@
 import { Icon, IconButton, Tooltip } from "@chakra-ui/react";
 import React from "react";
-import { BiReceipt } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setView, Views } from "../../slices/appSlice";
+import { Wallet } from "akar-icons";
 
 export const ManageRecurrences = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export const ManageRecurrences = () => {
           colorScheme="messenger"
           onClick={() => dispatch(setView(Views.Recurrences))}
           aria-label="Manage recurring transactions"
-          icon={<Icon boxSize="1.5em" as={BiReceipt} />}
+          icon={<Icon boxSize="1.2em" as={Wallet} />}
         />
       </Tooltip>
     </>
