@@ -24,7 +24,6 @@ export const UserGuard = ({ children }: UserGuardProps) => {
       .doc(user.uid)
       .withConverter(userConverter)
       .onSnapshot(function (user) {
-        console.log(user);
         dispatch(setCurrentUser(user.data()!));
       });
   }
