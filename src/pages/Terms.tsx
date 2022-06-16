@@ -14,7 +14,7 @@ export const Terms = () => {
           groundwork:
         </Text>
         <Heading p="10px" as="h2" size="md" color="blue.500">
-          Things week lets you do
+          Things Safety Spend lets you do
         </Heading>
         <UnorderedList>
           <ListItem>Enter transactions.</ListItem>
@@ -34,15 +34,15 @@ export const Terms = () => {
             data loss.
           </ListItem>
           <ListItem>
-            Attempt to circumvent security measures or otherwise abuse week from
-            it's intended purposes.
+            Attempt to circumvent security measures or otherwise abuse Safety
+            Spend from it's intended purposes.
           </ListItem>
           <ListItem>
-            Enter any sensitive or private information anywhere in week.
+            Enter any sensitive or private information anywhere in Safety Spend.
           </ListItem>
           <ListItem>
-            Blame or otherwise hold week responsible for any inconvience,
-            outage, issue, etc.
+            Blame or otherwise hold Safety Spend responsible for any
+            inconvience, outage, issue, etc.
           </ListItem>
         </UnorderedList>
       </Box>

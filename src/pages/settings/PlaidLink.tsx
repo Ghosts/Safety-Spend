@@ -31,7 +31,7 @@ export const PlaidLink = ({ token }: { token: string }) => {
 
   const config: PlaidLinkOptions = {
     token: token,
-    webhook: "https://safetyspend.app/api/webhook",
+    webhook: "",
     onSuccess,
   };
   const { open, ready } = usePlaidLink(config);

@@ -29,6 +29,7 @@ export const SimpleLayout = ({ children }: SimpleLayoutProps) => {
           <Flex direction="column">
             <Box>{children}</Box>
             <br />
+            <br />
             <Button onClick={() => navigate("/app")} colorScheme="messenger">
               Back to Safety Spend
             </Button>

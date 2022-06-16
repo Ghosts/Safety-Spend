@@ -19,29 +19,29 @@ export const Privacy = () => {
         <UnorderedList>
           <ListItem>Your email.</ListItem>
           <ListItem>
-            A unique ID to track your data <b>within</b> week.
+            A unique ID to track your data <b>within</b> Safety Spend.
           </ListItem>
           <ListItem>
-            Any data you directly enter into week (transactions / recurrences /
-            etc.)
+            Any data you directly enter into Safety Spend (transactions /
+            recurrences / etc.)
           </ListItem>
           <ListItem>
-            Any data from third-parties that you authorize week to access
-            (Plaid, OAuth, etc.)
+            Any data from third-parties that you authorize Safety Spend to
+            access (Plaid, OAuth, etc.)
           </ListItem>
         </UnorderedList>
         <Heading p="10px" as="h2" size="md" color="blue.500">
           How we use it
         </Heading>
         <Text>
-          Week does <b>not</b> sell, monetize, share, or otherwise distribute
-          the data we have with third-parties outside of our immediate business
-          needs (such as storing data on a database).
+          Safety Spend does <b>not</b> sell, monetize, share, or otherwise
+          distribute the data we have with third-parties outside of our
+          immediate business needs (such as storing data on a database).
         </Text>
         <br />
         <Text>
-          Third-parties that Week utilizes to offer the services may gather
-          additional information that we do not (IP address, geolocation,
+          Third-parties that Safety Spend utilizes to offer the services may
+          gather additional information that we do not (IP address, geolocation,
           browser info, etc.). We have no control over this practice and
           recommend using Ad-Blockers to mitigate unwanted data sharing with
           third-parties.

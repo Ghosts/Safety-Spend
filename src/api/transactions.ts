@@ -55,12 +55,19 @@ const getTransactions = async (
   weekStart.setHours(0, 0, 0, 0);
   weekEnd.setHours(23, 59, 59, 0);
 
-  const transactionsRef = collection(db, "users", userId, "transactions");
+  const transactionsRef = collection(
+    db,
+    "users",
+    userId,
+    "transactions"
+  ).withConverter(transactionConverter);
+
   const transactionsQuery = query(
-    transactionsRef?.withConverter(transactionConverter),
+    transactionsRef,
     where("date", ">=", weekStart),
     where("date", "<=", weekEnd)
   );
+
   const querySnapshot = await getDocs(transactionsQuery);
   return querySnapshot.docs.map((transaction) => transaction.data());
 };
