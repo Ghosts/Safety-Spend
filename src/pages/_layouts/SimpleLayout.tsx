@@ -1,12 +1,12 @@
+import React, { ReactNode } from "react";
 import { VStack, Box, Text, Flex, Button, SlideFade } from "@chakra-ui/react";
-import React, { ReactChild, ReactChildren } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SimpleLayoutProps {
-  children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
+  children: ReactNode;
 }
 export const SimpleLayout = ({ children }: SimpleLayoutProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <SlideFade in offsetX="0" offsetY="50px">
       <VStack padding="10px" spacing={2} align="center">
@@ -29,10 +29,7 @@ export const SimpleLayout = ({ children }: SimpleLayoutProps) => {
           <Flex direction="column">
             <Box>{children}</Box>
             <br />
-            <Button
-              onClick={() => history.push("/app")}
-              colorScheme="messenger"
-            >
+            <Button onClick={() => navigate("/app")} colorScheme="messenger">
               Back to Safety Spend
             </Button>
           </Flex>

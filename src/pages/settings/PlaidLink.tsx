@@ -1,6 +1,11 @@
-import { Button, Icon } from "@chakra-ui/react";
 import React, { useCallback } from "react";
-import { usePlaidLink } from "react-plaid-link";
+import { Button, Icon } from "@chakra-ui/react";
+import {
+  PlaidLinkOnSuccess,
+  PlaidLinkOnSuccessMetadata,
+  PlaidLinkOptions,
+  usePlaidLink,
+} from "react-plaid-link";
 import { LinkChain, Block } from "akar-icons";
 import { appSelectors } from "../../slices/appSlice";
 import { useSelector } from "react-redux";
@@ -8,25 +13,28 @@ import { UsersApi } from "./../../api/users";
 
 export const PlaidLink = ({ token }: { token: string }) => {
   const currentUser = useSelector(appSelectors.currentUser);
-  const onSuccess = useCallback((token, metadata) => {
-    // send token to server
-    console.log(token);
-    console.log(metadata);
-    UsersApi.setBankAuthId(token, currentUser?.userId!)
-      .then(() => {})
-      .catch((e) => {});
-  }, []);
+  const onSuccess: PlaidLinkOnSuccess = useCallback(
+    (public_token: string, metadata: PlaidLinkOnSuccessMetadata) => {
+      // send token to server
+      console.log(public_token);
+      console.log(metadata);
+      UsersApi.setBankAuthId(token, currentUser?.userId!)
+        .then(() => {})
+        .catch((e) => {});
+    },
+    [currentUser?.userId, token]
+  );
 
   const disconnectPlaid = () => {
     UsersApi.setBankAuthId("", currentUser?.userId!);
   };
 
-  const config = {
+  const config: PlaidLinkOptions = {
     token: token,
     webhook: "https://safetyspend.app/api/webhook",
     onSuccess,
   };
-  const { open, ready, error } = usePlaidLink(config);
+  const { open, ready } = usePlaidLink(config);
 
   return (
     <>

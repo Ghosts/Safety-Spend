@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   Box,
   Center,
@@ -14,8 +15,8 @@ import {
   Icon,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ArrowLeft, ArrowRight } from "akar-icons";
+import { useSelector } from "react-redux";
 import { transactionsSelectors } from "../slices/transactionsSlice";
 import { DayTags } from "../components/DayTags";
 import {
@@ -24,16 +25,16 @@ import {
 } from "../slices/recurrencesSlice";
 import { getSafeToSpend, getCurrentSafeToSpend } from "../utils/tracking";
 import { getLastSunday } from "../utils/dates";
+import { useAppDispatch } from "./../store";
 import {
   appSelectors,
   goLastWeek,
   goNextWeek,
   setCurrentDay,
 } from "../slices/appSlice";
-import { ArrowLeft, ArrowRight } from "akar-icons";
 
 export const TrackingCard = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const recurrences = useSelector(recurrencesSelectors.list);
   const transactions = useSelector(transactionsSelectors.list);
   const safeToSpend = getSafeToSpend(recurrences);

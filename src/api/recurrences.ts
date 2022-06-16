@@ -1,60 +1,89 @@
-import firebase from "firebase/app";
 import "firebase/firestore";
-import initFirebase from "../firestore";
+import { db } from "../firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  QueryDocumentSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import { Recurrence } from "../models/recurrence";
 import { RootState } from "../store";
-
-const db = initFirebase.firestore();
 
 const recurrenceConverter = {
   toFirestore: (recurrence: Recurrence) => {
     return { ...recurrence };
   },
-  fromFirestore: (snapshot: firebase.firestore.QueryDocumentSnapshot) =>
+  fromFirestore: (snapshot: QueryDocumentSnapshot) =>
     snapshot.data() as Recurrence,
 };
 
-const getRecurrence = (recurrenceId: string, getState: () => RootState) => {
+const getRecurrence = async (
+  recurrenceId: string,
+  getState: () => RootState
+) => {
   const userId = getState().app.currentUser?.userId ?? "";
-  return db
-    .collection("users")
-    .doc(userId)
-    .collection("recurrences")
-    .withConverter(recurrenceConverter)
-    .doc(recurrenceId)
-    .get();
+  const recurrenceRef = doc(
+    db,
+    "users",
+    userId,
+    "recurrences",
+    recurrenceId
+  ).withConverter(recurrenceConverter);
+
+  const recurrenceSnapshot = await getDoc(recurrenceRef);
+
+  if (recurrenceSnapshot.exists()) {
+    return recurrenceSnapshot.data();
+  } else {
+    return null;
+  }
 };
 
-const getRecurrences = (getState: () => RootState) => {
+const getRecurrences = async (getState: () => RootState) => {
   const userId = getState().app.currentUser?.userId ?? "";
-  return db
-    .collection("users")
-    .doc(userId)
-    .collection("recurrences")
-    .withConverter(recurrenceConverter)
-    .get();
+  const recurrencesQuerySnapshot = await getDocs(
+    collection(db, "users", userId, "recurrences")?.withConverter(
+      recurrenceConverter
+    )
+  );
+  return recurrencesQuerySnapshot.docs.map((recurrence) => recurrence.data());
 };
 
-const setRecurrence = (recurrence: Recurrence, getState: () => RootState) => {
+const setRecurrence = async (
+  recurrence: Recurrence,
+  getState: () => RootState
+) => {
   const userId = getState().app.currentUser?.userId ?? "";
-  return db
-    .collection("users")
-    .doc(userId)
-    .collection("recurrences")
-    .withConverter(recurrenceConverter)
-    .doc(recurrence.id)
-    .set(recurrence);
+  const recurrenceRef = doc(
+    db,
+    "users",
+    userId,
+    "recurrences",
+    recurrence.id
+  ).withConverter(recurrenceConverter);
+
+  await setDoc(recurrenceRef, {
+    ...recurrence,
+  });
 };
 
-const deleteRecurrence = (recurrenceId: string, getState: () => RootState) => {
+const deleteRecurrence = async (
+  recurrenceId: string,
+  getState: () => RootState
+) => {
   const userId = getState().app.currentUser?.userId ?? "";
-  return db
-    .collection("users")
-    .doc(userId)
-    .collection("recurrences")
-    .withConverter(recurrenceConverter)
-    .doc(recurrenceId)
-    .delete();
+  const recurrenceRef = doc(
+    db,
+    "users",
+    userId,
+    "recurrences",
+    recurrenceId
+  ).withConverter(recurrenceConverter);
+
+  await deleteDoc(recurrenceRef);
 };
 
 export const RecurrencesApi = {

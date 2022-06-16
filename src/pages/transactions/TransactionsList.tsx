@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   Text,
   Box,
@@ -15,27 +16,25 @@ import {
   SlideFade,
   useToast,
 } from "@chakra-ui/react";
-import React from "react";
 import {
   loadTransactions,
   transactionsSelectors,
 } from "../../slices/transactionsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { TransactionEdit } from "./TransactionEdit";
 import { getWeekByDate } from "../../utils/dates";
 import { getTransactionsByDay } from "../../utils/transactions";
-
 import {
   appSelectors,
   setEditing,
   setEditingId,
   toggleOpenDays,
 } from "../../slices/appSlice";
-import { useEffect } from "react";
+import { useAppDispatch } from "../../store";
 
 export const TransactionsList = () => {
   const transactions = useSelector(transactionsSelectors.list);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isEditing = useSelector(appSelectors.isEditing);
   const currentDay = useSelector(appSelectors.currentDay);
   const openDays = useSelector(appSelectors.openDays);
@@ -122,7 +121,7 @@ export const TransactionsList = () => {
                             >
                               <Stat>
                                 <StatLabel>
-                                  <Text maxW="125px" isTruncated>
+                                  <Text maxW="125px" noOfLines={[1, 2, 3]}>
                                     {transaction.description}
                                   </Text>
                                 </StatLabel>

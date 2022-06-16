@@ -1,14 +1,14 @@
-import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import React from "react";
-import firebase from "firebase/app";
+import { Tooltip, IconButton, Icon } from "@chakra-ui/react";
 import { SignOut as SignOutIcon } from "akar-icons";
+import { getAuth } from "firebase/auth";
 
 export const SignOut = () => {
   return (
     <Tooltip label="Sign Out" fontSize="sm">
       <IconButton
-        onClick={() => {
-          firebase.auth().signOut();
+        onClick={async () => {
+          await getAuth().signOut();
         }}
         colorScheme="messenger"
         variant="ghost"

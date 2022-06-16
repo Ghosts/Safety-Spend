@@ -1,45 +1,48 @@
-import React, { ReactChild, ReactChildren, useEffect } from "react";
-import firebase from "firebase/app";
+import React, { ReactNode, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useHistory } from "react-router";
 import { useToast } from "@chakra-ui/react";
-import firestore from "../../firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { userConverter } from "../../api/users";
-import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../slices/appSlice";
+import { useNavigate } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+import { useAppDispatch } from "./../../store";
+import { db } from "../../firestore";
 
 interface UserGuardProps {
-  children: ReactChild | ReactChildren | ReactChildren[] | ReactChild[];
+  children: ReactNode;
 }
 export const UserGuard = ({ children }: UserGuardProps) => {
-  const [user, loading, error] = useAuthState(firebase.auth());
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const [user, loading, error] = useAuthState(getAuth());
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const toast = useToast();
 
-  if (user && user.uid) {
-    firestore
-      .firestore()
-      .collection("users")
-      .doc(user.uid)
-      .withConverter(userConverter)
-      .onSnapshot(function (user) {
-        dispatch(setCurrentUser(user.data()!));
-      });
-  }
+  useEffect(() => {
+    const unsubFn = onSnapshot(
+      doc(db, "users", user?.uid ?? "-1").withConverter(userConverter),
+      (snapshot) => {
+        const user = snapshot.data();
+        if (user) {
+          dispatch(setCurrentUser(user));
+        }
+      }
+    );
+    return () => unsubFn();
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (!user) {
-      history.push("/");
+      navigate("/");
     } else if (error) {
       toast({
         title: "User Error",
-        description: error,
+        description: error.message,
         status: "error",
         duration: 5000,
         isClosable: true,
       });
     }
-  }, [error, history, toast, user]);
+  }, [error, navigate, toast, user]);
   return <>{loading ? <h1>Hang on a sec!</h1> : <> {children}</>}</>;
 };

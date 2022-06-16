@@ -67,68 +67,62 @@ export const {
   setTransactions,
 } = transactionsSlice.actions;
 
-export const loadTransactions = (date?: Date) => (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
-  if (!date) date = new Date();
-  const start = getWeekStart(date);
-  const end = getWeekEnd(date);
-  TransactionsApi.getTransactions(start, end, getState)
-    .then((transactions) => {
-      const transactionList = transactions.docs.map((t) => t.data());
-      dispatch(setTransactions(transactionList));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const loadTransactions =
+  (date?: Date) => (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
+    if (!date) date = new Date();
+    const start = getWeekStart(date);
+    const end = getWeekEnd(date);
+    TransactionsApi.getTransactions(start, end, getState)
+      .then((transactions) => {
+        dispatch(setTransactions(transactions));
+      })
+      .catch((e: { toString: () => string }) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const createTransaction = (transaction: Transaction) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
-  transaction.id = getRandomId();
-  TransactionsApi.setTransaction(transaction, getState)
-    .then((t) => {
-      dispatch(addTransaction(transaction));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const createTransaction =
+  (transaction: Transaction) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
+    transaction.id = getRandomId();
+    TransactionsApi.setTransaction(transaction, getState)
+      .then((t: any) => {
+        dispatch(addTransaction(transaction));
+      })
+      .catch((e: { toString: () => string }) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const editTransaction = (transaction: Transaction) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  TransactionsApi.setTransaction(transaction, getState)
-    .then((t) => {
-      dispatch(updateTransaction(transaction));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const editTransaction =
+  (transaction: Transaction) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    TransactionsApi.setTransaction(transaction, getState)
+      .then((t: any) => {
+        dispatch(updateTransaction(transaction));
+      })
+      .catch((e: { toString: () => string }) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const deleteTransaction = (id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  TransactionsApi.deleteTransaction(id, getState)
-    .then((t) => {
-      dispatch(removeTransaction(id));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const deleteTransaction =
+  (id: string) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    TransactionsApi.deleteTransaction(id, getState)
+      .then((t: any) => {
+        dispatch(removeTransaction(id));
+      })
+      .catch((e: { toString: () => string }) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
 const list = (state: RootState) => state.transactions.list;
 const loading = (state: RootState) => state.transactions.loading;

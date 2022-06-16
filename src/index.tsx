@@ -4,27 +4,20 @@ import { App } from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./store";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import theme from "./theme";
-import firebase from "firebase/app";
-import "firebase/auth";
-import { FirebaseAuthProvider } from "@react-firebase/auth";
-import { config } from "./firestore";
+import { store, persistor } from "./store";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-
 ReactDOM.render(
   <React.StrictMode>
-    <FirebaseAuthProvider firebase={firebase} {...config}>
-      <ChakraProvider theme={theme}>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-            <App />
-          </PersistGate>
-        </Provider>
-      </ChakraProvider>
-    </FirebaseAuthProvider>
+    <ChakraProvider theme={theme}>
+      <ReduxProvider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+          <App />
+        </PersistGate>
+      </ReduxProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

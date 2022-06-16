@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import {
   Box,
   Button,
@@ -24,8 +25,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   getTypedTransactionType,
   transactionTypes,
@@ -41,16 +41,17 @@ import {
   editRecurrence,
   deleteRecurrence,
 } from "../../slices/recurrencesSlice";
-
 import { toTitleCase } from "../../utils/string";
 import { CancelEditingButton } from "../../components/CancelEditingButton";
+import { useAppDispatch } from "./../../store";
 
 export const RecurrenceEdit = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingId);
   const recurrence = useSelector(recurrencesSelectors.byId(editingId));
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   if (!recurrence) {
     toast({
@@ -248,7 +249,7 @@ export const RecurrenceEdit = () => {
           </Form>
         </Formik>
         <AlertDialog
-          leastDestructiveRef={undefined}
+          leastDestructiveRef={cancelRef}
           isOpen={isOpen}
           onClose={onClose}
         >
@@ -261,7 +262,9 @@ export const RecurrenceEdit = () => {
                 Are you sure? You can't undo this action afterwards.
               </AlertDialogBody>
               <AlertDialogFooter>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
                 <Button colorScheme="red" onClick={removeRecurrence} ml={3}>
                   Delete
                 </Button>

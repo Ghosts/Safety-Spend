@@ -11,21 +11,24 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import firebase from "firebase/app";
+import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { UsersApi } from "../api/users";
-import { appSelectors, updateCurrentUesr } from "./../slices/appSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { appSelectors, updateCurrentUser } from "./../slices/appSlice";
+import { useSelector } from "react-redux";
 import { User } from "../models/user";
 import { GoogleLogin } from "./login/GoogleLogin";
 import { TwitterLogin } from "./login/TwitterLogin";
+import { AnonymousLogin } from "./login/AnonymousLogin";
+import { getAuth } from "firebase/auth";
+import { useAppDispatch } from "../store";
 
 export const Login = () => {
-  const dispatch = useDispatch();
-  const [user, loading, error] = useAuthState(firebase.auth());
+  const dispatch = useAppDispatch();
+  const auth = getAuth();
+  const [user, loading, error] = useAuthState(auth);
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
   const currentUser = useSelector(appSelectors.currentUser);
   const bgColor = useColorModeValue("gray.50", "gray.900");
 
@@ -47,7 +50,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (user && currentUser) {
-      history.push("/app");
+      navigate("/app");
     }
   });
 
@@ -55,21 +58,28 @@ export const Login = () => {
     if (user) {
       UsersApi.getUser(user.uid)
         .then((u) => {
-          if (!u.exists) {
+          if (!u) {
             UsersApi.addUser(
-              new User(user.email, user.uid, "", false, user.photoUrl, [])
+              new User(
+                user.email ?? "",
+                user.uid,
+                "",
+                false,
+                user.photoURL ?? "",
+                []
+              )
             ).catch((e) => {
-              logInError();
+              logInError(e);
             });
           } else {
-            dispatch(updateCurrentUesr(u.data()!));
+            dispatch(updateCurrentUser(u));
           }
         })
         .catch((e) => {
-          logInError();
+          logInError(e);
         });
     }
-  }, [dispatch, error, history, logInError, toast, user]);
+  }, [dispatch, error, logInError, toast, user]);
 
   return (
     <SlideFade in offsetX="0" offsetY="50px">
@@ -125,20 +135,8 @@ export const Login = () => {
               <VStack justifyContent="center">
                 <GoogleLogin error={logInError} />
                 <TwitterLogin error={logInError} />
+                <AnonymousLogin error={logInError} />
               </VStack>
-              {/* <Accordion w="100%" allowToggle>
-                <AccordionItem>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="center">
-                      Other ways to log in
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                  <AccordionPanel pb={4}>
-                    <EmailMagicLink />
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion> */}
             </VStack>
           )}
         </Box>

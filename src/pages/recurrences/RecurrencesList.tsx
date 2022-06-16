@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   Spacer,
   Stack,
@@ -15,8 +16,7 @@ import {
   Divider,
   useToast,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   loadRecurrences,
   recurrencesSelectors,
@@ -27,9 +27,10 @@ import { RecurrenceEdit } from "./RecurrenceEdit";
 import { WeeklyBreakdown } from "./WeeklyBreakdown";
 import { RefreshButton } from "../../components/RefreshButton";
 import { BackButton } from "../../components/BackButton";
+import { useAppDispatch } from "./../../store";
 
 export const RecurrencesList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const recurrences = useSelector(recurrencesSelectors.list);
   const isEditing = useSelector(appSelectors.isEditing);
   const error = useSelector(recurrencesSelectors.error);
@@ -111,7 +112,7 @@ export const RecurrencesList = () => {
                   >
                     <Stat>
                       <StatLabel>
-                        <Text maxW="125px" isTruncated>
+                        <Text maxW="125px" noOfLines={[1, 2, 3]}>
                           {recurrence.description}
                         </Text>
                       </StatLabel>

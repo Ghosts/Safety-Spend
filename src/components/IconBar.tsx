@@ -2,7 +2,6 @@ import { Icon, IconButton, SlideFade, Stack, Tooltip } from "@chakra-ui/react";
 import React from "react";
 import { InfoModal } from "./iconBar/InfoModal";
 import { SignOut } from "./iconBar/SignOut";
-import { LearnModal } from "./iconBar/LearnModal";
 import { ThemeSwitch } from "./iconBar/ThemeSwitch";
 import { Heart } from "akar-icons";
 export const IconBar = () => {
@@ -10,7 +9,6 @@ export const IconBar = () => {
     <SlideFade in offsetX="0" offsetY="50px">
       <Stack direction="row" spacing={1}>
         <ThemeSwitch />
-        <LearnModal />
         <Tooltip label="Support" fontSize="sm">
           <IconButton
             colorScheme="red"

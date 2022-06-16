@@ -66,68 +66,62 @@ export const {
   setError,
 } = recurrencesSlice.actions;
 
-export const loadRecurrences = () => (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
-  RecurrencesApi.getRecurrences(getState)
-    .then((recurrences) => {
-      const recurrencesList = recurrences.docs.map((r) => r.data());
-      dispatch(setRecurrences(recurrencesList));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const loadRecurrences =
+  () => (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
+    RecurrencesApi.getRecurrences(getState)
+      .then((recurrences) => {
+        dispatch(setRecurrences(recurrences));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const createRecurrence = (recurrence: Recurrence) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
-  recurrence.id = getRandomId();
-  RecurrencesApi.setRecurrence(recurrence, getState)
-    .then(() => {
-      dispatch(addRecurrence(recurrence));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const createRecurrence =
+  (recurrence: Recurrence) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
+    recurrence.id = getRandomId();
+    RecurrencesApi.setRecurrence(recurrence, getState)
+      .then(() => {
+        dispatch(addRecurrence(recurrence));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const editRecurrence = (recurrence: Recurrence) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
-  RecurrencesApi.setRecurrence(recurrence, getState)
-    .then(() => {
-      dispatch(updateRecurrence(recurrence));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+export const editRecurrence =
+  (recurrence: Recurrence) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
+    RecurrencesApi.setRecurrence(recurrence, getState)
+      .then(() => {
+        dispatch(updateRecurrence(recurrence));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
-export const deleteRecurrence = (id: string) => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  dispatch(setLoading(true));
+export const deleteRecurrence =
+  (id: string) =>
+  async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    dispatch(setLoading(true));
 
-  RecurrencesApi.deleteRecurrence(id, getState)
-    .then(() => {
-      dispatch(removeRecurrence(id));
-    })
-    .catch((e) => {
-      console.log(e);
-      dispatch(setError(e.toString()));
-    });
-};
+    RecurrencesApi.deleteRecurrence(id, getState)
+      .then(() => {
+        dispatch(removeRecurrence(id));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(setError(e.toString()));
+      });
+  };
 
 const list = (state: RootState) => state.recurrences.list;
 const loading = (state: RootState) => state.recurrences.loading;

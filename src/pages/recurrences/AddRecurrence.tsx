@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Drawer,
@@ -21,9 +22,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
-import React from "react";
 import { BiPlus } from "react-icons/bi";
-import { useDispatch } from "react-redux";
 import {
   frequencies,
   getTypedFrequency,
@@ -35,13 +34,14 @@ import {
   getTypedTransactionType,
   transactionTypes,
 } from "../../models/transaction";
+import { useAppDispatch } from "../../store";
 
 export const AddRecurrence = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const position = useBreakpointValue<"bottom" | "left">(["bottom", "left"]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const newRecurrence = (r: Recurrence) => {
     dispatch(

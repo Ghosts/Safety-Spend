@@ -63,62 +63,54 @@ export const {
   setCurrentDay,
 } = appSlice.actions;
 
-export const updateEditingId = (editingId: string) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(setEditingId(editingId));
-};
+export const updateEditingId =
+  (editingId: string) => async (dispatch: Dispatch<any>) => {
+    dispatch(setEditingId(editingId));
+  };
 
 export const updateView = (view: Views) => async (dispatch: Dispatch<any>) => {
   dispatch(setView(view));
 };
 
-export const updateIsEditing = (isEditing: boolean) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(setEditing(isEditing));
-};
+export const updateIsEditing =
+  (isEditing: boolean) => async (dispatch: Dispatch<any>) => {
+    dispatch(setEditing(isEditing));
+  };
 
-export const goLastWeek = () => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  return new Promise((resolve, reject) => {
-    const currentDay = new Date(getState().app.currentDay);
-    const weekStart = getWeekStart(currentDay);
-    weekStart.setDate(weekStart.getDate() - 6);
-    dispatch(setCurrentDay(weekStart.toISOString()));
-    resolve("");
-  });
-};
+export const goLastWeek =
+  () => async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    return new Promise((resolve, reject) => {
+      const currentDay = new Date(getState().app.currentDay);
+      const weekStart = getWeekStart(currentDay);
+      weekStart.setDate(weekStart.getDate() - 6);
+      dispatch(setCurrentDay(weekStart.toISOString()));
+      resolve("");
+    });
+  };
 
-export const goNextWeek = () => async (
-  dispatch: Dispatch<any>,
-  getState: () => RootState
-) => {
-  return new Promise<void>((resolve, reject) => {
-    const currentDay = new Date(getState().app.currentDay);
-    const weekEnd = getWeekEnd(currentDay);
-    weekEnd.setDate(weekEnd.getDate() + 6);
-    dispatch(setCurrentDay(weekEnd.toISOString()));
-    resolve();
-  });
-};
+export const goNextWeek =
+  () => async (dispatch: Dispatch<any>, getState: () => RootState) => {
+    return new Promise<void>((resolve, reject) => {
+      const currentDay = new Date(getState().app.currentDay);
+      const weekEnd = getWeekEnd(currentDay);
+      weekEnd.setDate(weekEnd.getDate() + 6);
+      dispatch(setCurrentDay(weekEnd.toISOString()));
+      resolve();
+    });
+  };
 
-export const toggleOpenDays = (days: number[] | number) => async (
-  dispatch: Dispatch<any>
-) => {
-  if (typeof days === "number") {
-    days = [days];
-  }
-  dispatch(setOpenDays(days));
-};
+export const toggleOpenDays =
+  (days: number[] | number) => async (dispatch: Dispatch<any>) => {
+    if (typeof days === "number") {
+      days = [days];
+    }
+    dispatch(setOpenDays(days));
+  };
 
-export const updateCurrentUesr = (user: User) => async (
-  dispatch: Dispatch<any>
-) => {
-  dispatch(setCurrentUser(user));
-};
+export const updateCurrentUser =
+  (user: User) => async (dispatch: Dispatch<any>) => {
+    dispatch(setCurrentUser(user));
+  };
 
 const openDays = (state: RootState) => state.app.openDays;
 const isEditing = (state: RootState) => state.app.isEditing;

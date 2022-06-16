@@ -1,3 +1,4 @@
+import React, { useRef } from "react";
 import {
   Box,
   Button,
@@ -25,8 +26,7 @@ import {
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import moment from "moment";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Transaction,
   getTypedTransactionType,
@@ -40,13 +40,15 @@ import {
 } from "../../slices/transactionsSlice";
 import { toTitleCase } from "../../utils/string";
 import { CancelEditingButton } from "../../components/CancelEditingButton";
+import { useAppDispatch } from "./../../store";
 
 export const TransactionEdit = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const editingId = useSelector(appSelectors.editingId);
   const transaction = useSelector(transactionsSelectors.byId(editingId));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const toast = useToast();
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
   if (!transaction) {
     toast({
@@ -237,7 +239,7 @@ export const TransactionEdit = () => {
           </Form>
         </Formik>
         <AlertDialog
-          leastDestructiveRef={undefined}
+          leastDestructiveRef={cancelRef}
           isOpen={isOpen}
           onClose={onClose}
         >
@@ -250,7 +252,9 @@ export const TransactionEdit = () => {
                 Are you sure? You can't undo this action afterwards.
               </AlertDialogBody>
               <AlertDialogFooter>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button ref={cancelRef} onClick={onClose}>
+                  Cancel
+                </Button>
                 <Button colorScheme="red" onClick={removeTransaction} ml={3}>
                   Delete
                 </Button>

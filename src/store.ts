@@ -18,6 +18,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { useDispatch } from "react-redux";
 
 export const whiteList = ["app"];
 
@@ -47,4 +48,6 @@ export const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
 export const persistor = persistStore(store);

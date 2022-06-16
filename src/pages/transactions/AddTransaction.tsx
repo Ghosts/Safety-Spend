@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Button,
   Drawer,
@@ -22,9 +23,7 @@ import {
 } from "@chakra-ui/react";
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
-import React from "react";
 import { Plus } from "akar-icons";
-import { useDispatch } from "react-redux";
 
 import {
   Transaction,
@@ -33,13 +32,14 @@ import {
 } from "../../models/transaction";
 import { createTransaction } from "../../slices/transactionsSlice";
 import { toTitleCase } from "../../utils/string";
+import { useAppDispatch } from "./../../store";
 
 export const AddTransaction = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const position = useBreakpointValue<"bottom" | "left">(["bottom", "left"]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const newTransaction = (t: Transaction) => {
     dispatch(

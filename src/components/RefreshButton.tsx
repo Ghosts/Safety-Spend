@@ -1,13 +1,14 @@
-import { Icon, IconButton, Tooltip, useToast } from "@chakra-ui/react";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Icon, IconButton, Tooltip, useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 import { appSelectors } from "../slices/appSlice";
 import { loadRecurrences } from "../slices/recurrencesSlice";
 import { loadTransactions } from "../slices/transactionsSlice";
 import { ArrowClockwise } from "akar-icons";
+import { useAppDispatch } from "./../store";
 
 export const RefreshButton = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const toast = useToast();
   const currentDay = useSelector(appSelectors.currentDay);
 
